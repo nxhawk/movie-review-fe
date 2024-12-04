@@ -1,20 +1,16 @@
+import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import React from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { emailPattern } from "../utils/helper";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { register } from "../api/apiUser";
 import { ErrorResponse } from "../types/response";
 import { AuthContext } from "../contexts/AuthContext";
+import { registerSchema, RegisterSchema } from "../utils/rules";
 
-type Inputs = {
-  email: string;
-  fullname: string;
-  password: string;
-  confirmPassword: string;
-};
+type FormData = RegisterSchema;
 
 const RegisterForm = () => {
   const { auth } = React.useContext(AuthContext)!;
@@ -23,21 +19,22 @@ const RegisterForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
-  } = useForm<Inputs>();
+  } = useForm<FormData>({
+    resolver: zodResolver(registerSchema),
+  });
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassord] = React.useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
       await register({
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: data.password,
-        name: data.fullname,
+        name: data.name,
       });
       toast.success("Registered successfully");
       navigate("/login");
@@ -61,10 +58,6 @@ const RegisterForm = () => {
       <Controller
         name="email"
         control={control}
-        rules={{
-          required: true,
-          pattern: emailPattern,
-        }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -75,17 +68,14 @@ const RegisterForm = () => {
             variant="outlined"
             error={!!errors.email}
             placeholder="email@example.com"
-            helperText={errors.email ? "Please enter a valid email address." : ""}
+            helperText={errors.email?.message}
           />
         )}
       />
       {/* Full Name input */}
       <Controller
-        name="fullname"
+        name="name"
         control={control}
-        rules={{
-          required: true,
-        }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -94,9 +84,9 @@ const RegisterForm = () => {
             label="Full Name"
             fullWidth
             variant="outlined"
-            error={!!errors.fullname}
+            error={!!errors.name}
             placeholder=""
-            helperText={errors.fullname ? "Please enter your full name." : ""}
+            helperText={errors.name?.message}
           />
         )}
       />
@@ -104,7 +94,6 @@ const RegisterForm = () => {
       <Controller
         name="password"
         control={control}
-        rules={{ required: true, minLength: 8 }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -114,7 +103,7 @@ const RegisterForm = () => {
             fullWidth
             variant="outlined"
             error={!!errors.password}
-            helperText={errors.password ? "Password is required and should be at least 8 characters." : ""}
+            helperText={errors.password?.message}
             type={showPassword ? "text" : "password"}
             InputProps={{
               endAdornment: (
@@ -137,10 +126,6 @@ const RegisterForm = () => {
       <Controller
         name="confirmPassword"
         control={control}
-        rules={{
-          required: true,
-          validate: (value) => value === getValues("password"),
-        }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -150,7 +135,7 @@ const RegisterForm = () => {
             fullWidth
             variant="outlined"
             error={!!errors.confirmPassword}
-            helperText={errors.confirmPassword ? "Passwords do not match." : ""}
+            helperText={errors.confirmPassword?.message}
             type={showConfirmPassword ? "text" : "password"}
             InputProps={{
               endAdornment: (

@@ -1,19 +1,18 @@
 import React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { emailPattern, setToken } from "../utils/helper";
+import { setToken } from "../utils/helper";
 import { Navigate, useNavigate } from "react-router-dom";
 import { login, profile } from "../api/apiUser";
 import { toast } from "react-toastify";
 import { ErrorResponse, SuccessResponse } from "../types/response";
 import { AuthContext } from "../contexts/AuthContext";
 import { ILoginUserRes, IFullUser } from "../types/user";
+import { loginSchema, LoginSchema } from "../utils/rules";
 
-type Inputs = {
-  email: string;
-  password: string;
-};
+type FormData = LoginSchema;
 
 const LoginForm = () => {
   const { auth, changeAuth } = React.useContext(AuthContext)!;
@@ -22,17 +21,23 @@ const LoginForm = () => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormData>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(loginSchema),
+  });
 
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
       const response: SuccessResponse<ILoginUserRes> = await login({
-        email: data.email,
+        email: data.email.toLowerCase(),
         password: data.password,
       });
 
@@ -65,10 +70,6 @@ const LoginForm = () => {
       <Controller
         name="email"
         control={control}
-        rules={{
-          required: true,
-          pattern: emailPattern,
-        }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -79,7 +80,7 @@ const LoginForm = () => {
             variant="outlined"
             error={!!errors.email}
             placeholder="email@example.com"
-            helperText={errors.email ? "Please enter a valid email address." : ""}
+            helperText={errors.email?.message}
           />
         )}
       />
@@ -87,7 +88,6 @@ const LoginForm = () => {
       <Controller
         name="password"
         control={control}
-        rules={{ required: true, minLength: 8 }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -97,7 +97,7 @@ const LoginForm = () => {
             fullWidth
             variant="outlined"
             error={!!errors.password}
-            helperText={errors.password ? "Password is required and should be at least 8 characters." : ""}
+            helperText={errors.password?.message}
             type={showPassword ? "text" : "password"}
             InputProps={{
               endAdornment: (

@@ -1,14 +1,14 @@
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { emailPattern } from "../utils/helper";
 import { ErrorResponse } from "../types/response";
 import { toast } from "react-toastify";
 import { forgotPassword } from "../api/apiUser";
+import { loginSchema, LoginSchema } from "../utils/rules";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type Inputs = {
-  email: string;
-};
+type FormData = Pick<LoginSchema, "email">;
+const forgotPasswordSchema = loginSchema.pick({ email: true });
 
 function ForgotPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,12 +17,14 @@ function ForgotPasswordForm() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormData>({
+    resolver: zodResolver(forgotPasswordSchema),
+  });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      await forgotPassword(data.email);
+      await forgotPassword(data.email.toLowerCase());
 
       toast.success("Check mail to reset password");
     } catch (err) {
@@ -47,10 +49,6 @@ function ForgotPasswordForm() {
       <Controller
         name="email"
         control={control}
-        rules={{
-          required: true,
-          pattern: emailPattern,
-        }}
         defaultValue=""
         render={({ field }) => (
           <TextField
@@ -62,7 +60,7 @@ function ForgotPasswordForm() {
             variant="filled"
             error={!!errors.email}
             placeholder="email@example.com"
-            helperText={errors.email ? "Please enter a valid email address." : ""}
+            helperText={errors.email?.message}
             InputProps={{
               sx: { backgroundColor: "white" },
             }}

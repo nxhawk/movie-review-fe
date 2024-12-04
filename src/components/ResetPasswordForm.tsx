@@ -6,11 +6,10 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ErrorResponse } from "../types/response";
 import { resetPassword } from "../api/apiUser";
+import { resetPasswordSchema, ResetPasswordSchema } from "../utils/rules";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-type Inputs = {
-  newPassword: string;
-  confirmPassword: string;
-};
+type FormData = ResetPasswordSchema;
 
 function ResetPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,21 +17,22 @@ function ResetPasswordForm() {
   const {
     control,
     handleSubmit,
-    getValues,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormData>({
+    resolver: zodResolver(resetPasswordSchema),
+  });
 
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     const token = searchParams.get("token");
     try {
       await resetPassword({
         token: token ?? "",
-        password: data.newPassword,
+        password: data.password,
       });
 
       navigate("/login");
@@ -61,15 +61,8 @@ function ResetPasswordForm() {
             </Typography>
 
             <Controller
-              name="newPassword"
+              name="password"
               control={control}
-              rules={{
-                required: "New password is required",
-                minLength: {
-                  value: 8,
-                  message: "Password must be at least 8 characters",
-                },
-              }}
               defaultValue=""
               render={({ field }) => (
                 <TextField
@@ -77,14 +70,8 @@ function ResetPasswordForm() {
                   hiddenLabel
                   fullWidth
                   variant="outlined"
-                  error={!!errors.newPassword}
-                  helperText={
-                    errors.newPassword
-                      ? errors.newPassword.type == "required"
-                        ? "This field is required"
-                        : "Password must be at least 8 characters long"
-                      : ""
-                  }
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
                   type={showNewPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (
@@ -110,10 +97,6 @@ function ResetPasswordForm() {
             <Controller
               name="confirmPassword"
               control={control}
-              rules={{
-                required: "Confirm New Password is required",
-                validate: (value) => value === getValues("newPassword") || "Passwords do not match",
-              }}
               defaultValue=""
               render={({ field }) => (
                 <TextField
@@ -122,15 +105,7 @@ function ResetPasswordForm() {
                   fullWidth
                   variant="outlined"
                   error={!!errors.confirmPassword}
-                  helperText={
-                    errors.confirmPassword
-                      ? errors.confirmPassword.type == "required"
-                        ? "This field is required"
-                        : errors.confirmPassword.type == "minLength"
-                          ? "Password must be at least 8 characters long"
-                          : "Password does not match"
-                      : ""
-                  }
+                  helperText={errors.confirmPassword?.message}
                   type={showConfirmNewPassword ? "text" : "password"}
                   InputProps={{
                     endAdornment: (
