@@ -23,3 +23,8 @@ export type AuthQueryConfig = {
   access_token?: string;
   refresh_token?: string;
 };
+
+export interface IResetPassword {
+  token: string;
+  password: string;
+}

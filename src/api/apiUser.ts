@@ -1,8 +1,18 @@
-import { ILoginUserReq, IRegisterUserReq } from "../types/user";
+import { ILoginUserReq, IRegisterUserReq, IResetPassword } from "../types/user";
 import AxiosClient from "./axios";
 
 export const login = async (data: ILoginUserReq) => {
   const res = await AxiosClient.post("/auth/login", data);
+  return res.data;
+};
+
+export const forgotPassword = async (email: string) => {
+  const res = await AxiosClient.post("/users/forgot-password", { email });
+  return res.data;
+};
+
+export const resetPassword = async (data: IResetPassword) => {
+  const res = await AxiosClient.post("/users/reset-password", data);
   return res.data;
 };
 

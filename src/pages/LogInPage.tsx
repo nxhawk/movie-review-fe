@@ -53,11 +53,11 @@ const LogInPage = () => {
         <Paper elevation={3} style={{ padding: "25px" }}>
           {/* Login form */}
           <LoginForm />
-          {/* <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"right"} marginTop={"16px"}>
+          <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"right"} marginTop={"16px"}>
             <Link to={"/forgot-password"} style={{ textDecoration: "none", color: "#0074D9" }}>
               Forgot password?
             </Link>
-          </Stack> */}
+          </Stack>
           <div
             className="or-divider"
             style={{
