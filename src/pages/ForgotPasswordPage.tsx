@@ -8,8 +8,8 @@ const ForgotPasswordPage = () => {
   }, []);
   return (
     <div>
-      <Grid container justifyContent="center" alignItems="center">
-        <Grid item xs={5} sx={{ pt: "100px" }}>
+      <Grid container justifyContent="center" alignItems="center" paddingX={2}>
+        <Grid item xs={12} sm={8} lg={5} sx={{ pt: "100px" }}>
           <ForgotPasswordForm />
         </Grid>
       </Grid>
