@@ -32,9 +32,9 @@ const onResponseError = async (err: AxiosError, axiosInstance: AxiosInstance): P
 
     try {
       const token = await refreshToken(currentRefreshToken!);
-      localStorage.setItem("accessToken", token.accessToken);
-      localStorage.setItem("refreshToken", token.refreshToken);
-      originalConfig.headers.Authorization = `Bearer ${token.accessToken}`;
+      localStorage.setItem("accessToken", token.data.accessToken);
+      localStorage.setItem("refreshToken", currentRefreshToken);
+      originalConfig.headers.Authorization = `Bearer ${token.data.accessToken}`;
     } catch (error) {
       localStorage.removeItem("auth");
       if (window.location.pathname == "/login") return Promise.reject(err?.response?.data);

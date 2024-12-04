@@ -22,10 +22,8 @@ export const logout = async () => {
 };
 
 export const refreshToken = async (refreshToken: string) => {
-  const res = await AxiosClient.get("/auth/refreshToken", {
-    headers: {
-      Authorization: `Bearer ${refreshToken}`,
-    },
+  const res = await AxiosClient.post("/auth/refresh-token", {
+    refreshToken,
   });
   return res.data;
 };
