@@ -4,18 +4,50 @@ import { MovieDetail } from "../../types/movie.type";
 import { getYearByDate, minToHour } from "../../utils/helper";
 import UserScore from "./UserScore";
 import UserAction from "./UserAction";
+import { FastAverageColor } from "fast-average-color";
+import React from "react";
 
 type Props = {
   movie: MovieDetail;
 };
 
+const fac = new FastAverageColor();
+
 const MovieCardInfor = ({ movie }: Props) => {
+  const [bgColor, setBgColor] = React.useState<string>("#000000");
+  const [textColor, setTextColor] = React.useState<string>("#ffffff");
+
+  React.useEffect(() => {
+    const getAverageColor = async (image: string) => {
+      await fac
+        .getColorAsync(image)
+        .then((color) => {
+          setBgColor(color.rgba);
+          setTextColor(color.isDark ? "#fff" : "#000");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    };
+    getAverageColor(`${tmdbConfig.imageW500URL}/${movie.backdrop_path}`);
+  }, [movie.backdrop_path]);
+
   return (
     <div
       className="relative bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${tmdbConfig.imageOriginalURL}/${movie.backdrop_path})` }}
     >
-      <div className="backdrop-blur-md text-white bg-stone-500/40">
+      {/* Add a blur overlay */}
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundColor: bgColor, // Your calculated background color
+          backdropFilter: "blur(10px)", // Apply the blur effect
+          opacity: 0.8, // Adjust the transparency
+        }}
+      ></div>
+      <div style={{ position: "relative", color: textColor }}>
         <Grid container justifyContent="center" padding={2}>
           <Grid item xs={12} md={4} lg={3} padding={3}>
             <img
