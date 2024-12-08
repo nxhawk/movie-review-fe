@@ -8,6 +8,7 @@ import UserProfilePage from "../pages/UserProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import path from "../constants/path";
+import MovieDetailsPage from "../pages/MovieDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,11 @@ const router = createBrowserRouter([
       {
         path: path.REGISTER,
         element: <RegisterPage />,
+      },
+      // Movies
+      {
+        path: path.MOVIE_DETAILS,
+        element: <MovieDetailsPage />,
       },
     ],
   },

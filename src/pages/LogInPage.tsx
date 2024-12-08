@@ -10,6 +10,8 @@ import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthContext";
 import path from "../constants/path";
 import userApi from "../api/base/user.api";
+import DocumentMeta from "react-document-meta";
+import metadata from "../utils/metadata";
 
 const LogInPage = () => {
   const { changeAuth } = React.useContext(AuthContext)!;
@@ -44,39 +46,37 @@ const LogInPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryConfig.access_token, queryConfig.refresh_token]);
 
-  React.useEffect(() => {
-    document.title = "Login";
-  }, []);
-
   return (
-    <Grid
-      container
-      justifyContent="center"
-      style={{ minHeight: "85vh", marginBottom: "20px", marginTop: "5px" }}
-      spacing={4}
-    >
-      <Grid item xs={11}>
-        {/* Login form */}
-        <LoginForm />
-        <div
-          className="or-divider"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            width: "100%",
-            padding: "20px",
-          }}
-        >
-          <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
-          <span className="divider-text" style={{ margin: "0 16px", color: "#5b5c55", fontWeight: "600" }}>
-            Or continue with
-          </span>
-          <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
-        </div>
+    <DocumentMeta {...metadata.loginMeta}>
+      <Grid
+        container
+        justifyContent="center"
+        style={{ minHeight: "85vh", marginBottom: "20px", marginTop: "5px" }}
+        spacing={4}
+      >
+        <Grid item xs={11}>
+          {/* Login form */}
+          <LoginForm />
+          <div
+            className="or-divider"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              width: "100%",
+              padding: "20px",
+            }}
+          >
+            <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
+            <span className="divider-text" style={{ margin: "0 16px", color: "#5b5c55", fontWeight: "600" }}>
+              Or continue with
+            </span>
+            <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
+          </div>
 
-        <SocialLogin />
+          <SocialLogin />
+        </Grid>
       </Grid>
-    </Grid>
+    </DocumentMeta>
   );
 };
 
