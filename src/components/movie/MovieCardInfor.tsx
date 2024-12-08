@@ -58,9 +58,10 @@ const MovieCardInfor = ({ movie }: Props) => {
           </Grid>
           <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 2 }}>
             <div>
-              <h1 className="text-4xl font-bold">
-                {movie.title}&nbsp;
-                <span className="text-gray-300">({getYearByDate(movie.release_date)})</span>
+              <h1 className="text-4xl">
+                <span className="font-bold">{movie.title}</span>
+                &nbsp;
+                <span>({getYearByDate(movie.release_date)})</span>
               </h1>
               <div className="flex flex-wrap gap-2 mt-1">
                 <p>{movie.release_date}</p>
@@ -82,7 +83,7 @@ const MovieCardInfor = ({ movie }: Props) => {
             </div>
             <UserAction />
             {/* Tag line */}
-            <div className="text-gray-300 text-lg italic">{movie.tagline}</div>
+            <div className="opacity-80 text-lg italic">{movie.tagline}</div>
             {/* Overview */}
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
