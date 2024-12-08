@@ -15,7 +15,7 @@ const MovieCardInfor = ({ movie }: Props) => {
       className="relative bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${tmdbConfig.imageOriginalURL}/${movie.backdrop_path})` }}
     >
-      <div className="backdrop-blur-md text-white">
+      <div className="backdrop-blur-md text-white bg-stone-500/40">
         <Grid container justifyContent="center" padding={2}>
           <Grid item xs={12} md={4} lg={3} padding={3}>
             <img
@@ -46,7 +46,7 @@ const MovieCardInfor = ({ movie }: Props) => {
             </div>
             {/* User score */}
             <div className="mt-6 mb-3">
-              <UserScore showText={true} point={movie.vote_average * 10} />
+              <UserScore showText={true} point={Math.round(movie.vote_average * 10)} />
             </div>
             <UserAction />
             {/* Tag line */}
