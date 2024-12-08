@@ -32,6 +32,17 @@ const metadata = {
       },
     },
   },
+  resendEmailVerifyMeta: {
+    title: "Resend email verify page",
+    description: "This is page resend email verify to CineMatch",
+    canonical: "http://example.com/path/to/page",
+    meta: {
+      charset: "utf-8",
+      name: {
+        keywords: "react,meta,document,html,tags",
+      },
+    },
+  },
   homeMeta: {
     title: "CineMtach - Home page",
     description: "This is page home to CineMatch",

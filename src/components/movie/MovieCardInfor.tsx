@@ -29,8 +29,8 @@ const MovieCardInfor = ({ movie }: Props) => {
           console.log(e);
         });
     };
-    getAverageColor(`${tmdbConfig.imageW500URL}/${movie.backdrop_path}`);
-  }, [movie.backdrop_path]);
+    getAverageColor(`${tmdbConfig.imageW500URL}${movie.poster_path}`);
+  }, [movie.poster_path]);
 
   return (
     <div

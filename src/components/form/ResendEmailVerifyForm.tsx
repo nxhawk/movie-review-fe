@@ -10,7 +10,7 @@ import userApi from "../../api/base/user.api";
 type FormData = Pick<LoginSchema, "email">;
 const forgotPasswordSchema = loginSchema.pick({ email: true });
 
-function ForgotPasswordForm() {
+const ResendEmailVerifyForm = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -24,9 +24,9 @@ function ForgotPasswordForm() {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      await userApi.forgotPassword(data.email.toLowerCase());
+      await userApi.resendEmailVerify(data.email.toLowerCase());
 
-      toast.success("Check mail to reset password");
+      toast.success("Resend confirm email successfully");
     } catch (err) {
       const error = err as ErrorResponse;
       toast.error(error?.message || "Something went wrong");
@@ -37,33 +37,26 @@ function ForgotPasswordForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography variant="h5" fontWeight={"bold"} marginTop={5}>
-        Forgot password?
+        Resend activation email
       </Typography>
       <Typography variant="body1" align="left" sx={{ mt: 1 }}>
-        Enter the email you signed up with. We&apos;ll send you a link to log in and reset your password.
+        Missing your account verification email? Enter your email below to have it resent.
       </Typography>
 
-      <Typography variant="body1" align="left" fontWeight={"bold"} sx={{ color: "primary", mt: 3 }}>
-        Email
-      </Typography>
       <Controller
         name="email"
         control={control}
         defaultValue=""
         render={({ field }) => (
           <TextField
-            sx={{ mt: 1 }}
+            style={{ marginTop: "25px" }}
             {...field}
-            hiddenLabel
+            label="Email"
             fullWidth
-            type="email"
-            variant="filled"
+            variant="outlined"
             error={!!errors.email}
             placeholder="email@example.com"
             helperText={errors.email?.message}
-            InputProps={{
-              sx: { backgroundColor: "white" },
-            }}
           />
         )}
       />
@@ -85,12 +78,12 @@ function ForgotPasswordForm() {
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (
           <Typography fontSize={"16px"} variant="body1">
-            Send link
+            Send
           </Typography>
         )}
       </Button>
     </form>
   );
-}
+};
 
-export default ForgotPasswordForm;
+export default ResendEmailVerifyForm;

@@ -50,7 +50,7 @@ const LoginForm = () => {
 
       changeAuth({ ...responseUser });
       toast.success("Login successfully");
-      navigate("/");
+      navigate(path.HOME);
     } catch (err) {
       const error = err as ErrorResponse;
       toast.error(error?.message || "Something went wrong");
@@ -59,7 +59,7 @@ const LoginForm = () => {
   };
 
   if (auth != null) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={path.HOME} replace />;
   }
 
   return (
@@ -75,6 +75,13 @@ const LoginForm = () => {
           &nbsp;Click here&nbsp;
         </Link>
         to get started.
+      </Typography>
+      <Typography variant="h6" fontSize={"1em"} marginY={2}>
+        If you signed up but didn&apos;t get your verification email,
+        <Link to={path.RESEND_EMAIL_VERIFYCATION} style={{ textDecoration: "none", color: "#0074D9" }}>
+          &nbsp;click here&nbsp;
+        </Link>
+        to have it resent.
       </Typography>
       {/* Email input */}
       <Controller

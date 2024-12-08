@@ -9,6 +9,7 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import path from "../constants/path";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
+import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: path.REGISTER,
         element: <RegisterPage />,
+      },
+      {
+        path: path.RESEND_EMAIL_VERIFYCATION,
+        element: <ResendEmailVerifyPage />,
       },
       // Movies
       {
