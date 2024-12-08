@@ -1,7 +1,7 @@
 import { ReactNode, createContext } from "react";
 import { useLocalStorageState } from "../hooks/useLocalStorageState";
 import { removeAllToken } from "../utils/helper";
-import { IFullUser } from "../types/user";
+import { IFullUser } from "../types/user.type";
 
 interface AuthContextType {
   auth: IFullUser;

@@ -1,12 +1,22 @@
 import axios from "axios";
 import { setupInterceptors } from "./interceptors";
+import defaultCast from "../../../assets/images/default_cast.jpg";
+import defaultMovie from "../../../assets/images/default_movie.jpg";
+
+export const tmdbConfig = {
+  baseURL: "https://api.themoviedb.org/3",
+  imageOriginalURL: "https://image.tmdb.org/t/p/original",
+  imageW500URL: "https://image.tmdb.org/t/p/w500",
+  defaultCastImg: defaultCast,
+  defaultMovieImg: defaultMovie,
+  apiKey: import.meta.env.VITE_THEMOVIEDB_API_KEY,
+};
 
 const AxiosClient = axios.create({
-  baseURL: "https://api.themoviedb.org/3",
+  baseURL: tmdbConfig.baseURL,
   headers: {
     Accept: "application/json",
-    "Access-Control-Allow-Origin": "*",
-    Authorization: `Bearer ${import.meta.env.VITE_THEMOVIEDB_API_KEY}`,
+    Authorization: `Bearer ${tmdbConfig.apiKey}`,
   },
 });
 

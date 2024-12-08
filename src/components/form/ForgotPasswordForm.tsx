@@ -1,7 +1,7 @@
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { ErrorResponse } from "../../types/response";
+import { ErrorResponse } from "../../types/response.type";
 import { toast } from "react-toastify";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";

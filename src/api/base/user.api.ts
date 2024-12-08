@@ -1,4 +1,4 @@
-import { ILoginUserReq, IRegisterUserReq, IResetPassword } from "../../types/user";
+import { ILoginUserReq, IRegisterUserReq, IResetPassword } from "../../types/user.type";
 import AxiosClient from "./base-client";
 
 const userApi = {

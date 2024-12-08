@@ -1,4 +1,4 @@
-export const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+import { getYear, minutesToHours } from "date-fns";
 
 export const removeAllToken = () => {
   localStorage.removeItem("accessToken");
@@ -8,4 +8,13 @@ export const removeAllToken = () => {
 export const setToken = (accessToken: string, refreshToken: string) => {
   localStorage.setItem("accessToken", accessToken);
   localStorage.setItem("refreshToken", refreshToken);
+};
+
+export const getYearByDate = (date: string) => {
+  return getYear(date);
+};
+
+export const minToHour = (min: number) => {
+  const result = minutesToHours(min);
+  return `${result}h ${min - result * 60}m`;
 };

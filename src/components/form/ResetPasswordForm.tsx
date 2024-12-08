@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ErrorResponse } from "../../types/response";
+import { ErrorResponse } from "../../types/response.type";
 import { resetPasswordSchema, ResetPasswordSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import path from "../../constants/path";

@@ -5,7 +5,7 @@ import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typogr
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ErrorResponse } from "../../types/response";
+import { ErrorResponse } from "../../types/response.type";
 import { AuthContext } from "../../contexts/AuthContext";
 import { registerSchema, RegisterSchema } from "../../utils/rules";
 import path from "../../constants/path";

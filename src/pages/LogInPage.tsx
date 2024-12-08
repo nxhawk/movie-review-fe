@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/form/LoginForm";
 import SocialLogin from "../components/SocialLogin";
-import { AuthQueryConfig, IFullUser } from "../types/user";
+import { AuthQueryConfig, IFullUser } from "../types/user.type";
 import useQueryString from "../hooks/useQueryString";
 import { setToken } from "../utils/helper";
 import { toast } from "react-toastify";

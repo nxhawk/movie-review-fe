@@ -7,7 +7,7 @@ const path = {
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
   // Movies
-  MOVIE_DETAILS: "/movie/:id",
+  MOVIE_DETAILS: "/movie/:movieId",
 };
 
 export default path;
