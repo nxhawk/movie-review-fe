@@ -63,7 +63,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" fontWeight={"bold"} marginTop={1}>
+      <Typography variant="h5" fontWeight={"bold"}>
         Login to your account
       </Typography>
       <Typography variant="h6" fontSize={"1em"} marginY={2}>

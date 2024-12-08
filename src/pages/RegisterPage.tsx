@@ -14,7 +14,7 @@ const RegisterPage = () => {
       container
       justifyContent="center"
       style={{ minHeight: "85vh", marginBottom: "25px", marginTop: "5px" }}
-      paddingX={{ xs: 1, sm: 4 }}
+      paddingX={{ xs: 0, sm: 4 }}
       spacing={4}
       flexWrap={"wrap-reverse"}
     >

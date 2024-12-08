@@ -7,7 +7,7 @@ const ForgotPasswordPage = () => {
     document.title = "Forgot password?";
   }, []);
   return (
-    <Grid container justifyContent="center" alignItems="center" paddingX={2}>
+    <Grid container justifyContent="center" paddingX={2} minHeight={"350px"}>
       <Grid item xs={11}>
         <ForgotPasswordForm />
       </Grid>

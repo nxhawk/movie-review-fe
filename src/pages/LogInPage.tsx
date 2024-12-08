@@ -48,7 +48,12 @@ const LogInPage = () => {
   }, []);
 
   return (
-    <Grid container justifyContent="center" alignItems="center" style={{ minHeight: "85vh", marginBottom: "0px" }}>
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ minHeight: "85vh", marginBottom: "20px", marginTop: "5px" }}
+    >
       <Grid item xs={11}>
         {/* Login form */}
         <LoginForm />

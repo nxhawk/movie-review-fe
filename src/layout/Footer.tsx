@@ -6,13 +6,9 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <Box sx={{ bgcolor: "primary.main", color: "white" }} paddingTop={"30px"} paddingBottom={"70px"} paddingX={"20px"}>
-      <Grid container justifyContent="center" flexWrap={"wrap"} spacing={3}>
-        <Grid item xs={12} md={4}>
-          <Stack
-            flexDirection={{ xs: "row", md: "column" }}
-            alignItems="center"
-            justifyContent={{ xs: "space-between", md: "start" }}
-          >
+      <Grid container justifyContent="center" flexWrap={"wrap"} spacing={2}>
+        <Grid item xs={12} md={4} marginBottom={2}>
+          <Stack alignItems="center" justifyContent={{ xs: "space-between", md: "start" }}>
             <Logo />
             <Button
               variant="outlined"
