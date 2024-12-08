@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import ResetPasswordForm from "../components/ResetPasswordForm";
+import ResetPasswordForm from "../components/form/ResetPasswordForm";
 
 function ResetPasswordPage() {
   React.useEffect(() => {

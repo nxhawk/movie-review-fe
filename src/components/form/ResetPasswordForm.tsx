@@ -4,9 +4,9 @@ import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ErrorResponse } from "../types/response";
-import { resetPassword } from "../api/apiUser";
-import { resetPasswordSchema, ResetPasswordSchema } from "../utils/rules";
+import { ErrorResponse } from "../../types/response";
+import { resetPassword } from "../../api/apiUser";
+import { resetPasswordSchema, ResetPasswordSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormData = ResetPasswordSchema;

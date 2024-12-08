@@ -3,12 +3,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { register } from "../api/apiUser";
-import { ErrorResponse } from "../types/response";
-import { AuthContext } from "../contexts/AuthContext";
-import { registerSchema, RegisterSchema } from "../utils/rules";
+import { register } from "../../api/apiUser";
+import { ErrorResponse } from "../../types/response";
+import { AuthContext } from "../../contexts/AuthContext";
+import { registerSchema, RegisterSchema } from "../../utils/rules";
 
 type FormData = RegisterSchema;
 
@@ -51,8 +51,16 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" align="center" fontWeight={"bold"}>
-        REGISTER
+      <Typography variant="h5" fontWeight={"bold"}>
+        Sign up for an account
+      </Typography>
+      <Typography variant="h6" fontSize={"1em"} marginY={1}>
+        Signing up for an account is free and easy. Fill out the form below to get started. JavaScript is required to to
+        continue.
+        <Link to={"/login"} style={{ textDecoration: "none", color: "#0074D9" }}>
+          &nbsp;Click here&nbsp;
+        </Link>
+        already have an account?
       </Typography>
       {/* Email input */}
       <Controller
@@ -61,7 +69,7 @@ const RegisterForm = () => {
         defaultValue=""
         render={({ field }) => (
           <TextField
-            style={{ marginTop: "25px" }}
+            style={{ marginTop: "20px" }}
             {...field}
             label="Email"
             fullWidth
@@ -154,15 +162,11 @@ const RegisterForm = () => {
           />
         )}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        style={{ marginTop: "20px" }}
-        size="large"
-        disabled={isLoading}
-      >
+      <Typography variant="h6" fontSize={"1em"} marginY={4}>
+        By clicking the &quot;Register&quot; button below, I certify that I have read and agree to the terms of use and
+        privacy policy.
+      </Typography>
+      <Button type="submit" variant="contained" color="primary" fullWidth size="large" disabled={isLoading}>
         {isLoading ? (
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (

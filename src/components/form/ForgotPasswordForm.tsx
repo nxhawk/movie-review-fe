@@ -1,10 +1,10 @@
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
-import { ErrorResponse } from "../types/response";
+import { ErrorResponse } from "../../types/response";
 import { toast } from "react-toastify";
-import { forgotPassword } from "../api/apiUser";
-import { loginSchema, LoginSchema } from "../utils/rules";
+import { forgotPassword } from "../../api/apiUser";
+import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 type FormData = Pick<LoginSchema, "email">;
@@ -36,10 +36,10 @@ function ForgotPasswordForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h3" align="center" fontWeight={"bold"} sx={{ color: "#0a2838" }}>
+      <Typography variant="h5" fontWeight={"bold"} marginTop={5}>
         Forgot password?
       </Typography>
-      <Typography variant="body1" align="left" sx={{ color: "gray", mt: 3 }}>
+      <Typography variant="body1" align="left" sx={{ color: "gray", mt: 1 }}>
         Enter the email you signed up with. We&apos;ll send you a link to log in and reset your password.
       </Typography>
 

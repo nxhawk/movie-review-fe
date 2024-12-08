@@ -1,13 +1,31 @@
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
 import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Avatar, IconButton, Menu, MenuItem } from "@mui/material";
+import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
 import { logout } from "../api/apiUser";
 import { toast } from "react-toastify";
+import Logo from "../components/common/Logo";
+
+interface Props {
+  window?: () => Window;
+  children?: React.ReactElement<unknown>;
+}
+
+function HideOnScroll(props: Props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({
+    target: window ? window() : undefined,
+  });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children ?? <div />}
+    </Slide>
+  );
+}
 
 const PrimaryAppBar = () => {
   const navigate = useNavigate();
@@ -66,78 +84,69 @@ const PrimaryAppBar = () => {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ cursor: "pointer" }}
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            APP
-          </Typography>
-
-          <Box sx={{ flexGrow: 1 }} />
-          <Box
-            sx={{
-              display: {
-                xs: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "20px",
-              },
-            }}
-          >
-            {auth !== null ? (
-              <IconButton
-                size="large"
-                edge="end"
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Avatar
-                  alt={`${auth?.email}`}
-                  //src={user?.avatar}
-                  style={{
-                    border: "2px solid white",
-                    color: "white",
-                    backgroundColor: "#3f51b5",
-                  }}
+      <HideOnScroll>
+        <AppBar position="fixed">
+          <Toolbar>
+            <Logo />
+            <Box sx={{ flexGrow: 1 }} />
+            <Box
+              sx={{
+                display: {
+                  xs: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "20px",
+                },
+              }}
+            >
+              {auth !== null ? (
+                <IconButton
+                  size="large"
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
                 >
-                  {auth?.email.charAt(0).toUpperCase()}
-                </Avatar>
-              </IconButton>
-            ) : (
-              <>
-                <Link
-                  to={"/login"}
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                  }}
-                >
-                  LOGIN
-                </Link>
-                <Link
-                  to={"/register"}
-                  style={{
-                    textDecoration: "none",
-                    color: "white",
-                  }}
-                >
-                  REGISTER
-                </Link>
-              </>
-            )}
-          </Box>
-        </Toolbar>
-      </AppBar>
+                  <Avatar
+                    alt={`${auth?.email}`}
+                    //src={user?.avatar}
+                    style={{
+                      border: "2px solid white",
+                      color: "white",
+                      backgroundColor: "#3f51b5",
+                    }}
+                  >
+                    {auth?.email.charAt(0).toUpperCase()}
+                  </Avatar>
+                </IconButton>
+              ) : (
+                <>
+                  <Link
+                    to={"/login"}
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                    }}
+                  >
+                    Đăng nhập
+                  </Link>
+                  <Link
+                    to={"/register"}
+                    style={{
+                      textDecoration: "none",
+                      color: "white",
+                    }}
+                  >
+                    Đăng ký
+                  </Link>
+                </>
+              )}
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
       {renderMenu}
     </Box>
   );

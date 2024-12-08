@@ -1,16 +1,16 @@
 import React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, IconButton, InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { setToken } from "../utils/helper";
-import { Navigate, useNavigate } from "react-router-dom";
-import { login, profile } from "../api/apiUser";
+import { setToken } from "../../utils/helper";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { login, profile } from "../../api/apiUser";
 import { toast } from "react-toastify";
-import { ErrorResponse, SuccessResponse } from "../types/response";
-import { AuthContext } from "../contexts/AuthContext";
-import { ILoginUserRes, IFullUser } from "../types/user";
-import { loginSchema, LoginSchema } from "../utils/rules";
+import { ErrorResponse, SuccessResponse } from "../../types/response";
+import { AuthContext } from "../../contexts/AuthContext";
+import { ILoginUserRes, IFullUser } from "../../types/user";
+import { loginSchema, LoginSchema } from "../../utils/rules";
 
 type FormData = LoginSchema;
 
@@ -63,8 +63,16 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Typography variant="h5" align="center" fontWeight={"bold"}>
-        LOGIN
+      <Typography variant="h5" fontWeight={"bold"} marginTop={1}>
+        Login to your account
+      </Typography>
+      <Typography variant="h6" fontSize={"1em"} marginY={2}>
+        In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will
+        need to login to your account. If you do not have an account, registering for an account is free and simple.
+        <Link to={"/register"} style={{ textDecoration: "none", color: "#0074D9" }}>
+          &nbsp;Click here&nbsp;
+        </Link>
+        to get started.
       </Typography>
       {/* Email input */}
       <Controller
@@ -116,21 +124,26 @@ const LoginForm = () => {
           />
         )}
       />
-      <Button
-        type="submit"
-        variant="contained"
-        color="primary"
-        fullWidth
-        style={{ marginTop: "20px" }}
-        size="large"
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <CircularProgress size={30} style={{ color: "white" }} />
-        ) : (
-          <Typography fontSize={"16px"}>Login</Typography>
-        )}
-      </Button>
+      <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"right"} marginTop={"16px"}>
+        <Link to={"/forgot-password"} style={{ textDecoration: "none", color: "#0074D9" }}>
+          Forgot password?
+        </Link>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          style={{ marginTop: "10px" }}
+          size="large"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <CircularProgress size={30} style={{ color: "white" }} />
+          ) : (
+            <Typography fontSize={"16px"}>Login</Typography>
+          )}
+        </Button>
+      </Stack>
     </form>
   );
 };

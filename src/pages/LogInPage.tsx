@@ -1,7 +1,7 @@
 import React from "react";
-import { Grid, Paper, Stack, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import LoginForm from "../components/LoginForm";
+import { Grid } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import LoginForm from "../components/form/LoginForm";
 import SocialLogin from "../components/SocialLogin";
 import { AuthQueryConfig, IFullUser } from "../types/user";
 import useQueryString from "../hooks/useQueryString";
@@ -49,40 +49,26 @@ const LogInPage = () => {
 
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ minHeight: "85vh", marginBottom: "0px" }}>
-      <Grid item xs={12} sm={8} md={6} lg={4}>
-        <Paper elevation={3} style={{ padding: "25px" }}>
-          {/* Login form */}
-          <LoginForm />
-          <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"right"} marginTop={"16px"}>
-            <Link to={"/forgot-password"} style={{ textDecoration: "none", color: "#0074D9" }}>
-              Forgot password?
-            </Link>
-          </Stack>
-          <div
-            className="or-divider"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              width: "100%",
-              padding: "25px",
-            }}
-          >
-            <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
-            <span className="divider-text" style={{ margin: "0 16px", color: "#5b5c55", fontWeight: "600" }}>
-              Or continue with
-            </span>
-            <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
-          </div>
+      <Grid item xs={11}>
+        {/* Login form */}
+        <LoginForm />
+        <div
+          className="or-divider"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+            padding: "20px",
+          }}
+        >
+          <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
+          <span className="divider-text" style={{ margin: "0 16px", color: "#5b5c55", fontWeight: "600" }}>
+            Or continue with
+          </span>
+          <span className="divider-line" style={{ flexGrow: 1, height: "1px", background: "#ccc" }}></span>
+        </div>
 
-          <SocialLogin />
-
-          <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"center"} marginTop={"16px"}>
-            <Typography>Not a member yet?</Typography>
-            <Link to={"/register"} style={{ textDecoration: "none", color: "#0074D9" }}>
-              Register
-            </Link>
-          </Stack>
-        </Paper>
+        <SocialLogin />
       </Grid>
     </Grid>
   );
