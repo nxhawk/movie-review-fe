@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
-import { removeAllToken } from "../../utils/helper";
-import { refreshToken } from "../apiUser";
+import { removeAllToken } from "../../../utils/helper";
+import userApi from "../user.api";
 
 interface IRequestAxios extends InternalAxiosRequestConfig {
   skipLoading?: boolean;
@@ -31,7 +31,7 @@ const onResponseError = async (err: AxiosError, axiosInstance: AxiosInstance): P
     }
 
     try {
-      const token = await refreshToken(currentRefreshToken!);
+      const token = await userApi.refreshToken(currentRefreshToken!);
       localStorage.setItem("accessToken", token.data.accessToken);
       localStorage.setItem("refreshToken", currentRefreshToken);
       originalConfig.headers.Authorization = `Bearer ${token.data.accessToken}`;

@@ -6,6 +6,7 @@ const ForgotPasswordPage = () => {
   React.useEffect(() => {
     document.title = "Forgot password?";
   }, []);
+
   return (
     <Grid container justifyContent="center" paddingX={2} minHeight={"350px"}>
       <Grid item xs={11}>

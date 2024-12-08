@@ -5,12 +5,13 @@ import { Button, CircularProgress, IconButton, InputAdornment, Stack, TextField,
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { setToken } from "../../utils/helper";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { login, profile } from "../../api/apiUser";
 import { toast } from "react-toastify";
 import { ErrorResponse, SuccessResponse } from "../../types/response";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ILoginUserRes, IFullUser } from "../../types/user";
 import { loginSchema, LoginSchema } from "../../utils/rules";
+import path from "../../constants/path";
+import userApi from "../../api/base/user.api";
 
 type FormData = LoginSchema;
 
@@ -36,7 +37,7 @@ const LoginForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      const response: SuccessResponse<ILoginUserRes> = await login({
+      const response: SuccessResponse<ILoginUserRes> = await userApi.login({
         email: data.email.toLowerCase(),
         password: data.password,
       });
@@ -45,7 +46,7 @@ const LoginForm = () => {
       setToken(response.data.accessToken, response.data.refreshToken);
 
       // check valid token and get profile information
-      const responseUser: IFullUser = await profile();
+      const responseUser: IFullUser = await userApi.profile();
 
       changeAuth({ ...responseUser });
       toast.success("Login successfully");
@@ -67,9 +68,10 @@ const LoginForm = () => {
         Login to your account
       </Typography>
       <Typography variant="h6" fontSize={"1em"} marginY={2}>
-        In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will
-        need to login to your account. If you do not have an account, registering for an account is free and simple.
-        <Link to={"/register"} style={{ textDecoration: "none", color: "#0074D9" }}>
+        In order to use the editing and rating capabilities of CINEMATCH, as well as get personal recommendations you
+        will need to login to your account. If you do not have an account, registering for an account is free and
+        simple.
+        <Link to={path.REGISTER} style={{ textDecoration: "none", color: "#0074D9" }}>
           &nbsp;Click here&nbsp;
         </Link>
         to get started.
@@ -125,7 +127,7 @@ const LoginForm = () => {
         )}
       />
       <Stack spacing={0.5} direction="row" useFlexGap flexWrap="wrap" justifyContent={"right"} marginTop={"16px"}>
-        <Link to={"/forgot-password"} style={{ textDecoration: "none", color: "#0074D9" }}>
+        <Link to={path.FORGOT_PASSWORD} style={{ textDecoration: "none", color: "#0074D9" }}>
           Forgot password?
         </Link>
         <Button

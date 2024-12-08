@@ -1,9 +1,10 @@
 import { Paper, Grid, Typography, CircularProgress } from "@mui/material";
 import React from "react";
-import { profile } from "../api/apiUser";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { IFullUser } from "../types/user";
+import path from "../constants/path";
+import userApi from "../api/base/user.api";
 
 const UserProfilePage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -14,12 +15,12 @@ const UserProfilePage = () => {
     async function getProfile() {
       setIsLoading(true);
       try {
-        const response = await profile();
+        const response = await userApi.profile();
         setUser(response as IFullUser);
         // set current user
       } catch (err) {
         toast.error("AcessToken has expired");
-        navigate("/login", { replace: true });
+        navigate(path.LOGIN, { replace: true });
       }
       setIsLoading(false);
     }

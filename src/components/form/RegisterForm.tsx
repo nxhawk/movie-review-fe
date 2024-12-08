@@ -5,10 +5,11 @@ import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typogr
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { register } from "../../api/apiUser";
 import { ErrorResponse } from "../../types/response";
 import { AuthContext } from "../../contexts/AuthContext";
 import { registerSchema, RegisterSchema } from "../../utils/rules";
+import path from "../../constants/path";
+import userApi from "../../api/base/user.api";
 
 type FormData = RegisterSchema;
 
@@ -31,13 +32,13 @@ const RegisterForm = () => {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      await register({
+      await userApi.register({
         email: data.email.toLowerCase(),
         password: data.password,
         name: data.name,
       });
       toast.success("Registered successfully");
-      navigate("/login");
+      navigate(path.LOGIN);
     } catch (err) {
       const error = err as ErrorResponse;
       toast.error(error?.message || "Something went wrong");
@@ -46,7 +47,7 @@ const RegisterForm = () => {
   };
 
   if (auth != null) {
-    return <Navigate to="/" replace />;
+    return <Navigate to={path.HOME} replace />;
   }
 
   return (
@@ -57,7 +58,7 @@ const RegisterForm = () => {
       <Typography variant="h6" fontSize={"1em"} marginY={1}>
         Signing up for an account is free and easy. Fill out the form below to get started. JavaScript is required to to
         continue.
-        <Link to={"/login"} style={{ textDecoration: "none", color: "#0074D9" }}>
+        <Link to={path.LOGIN} style={{ textDecoration: "none", color: "#0074D9" }}>
           &nbsp;Click here&nbsp;
         </Link>
         already have an account?

@@ -7,6 +7,7 @@ import PrivateRoute from "../layout/private/PrivateRoute";
 import UserProfilePage from "../pages/UserProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
+import path from "../constants/path";
 
 const router = createBrowserRouter([
   {
@@ -16,29 +17,32 @@ const router = createBrowserRouter([
         element: <PrivateRoute />,
         children: [
           {
-            path: "/profile",
+            path: path.PROFILE,
             element: <UserProfilePage />,
           },
         ],
       },
+      // Home page
       {
-        path: "/",
+        path: path.HOME,
         element: <HomePage />,
       },
+
+      // Authentication
       {
-        path: "/login",
+        path: path.LOGIN,
         element: <LogInPage />,
       },
       {
-        path: "/forgot-password",
+        path: path.FORGOT_PASSWORD,
         element: <ForgotPasswordPage />,
       },
       {
-        path: "/reset-password",
+        path: path.RESET_PASSWORD,
         element: <ResetPasswordPage />,
       },
       {
-        path: "/register",
+        path: path.REGISTER,
         element: <RegisterPage />,
       },
     ],

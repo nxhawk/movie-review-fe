@@ -3,7 +3,7 @@ export const linkGroup = [
     title: "The Basics",
     links: [
       {
-        title: "Giới thiệu về TMDB",
+        title: "Giới thiệu về CINEMATCH",
         url: "/",
       },
       {

@@ -7,13 +7,11 @@ function ResetPasswordPage() {
     document.title = "Reset Password";
   }, []);
   return (
-    <div>
-      <Grid container justifyContent="center" alignItems="center" paddingX={2}>
-        <Grid item xs={12} sm={8} lg={5} sx={{ pt: "100px" }}>
-          <ResetPasswordForm />
-        </Grid>
+    <Grid container justifyContent="center" alignItems="center" paddingX={2} minHeight={"350px"}>
+      <Grid item xs={11}>
+        <ResetPasswordForm />
       </Grid>
-    </div>
+    </Grid>
   );
 }
 

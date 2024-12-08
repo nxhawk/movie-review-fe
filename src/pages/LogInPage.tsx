@@ -8,7 +8,8 @@ import useQueryString from "../hooks/useQueryString";
 import { setToken } from "../utils/helper";
 import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthContext";
-import { profile } from "../api/apiUser";
+import path from "../constants/path";
+import userApi from "../api/base/user.api";
 
 const LogInPage = () => {
   const { changeAuth } = React.useContext(AuthContext)!;
@@ -23,14 +24,14 @@ const LogInPage = () => {
   React.useEffect(() => {
     async function getProfile() {
       try {
-        const response: IFullUser = await profile();
+        const response: IFullUser = await userApi.profile();
         // set current user
         changeAuth({ ...response });
         toast.success("Login successfully");
-        navigate("/");
+        navigate(path.HOME);
       } catch (err) {
         toast.error("AcessToken has expired");
-        navigate("/login", { replace: true });
+        navigate(path.LOGIN, { replace: true });
       }
     }
     if (queryConfig.access_token && queryConfig.refresh_token) {
@@ -51,8 +52,8 @@ const LogInPage = () => {
     <Grid
       container
       justifyContent="center"
-      alignItems="center"
       style={{ minHeight: "85vh", marginBottom: "20px", marginTop: "5px" }}
+      spacing={4}
     >
       <Grid item xs={11}>
         {/* Login form */}

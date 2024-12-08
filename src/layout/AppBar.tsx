@@ -5,9 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
-import { logout } from "../api/apiUser";
 import { toast } from "react-toastify";
 import Logo from "../components/common/Logo";
+import userApi from "../api/base/user.api";
+import path from "../constants/path";
 
 interface Props {
   window?: () => Window;
@@ -43,9 +44,9 @@ const PrimaryAppBar = () => {
   };
 
   const handleLogout = async () => {
-    await logout();
+    await userApi.logout();
     toast.success("Logout successfully");
-    navigate("/login");
+    navigate(path.LOGIN);
     setAnchorEl(null);
     removeAuth();
   };
@@ -72,7 +73,7 @@ const PrimaryAppBar = () => {
         <MenuItem
           onClick={() => {
             setAnchorEl(null);
-            navigate("/profile");
+            navigate(path.PROFILE);
           }}
         >
           {auth?.email}
@@ -124,7 +125,7 @@ const PrimaryAppBar = () => {
               ) : (
                 <>
                   <Link
-                    to={"/login"}
+                    to={path.LOGIN}
                     style={{
                       textDecoration: "none",
                       color: "white",
@@ -133,7 +134,7 @@ const PrimaryAppBar = () => {
                     Đăng nhập
                   </Link>
                   <Link
-                    to={"/register"}
+                    to={path.REGISTER}
                     style={{
                       textDecoration: "none",
                       color: "white",

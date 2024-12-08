@@ -3,9 +3,9 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { ErrorResponse } from "../../types/response";
 import { toast } from "react-toastify";
-import { forgotPassword } from "../../api/apiUser";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
+import userApi from "../../api/base/user.api";
 
 type FormData = Pick<LoginSchema, "email">;
 const forgotPasswordSchema = loginSchema.pick({ email: true });
@@ -24,7 +24,7 @@ function ForgotPasswordForm() {
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsLoading(true);
     try {
-      await forgotPassword(data.email.toLowerCase());
+      await userApi.forgotPassword(data.email.toLowerCase());
 
       toast.success("Check mail to reset password");
     } catch (err) {
