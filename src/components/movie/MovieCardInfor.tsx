@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { MovieDetail } from "../../types/movie.type";
-import { getYearByDate, minToHour } from "../../utils/helper";
+import { getYearByDate, minToHour, formatDate } from "../../utils/helper";
 import UserScore from "./UserScore";
 import UserAction from "./UserAction";
 import { FastAverageColor } from "fast-average-color";
@@ -14,7 +14,7 @@ type Props = {
 const fac = new FastAverageColor();
 
 const MovieCardInfor = ({ movie }: Props) => {
-  const [bgColor, setBgColor] = React.useState<string>("#000000");
+  const [bgColor, setBgColor] = React.useState<string>("#343434");
   const [textColor, setTextColor] = React.useState<string>("#ffffff");
 
   React.useEffect(() => {
@@ -29,7 +29,7 @@ const MovieCardInfor = ({ movie }: Props) => {
           console.log(e);
         });
     };
-    getAverageColor(`${tmdbConfig.imageW500URL}${movie.poster_path}`);
+    getAverageColor(`${tmdbConfig.imageOriginalURL}${movie.poster_path}`);
   }, [movie.poster_path]);
 
   return (
@@ -49,9 +49,9 @@ const MovieCardInfor = ({ movie }: Props) => {
       ></div>
       <div style={{ position: "relative", color: textColor }}>
         <Grid container justifyContent="center" padding={2}>
-          <Grid item xs={12} md={4} lg={3} padding={3}>
+          <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
             <img
-              src={`${tmdbConfig.imageW500URL}/${movie.poster_path}`}
+              src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
               alt={movie.title}
               className="rounded-lg shadow-lg"
             />
@@ -61,12 +61,11 @@ const MovieCardInfor = ({ movie }: Props) => {
               <h1 className="text-4xl">
                 <span className="font-bold">{movie.title}</span>
                 &nbsp;
-                <span>({getYearByDate(movie.release_date)})</span>
+                {movie.release_date && <span>({getYearByDate(movie.release_date)})</span>}
               </h1>
-              <div className="flex flex-wrap gap-2 mt-1">
-                <p>{movie.release_date}</p>
+              {movie.release_date && <p className="mt-1">Release date: {formatDate(movie.release_date)}</p>}
+              <div className="flex flex-wrap gap-2">
                 <div className="flex gap-1">
-                  &#x1F784;
                   {movie.genres.map((genre, idx) => (
                     <div key={idx}>
                       {genre.name}
@@ -81,7 +80,7 @@ const MovieCardInfor = ({ movie }: Props) => {
             <div className="mt-6 mb-3">
               <UserScore showText={true} point={Math.round(movie.vote_average * 10)} />
             </div>
-            <UserAction />
+            <UserAction movieId={movie.id} />
             {/* Tag line */}
             <div className="opacity-80 text-lg italic">{movie.tagline}</div>
             {/* Overview */}

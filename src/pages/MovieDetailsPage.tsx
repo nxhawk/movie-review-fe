@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import movieApi from "../api/tmdb/movie.api";
 import { MovieDetail } from "../types/movie.type";
 import MovieCardInfor from "../components/movie/MovieCardInfor";
-import { Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Grid, Typography } from "@mui/material";
 
 const MovieDetailsPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -31,7 +31,9 @@ const MovieDetailsPage = () => {
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
       {isLoading ? (
-        <div>Loading...</div>
+        <Box sx={{ display: "flex", justifyContent: "center", paddingY: "10px" }}>
+          <CircularProgress color="secondary" />
+        </Box>
       ) : movie ? (
         <MovieCardInfor movie={movie} />
       ) : (
