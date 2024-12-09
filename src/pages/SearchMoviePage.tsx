@@ -18,18 +18,21 @@ const SearchMoviePage = () => {
     setSearchValue("");
   };
 
-  const handleSearch = useCallback(async (query: string, page: number = 1) => {
-    if (query.trim()) {
-      try {
-        const response = await movieApi.getMovieByQuery(query, page);
-        setMovies(response.results);
-        setTotalPages(response.total_pages);
-        navigate(`/search?query=${query}&page=${page}`);
-      } catch (error) {
-        console.error("Failed to fetch movies:", error);
+  const handleSearch = useCallback(
+    async (query: string, page: number = 1) => {
+      if (query.trim()) {
+        try {
+          const response = await movieApi.getMovieByQuery(query, page);
+          setMovies(response.results);
+          setTotalPages(response.total_pages);
+          navigate(`/search?query=${query}&page=${page}`);
+        } catch (error) {
+          console.error("Failed to fetch movies:", error);
+        }
       }
-    }
-  }, [navigate]);
+    },
+    [navigate],
+  );
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
