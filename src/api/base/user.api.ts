@@ -10,12 +10,16 @@ const userApi = {
     const res = await AxiosClient.post("/users/forgot-password", { email });
     return res.data;
   },
-  apiResetPassword: async (data: IResetPassword) => {
+  resetPassword: async (data: IResetPassword) => {
     const res = await AxiosClient.post("/users/reset-password", data);
     return res.data;
   },
   register: async (data: IRegisterUserReq) => {
     const res = await AxiosClient.post("/auth/register", data);
+    return res.data;
+  },
+  resendEmailVerify: async (email: string) => {
+    const res = await AxiosClient.post("/auth/resend-confirm-email", { email });
     return res.data;
   },
   profile: async () => {

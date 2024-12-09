@@ -6,8 +6,10 @@ const path = {
   PROFILE: "/profile",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
+  RESEND_EMAIL_VERIFYCATION: "/resend-email-verification",
   // Movies
   MOVIE_DETAILS: "/movie/:movieId",
+  SEARCH_MOVIE: "/search",
 };
 
 export default path;

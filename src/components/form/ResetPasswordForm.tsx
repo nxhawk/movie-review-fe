@@ -35,7 +35,7 @@ function ResetPasswordForm() {
       return;
     }
     try {
-      await userApi.apiResetPassword({
+      await userApi.resetPassword({
         token: token ?? "",
         password: data.password,
       });

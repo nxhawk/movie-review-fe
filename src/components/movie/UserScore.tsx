@@ -1,6 +1,7 @@
 import CircularProgress, { circularProgressClasses } from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
+import { getColorByPoint } from "../../utils/helper";
 
 type Props = {
   point: number;
@@ -8,16 +9,6 @@ type Props = {
 };
 
 const UserScore = ({ point, showText = false }: Props) => {
-  function getColorByPoint(point: number) {
-    if (point < 50) {
-      return "red";
-    } else if (point < 70) {
-      return "yellow";
-    } else {
-      return "green";
-    }
-  }
-
   return (
     <div className="flex items-center gap-3">
       <div className="hover:scale-110 cursor-pointer transition-all ease-linear w-[68px] h-[68px] bg-[#081c22] rounded-full flex items-center justify-center">
@@ -28,13 +19,7 @@ const UserScore = ({ point, showText = false }: Props) => {
             size={60}
             value={100}
             sx={{
-              color: "gray",
-              "& .MuiSlider-thumb": {
-                borderRadius: "1px",
-              },
-              [`& .${circularProgressClasses.circle}`]: {
-                strokeLinecap: "round",
-              },
+              color: getColorByPoint(point).track,
             }}
           />
           <CircularProgress
@@ -42,10 +27,7 @@ const UserScore = ({ point, showText = false }: Props) => {
             size={60}
             value={point}
             sx={{
-              color: getColorByPoint(point),
-              "& .MuiSlider-thumb": {
-                borderRadius: "1px",
-              },
+              color: getColorByPoint(point).bar,
               [`& .${circularProgressClasses.circle}`]: {
                 strokeLinecap: "round",
               },

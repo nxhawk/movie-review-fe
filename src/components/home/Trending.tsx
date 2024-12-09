@@ -26,7 +26,7 @@ const Trending = () => {
   }, [subType]);
 
   return (
-    <div className="min-h-40 md:min-h-56 xl:min-h-80 mt-5">
+    <div className="min-h-40 md:min-h-56 xl:min-h-80 mt-5 mb-5">
       <div className="flex items-center gap-4 ml-4 md:ml-10 lg:ml-20 xl:ml-52">
         <h3 className="text-xs md:text-xl lg:text-xl xl:text-2xl font-bold text-cyan-950">Trending</h3>
         <Box className="relative border-2 border-cyan-950 rounded-full flex w-fit">

@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import React from "react";
 import { styled } from "@mui/material/styles";
+import PreviewDialog from "../dialog/PreviewDialog";
 
 type ButtonActionProps = {
   children: React.ReactNode;
@@ -42,7 +43,11 @@ const ButtonAction = ({ children, title }: ButtonActionProps) => {
   );
 };
 
-const UserAction = () => {
+type Props = {
+  movieId: number;
+};
+
+const UserAction = ({ movieId }: Props) => {
   return (
     <Stack marginBottom={3} direction="row" spacing={3} sx={{ alignItems: "center" }}>
       <ButtonAction title="Add to list">
@@ -54,6 +59,7 @@ const UserAction = () => {
       <ButtonAction title="Add to your watchlist">
         <BookmarkIcon />
       </ButtonAction>
+      <PreviewDialog movieId={movieId} />
     </Stack>
   );
 };
