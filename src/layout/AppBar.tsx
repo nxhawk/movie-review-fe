@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
-import { toast } from "react-toastify";
 import Logo from "../components/common/Logo";
 import userApi from "../api/base/user.api";
 import path from "../constants/path";
+import toast from "react-hot-toast";
 
 interface Props {
   window?: () => Window;
@@ -84,7 +84,7 @@ const PrimaryAppBar = () => {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, position: "relative" }}>
       <HideOnScroll>
         <AppBar position="fixed">
           <Toolbar>

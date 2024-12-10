@@ -27,8 +27,8 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
           borderRadius: "15px",
         }}
       >
-        <CardActionArea disableRipple sx={{ minHeight: 0, backgroundColor: "#032541" }}>
-          <div style={{ height: "calc(150px * 2.2)", overflow: "hidden" }}>
+        <CardActionArea disableRipple sx={{ backgroundColor: "primary.main" }}>
+          <div style={{ height: "calc(140px * 2.2)", overflow: "hidden" }}>
             <LazyLoadImage
               alt={movie.title}
               src={
@@ -41,7 +41,7 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
             />
           </div>
           <CardContent>
-            <Box sx={{ position: "absolute", top: "285px", left: "5px" }}>
+            <Box sx={{ position: "absolute", top: "270px", left: "5px" }}>
               <UserScore point={Math.round(movie.vote_average * 10)} />
             </Box>
             <Typography

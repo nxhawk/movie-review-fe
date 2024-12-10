@@ -6,12 +6,12 @@ import SocialLogin from "../components/SocialLogin";
 import { AuthQueryConfig, IFullUser } from "../types/user.type";
 import useQueryString from "../hooks/useQueryString";
 import { setToken } from "../utils/helper";
-import { toast } from "react-toastify";
 import { AuthContext } from "../contexts/AuthContext";
 import path from "../constants/path";
 import userApi from "../api/base/user.api";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
+import toast from "react-hot-toast";
 
 const LogInPage = () => {
   const { changeAuth } = React.useContext(AuthContext)!;

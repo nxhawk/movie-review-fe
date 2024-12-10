@@ -31,8 +31,10 @@ const MovieDetailsPage = () => {
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
       {isLoading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", paddingY: "10px" }}>
-          <CircularProgress color="secondary" />
+        <Box
+          sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
+        >
+          <CircularProgress />
         </Box>
       ) : movie ? (
         <MovieCardInfor movie={movie} />

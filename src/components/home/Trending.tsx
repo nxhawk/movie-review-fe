@@ -5,6 +5,8 @@ import MovieSimpleCard from "../movie/MovieSimpleCard.tsx";
 import movieApi from "../../api/base/movie.api";
 import { Movie } from "../../types/movie.type.ts";
 import TextGradient from "../common/TextGradient.tsx";
+import { Typography } from "@mui/material";
+import MovieCardSkeleton from "../skeleton/MovieCardSkeleton.tsx";
 
 const Trending = () => {
   const [subType, setSubType] = React.useState("today");
@@ -29,7 +31,9 @@ const Trending = () => {
   return (
     <div className="min-h-40 md:min-h-56 xl:min-h-80 my-5">
       <div className="flex items-center gap-4 pl-5 md:pl-10">
-        <h3 className="md:text-xl lg:text-xl xl:text-2xl font-bold text-cyan-950">Trending</h3>
+        <Typography color="primary.main" fontWeight={"bold"} fontSize={{ xs: "2em", md: "2.5em" }}>
+          Trending
+        </Typography>
         <Box className="relative border-2 border-cyan-950 rounded-full flex w-fit">
           <Box
             className="absolute w-[100px] h-[32px] rounded-full transition-all duration-500 ease"
@@ -71,7 +75,9 @@ const Trending = () => {
 
       <div className="mt-5">
         {isLoading ? (
-          <div className="px-5 md:px-10">Loading...</div>
+          <div className="pl-5 md:pl-10">
+            <MovieCardSkeleton />
+          </div>
         ) : (
           <div className="relative custom-scrollbar-h flex overflow-auto gap-3 pb-5 px-5 md:px-10">
             {movies.map((movie) => (

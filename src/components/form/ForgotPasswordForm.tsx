@@ -2,10 +2,10 @@ import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
 import { ErrorResponse } from "../../types/response.type";
-import { toast } from "react-toastify";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userApi from "../../api/base/user.api";
+import toast from "react-hot-toast";
 
 type FormData = Pick<LoginSchema, "email">;
 const forgotPasswordSchema = loginSchema.pick({ email: true });

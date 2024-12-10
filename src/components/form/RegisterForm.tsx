@@ -4,12 +4,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { ErrorResponse } from "../../types/response.type";
 import { AuthContext } from "../../contexts/AuthContext";
 import { registerSchema, RegisterSchema } from "../../utils/rules";
 import path from "../../constants/path";
 import userApi from "../../api/base/user.api";
+import toast from "react-hot-toast";
 
 type FormData = RegisterSchema;
 

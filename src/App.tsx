@@ -1,21 +1,20 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <>
-      <ToastContainer
+      <Toaster
         position="bottom-right"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnHover
-        pauseOnFocusLoss={false}
-        className="w-fit"
+        reverseOrder={true}
+        toastOptions={{
+          duration: 2000,
+          style: {
+            background: "#333",
+            color: "#fff",
+          },
+        }}
       />
       <RouterProvider router={router} />
     </>

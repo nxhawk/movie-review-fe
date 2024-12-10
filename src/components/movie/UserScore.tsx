@@ -57,7 +57,9 @@ const UserScore = ({ point, showText = false, size = "small" }: Props) => {
               fontSize={size === "small" ? "18px" : "20px"}
               sx={{ color: "white", fontWeight: "bold" }}
               className="font-mono"
-            >{`${point}%`}</Typography>
+            >
+              {point == 0 ? "NR" : `${point}%`}
+            </Typography>
           </Box>
         </Box>
       </div>
