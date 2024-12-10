@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import React from "react";
 import MovieSimpleCard from "../movie/MovieSimpleCard.tsx";
-import movieApi from "../../api/tmdb/movie.api";
+import movieApi from "../../api/base/movie.api";
 import { Movie } from "../../types/movie.type.ts";
 import TextGradient from "../common/TextGradient.tsx";
 

@@ -6,6 +6,7 @@ import UserScore from "./UserScore";
 import UserAction from "./UserAction";
 import { FastAverageColor } from "fast-average-color";
 import React from "react";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 type Props = {
   movie: MovieDetail;
@@ -50,11 +51,19 @@ const MovieCardInfor = ({ movie }: Props) => {
       <div style={{ position: "relative", color: textColor }}>
         <Grid container justifyContent="center" padding={2}>
           <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
-            <img
+            <LazyLoadImage
+              alt={movie.title}
+              src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg} // use normal <img> attributes as props
+              wrapperProps={{
+                style: { transitionDelay: "1s" },
+              }}
+              className="rounded-lg shadow-lg"
+            />
+            {/* <img
               src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
               alt={movie.title}
               className="rounded-lg shadow-lg"
-            />
+            /> */}
           </Grid>
           <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 2 }}>
             <div>

@@ -1,11 +1,11 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid } from "@mui/material";
+import { Card, CardActionArea, CardContent, Grid } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
-import defaultImage from "../../assets/images/default_movie.jpg";
 import { Movie } from "../../types/movie.type.ts";
 import { getYearByDate } from "../../utils/helper.ts";
 import React from "react";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../constants/dynamicPath.ts";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MovieSearchCard = ({ movie }: { movie: Movie }) => {
   const formattedDate = React.useMemo(() => {
@@ -27,12 +27,13 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
         }}
       >
         <CardActionArea disableRipple sx={{ display: "flex", backgroundColor: "white" }}>
-          <CardMedia
-            component="img"
-            title={movie.title}
+          <LazyLoadImage
             alt={movie.title}
-            image={movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : defaultImage}
-            sx={{ width: 100, height: "auto", objectFit: "cover" }}
+            src={movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg}
+            wrapperProps={{
+              style: { transitionDelay: "1s" },
+            }}
+            style={{ width: 100, height: "auto", objectFit: "cover" }}
           />
           <CardContent sx={{ flex: 1, padding: 0, marginLeft: 2 }}>
             <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 0 }}>

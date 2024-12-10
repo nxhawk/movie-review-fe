@@ -1,10 +1,11 @@
-import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Typography } from "@mui/material";
 import React from "react";
 import { Movie } from "../../types/movie.type.ts";
 import UserScore from "./UserScore.tsx";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../constants/dynamicPath.ts";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
   const formattedDate = React.useMemo(() => {
@@ -28,13 +29,14 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
       >
         <CardActionArea disableRipple sx={{ minHeight: 0, backgroundColor: "#032541" }}>
           <div style={{ height: "calc(150px * 2.2)", overflow: "hidden" }}>
-            <CardMedia
-              component="img"
-              title={movie.title}
+            <LazyLoadImage
               alt={movie.title}
-              image={
+              src={
                 movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg
               }
+              wrapperProps={{
+                style: { transitionDelay: "1s" },
+              }}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import Layout from "../layout/Layout";
 import LogInPage from "../pages/LogInPage";
 import RegisterPage from "../pages/RegisterPage";
@@ -11,54 +11,64 @@ import path from "../constants/path";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
 import SearchMoviePage from "../pages/SearchMoviePage";
+import ScrollToTop from "../hooks/useScrollToTop";
 const router = createBrowserRouter([
   {
-    element: <Layout />,
+    element: (
+      <ScrollToTop>
+        <Outlet />
+      </ScrollToTop>
+    ),
     children: [
       {
-        element: <PrivateRoute />,
+        element: <Layout />,
         children: [
           {
-            path: path.PROFILE,
-            element: <UserProfilePage />,
+            element: <PrivateRoute />,
+            children: [
+              {
+                path: path.PROFILE,
+                element: <UserProfilePage />,
+              },
+            ],
+          },
+          // Home page
+          {
+            path: path.HOME,
+            element: <HomePage />,
+          },
+
+          // Authentication
+          {
+            path: path.LOGIN,
+            element: <LogInPage />,
+          },
+          {
+            path: path.FORGOT_PASSWORD,
+            element: <ForgotPasswordPage />,
+          },
+          {
+            path: path.RESET_PASSWORD,
+            element: <ResetPasswordPage />,
+          },
+          {
+            path: path.REGISTER,
+            element: <RegisterPage />,
+          },
+          {
+            path: path.RESEND_EMAIL_VERIFYCATION,
+            element: <ResendEmailVerifyPage />,
+          },
+          // Movies
+          {
+            path: path.MOVIE_DETAILS,
+            element: <MovieDetailsPage />,
+          },
+          {
+            path: path.SEARCH_MOVIE,
+            element: <SearchMoviePage />,
           },
         ],
-      },
-      // Home page
-      {
-        path: path.HOME,
-        element: <HomePage />,
-      },
-
-      // Authentication
-      {
-        path: path.LOGIN,
-        element: <LogInPage />,
-      },
-      {
-        path: path.FORGOT_PASSWORD,
-        element: <ForgotPasswordPage />,
-      },
-      {
-        path: path.RESET_PASSWORD,
-        element: <ResetPasswordPage />,
-      },
-      {
-        path: path.REGISTER,
-        element: <RegisterPage />,
-      },
-      {
-        path: path.RESEND_EMAIL_VERIFYCATION,
-        element: <ResendEmailVerifyPage />,
-      },
-      // Movies
-      {
-        path: path.MOVIE_DETAILS,
-        element: <MovieDetailsPage />,
-      },
-      {
-        path: path.SEARCH_MOVIE,
-        element: <SearchMoviePage />,
       },
     ],
   },
