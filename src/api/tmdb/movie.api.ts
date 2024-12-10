@@ -5,6 +5,7 @@ const movieApi = {
     const res = await AxiosClient.get(`/movie/${movieId}`);
     return res.data;
   },
+
   getVideos: async (movieId: number | string) => {
     const res = await AxiosClient.get(`/movie/${movieId}/videos`);
     return res.data;

@@ -1,15 +1,12 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import { Movie } from "../../types/movie.type.ts";
-import defaultImage from "../../assets/images/default_movie.jpg";
 import UserScore from "./UserScore.tsx";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
+import { Link } from "react-router-dom";
+import dynamicPath from "../../constants/dynamicPath.ts";
 
 const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
-  const navigateToTarget = () => {
-    window.location.href = `/movie/${movie.id}`;
-  };
-
   const formattedDate = React.useMemo(() => {
     const date = new Date(movie.release_date);
     return date.toLocaleDateString("en-US", {
@@ -20,7 +17,7 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <div className="min-w-60">
+    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="min-w-60">
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",
@@ -29,13 +26,15 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
           borderRadius: "15px",
         }}
       >
-        <CardActionArea disableRipple onClick={navigateToTarget} sx={{ minHeight: 0, backgroundColor: "#032541" }}>
+        <CardActionArea disableRipple sx={{ minHeight: 0, backgroundColor: "#032541" }}>
           <div style={{ height: "calc(150px * 2.2)", overflow: "hidden" }}>
             <CardMedia
               component="img"
               title={movie.title}
               alt={movie.title}
-              image={movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : defaultImage}
+              image={
+                movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg
+              }
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -57,7 +56,7 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-    </div>
+    </Link>
   );
 };
 

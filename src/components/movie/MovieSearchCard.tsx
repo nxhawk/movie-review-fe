@@ -4,11 +4,10 @@ import defaultImage from "../../assets/images/default_movie.jpg";
 import { Movie } from "../../types/movie.type.ts";
 import { getYearByDate } from "../../utils/helper.ts";
 import React from "react";
+import { Link } from "react-router-dom";
+import dynamicPath from "../../constants/dynamicPath.ts";
 
 const MovieSearchCard = ({ movie }: { movie: Movie }) => {
-  const navigateToTarget = () => {
-    window.location.href = `/movie/${movie.id}`;
-  };
   const formattedDate = React.useMemo(() => {
     const date = new Date(movie.release_date);
     return date.toLocaleDateString("en-US", {
@@ -19,7 +18,7 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <div className="max-h-fit w-2/3 mb-4">
+    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="max-h-fit w-full md:w-2/3 mb-4 px-5 md:px-0">
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",
@@ -27,7 +26,7 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
           borderRadius: "10px",
         }}
       >
-        <CardActionArea disableRipple onClick={navigateToTarget} sx={{ display: "flex", backgroundColor: "white" }}>
+        <CardActionArea disableRipple sx={{ display: "flex", backgroundColor: "white" }}>
           <CardMedia
             component="img"
             title={movie.title}
@@ -57,7 +56,7 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
           </CardContent>
         </CardActionArea>
       </Card>
-    </div>
+    </Link>
   );
 };
 

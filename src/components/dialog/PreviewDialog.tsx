@@ -80,7 +80,7 @@ const PreviewDialog = ({ movieId }: Props) => {
       )}
       <BootstrapDialog onClose={handleClose} aria-labelledby="customized-dialog-title" open={open} maxWidth="md">
         <DialogTitle fontWeight={"bold"} sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Play Trailer
+          Play {videoType}
         </DialogTitle>
         <IconButton
           aria-label="close"

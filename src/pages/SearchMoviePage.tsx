@@ -5,6 +5,7 @@ import Pagination from "@mui/material/Pagination";
 import movieApi from "../api/tmdb/movie.api";
 import MovieSearchCard from "../components/movie/MovieSearchCard";
 import { Movie } from "../types/movie.type";
+import path from "../constants/path";
 
 const SearchMoviePage = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -25,7 +26,7 @@ const SearchMoviePage = () => {
           const response = await movieApi.getMovieByQuery(query, page);
           setMovies(response.results);
           setTotalPages(response.total_pages);
-          navigate(`/search?query=${query}&page=${page}`);
+          navigate(`${path.SEARCH_MOVIE}?query=${query}&page=${page}`);
         } catch (error) {
           console.error("Failed to fetch movies:", error);
         }

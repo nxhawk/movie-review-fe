@@ -78,7 +78,7 @@ const MovieCardInfor = ({ movie }: Props) => {
             </div>
             {/* User score */}
             <div className="mt-6 mb-3">
-              <UserScore showText={true} point={Math.round(movie.vote_average * 10)} />
+              <UserScore showText={true} point={Math.round(movie.vote_average * 10)} size="large" />
             </div>
             <UserAction movieId={movie.id} />
             {/* Tag line */}
