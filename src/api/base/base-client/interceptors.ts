@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { removeAllToken } from "../../../utils/helper";
-import userApi from "../user.api";
+import authApi from "../auth.api";
 
 interface IRequestAxios extends InternalAxiosRequestConfig {
   skipLoading?: boolean;
@@ -25,20 +25,16 @@ const onResponseError = async (err: AxiosError, axiosInstance: AxiosInstance): P
   if (err.response?.status === 401) {
     const currentRefreshToken = localStorage.getItem("refreshToken");
     removeAllToken();
-    if (!currentRefreshToken) {
-      if (window.location.pathname == "/login") return Promise.reject(err?.response?.data);
-      return Promise.reject(err?.response?.data);
-    }
+    if (!currentRefreshToken) return Promise.reject(err?.response?.data);
 
     try {
-      const token = await userApi.refreshToken(currentRefreshToken!);
+      const token = await authApi.refreshToken(currentRefreshToken!);
       localStorage.setItem("accessToken", token.data.accessToken);
       localStorage.setItem("refreshToken", currentRefreshToken);
       originalConfig.headers.Authorization = `Bearer ${token.data.accessToken}`;
     } catch (error) {
       localStorage.removeItem("auth");
       if (window.location.pathname == "/login") return Promise.reject(err?.response?.data);
-      return Promise.reject(err?.response?.data);
     }
 
     return axiosInstance(originalConfig);

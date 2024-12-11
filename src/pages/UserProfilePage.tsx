@@ -3,40 +3,45 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IFullUser } from "../types/user.type";
 import path from "../constants/path";
-import userApi from "../api/base/user.api";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import toast from "react-hot-toast";
+import authApi from "../api/base/auth.api";
+import { useQuery } from "@tanstack/react-query";
 
 const UserProfilePage = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
   const navigate = useNavigate();
   const [user, setUser] = React.useState<IFullUser | null>(null);
 
+  const getMeQuery = useQuery({
+    queryKey: ["profile"],
+    queryFn: authApi.profile,
+    gcTime: 0,
+  });
+
   React.useEffect(() => {
-    async function getProfile() {
-      setIsLoading(true);
-      try {
-        const response = await userApi.profile();
-        setUser(response as IFullUser);
-        metadata.profileMeta.title = `${response.name} - Profile Page`;
-        // set current user
-      } catch (err) {
-        toast.error("AcessToken has expired");
-        navigate(path.LOGIN, { replace: true });
-      }
-      setIsLoading(false);
+    if (getMeQuery.isSuccess) {
+      const profile: IFullUser = getMeQuery.data;
+      setUser(profile);
+      metadata.profileMeta.title = `${profile.name} - Profile Page`;
     }
-    getProfile();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [getMeQuery.isSuccess]);
+
+  React.useEffect(() => {
+    if (getMeQuery.isError) {
+      toast.error("AcessToken has expired");
+      navigate(path.LOGIN, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getMeQuery.isError]);
 
   return (
     <DocumentMeta {...metadata.profileMeta}>
       <Grid container justifyContent="center" alignItems="center" style={{ minHeight: "80vh" }}>
         <Grid item xs={12} sm={8} md={6} lg={4}>
           <Paper elevation={3} style={{ padding: "32px" }}>
-            {isLoading ? (
+            {getMeQuery.isLoading ? (
               <div style={{ textAlign: "center" }}>
                 <CircularProgress size={30} />
               </div>

@@ -1,18 +1,16 @@
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import { ErrorResponse } from "../../types/response.type";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 type FormData = Pick<LoginSchema, "email">;
 const forgotPasswordSchema = loginSchema.pick({ email: true });
 
 function ForgotPasswordForm() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -21,17 +19,19 @@ function ForgotPasswordForm() {
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    try {
-      await userApi.forgotPassword(data.email.toLowerCase());
-
-      toast.success("Check mail to reset password");
-    } catch (err) {
-      const error = err as ErrorResponse;
+  const forgotPasswordMutation = useMutation({
+    mutationFn: (email: string) => userApi.forgotPassword(email),
+    onError: (error: AxiosError) => {
       toast.error(error?.message || "Something went wrong");
-    }
-    setIsLoading(false);
+    },
+    onSuccess: () => {
+      toast.success("Check mail to reset password");
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (forgotPasswordMutation.isPending) return;
+    forgotPasswordMutation.mutate(data.email);
   };
 
   return (
@@ -79,9 +79,9 @@ function ForgotPasswordForm() {
           textTransform: "none",
         }}
         size="large"
-        disabled={isLoading}
+        disabled={forgotPasswordMutation.isPending}
       >
-        {isLoading ? (
+        {forgotPasswordMutation.isPending ? (
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (
           <Typography fontSize={"16px"} variant="body1">

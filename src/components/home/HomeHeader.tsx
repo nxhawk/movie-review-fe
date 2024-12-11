@@ -54,7 +54,7 @@ const HomeHeader = () => {
                 </button>
               )}
               <button
-                className="absolute top-0 right-0 md:right-0.5 flex gap-1 h-full md:h-fit items-center rounded-full bg-cyan-950 py-1.5 mt-0 md:mt-0.5 md:py-2 lg:py-2.5 px-2 md:px-2.5 lg:px-3 text-center text-sm md:text-base lg:text-base text-white shadow-sm hover:bg-cyan-900 px-2"
+                className="absolute top-0 right-0 md:right-0.5 flex gap-1 h-full md:h-fit items-center rounded-full bg-cyan-950 py-1.5 mt-0 md:mt-0.5 md:py-2 lg:py-2.5 md:px-2.5 lg:px-3 text-center text-sm md:text-base lg:text-base text-white shadow-sm hover:bg-cyan-900 px-2"
                 type="button"
                 onClick={handleSearch}
               >

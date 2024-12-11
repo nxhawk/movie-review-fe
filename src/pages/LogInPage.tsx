@@ -1,51 +1,10 @@
-import React from "react";
 import { Grid } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import LoginForm from "../components/form/LoginForm";
 import SocialLogin from "../components/SocialLogin";
-import { AuthQueryConfig, IFullUser } from "../types/user.type";
-import useQueryString from "../hooks/useQueryString";
-import { setToken } from "../utils/helper";
-import { AuthContext } from "../contexts/AuthContext";
-import path from "../constants/path";
-import userApi from "../api/base/user.api";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
-import toast from "react-hot-toast";
 
 const LogInPage = () => {
-  const { changeAuth } = React.useContext(AuthContext)!;
-  const queryString: AuthQueryConfig = useQueryString();
-  const queryConfig: AuthQueryConfig = {
-    access_token: queryString.access_token || "",
-    refresh_token: queryString.refresh_token || "",
-  };
-
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    async function getProfile() {
-      try {
-        const response: IFullUser = await userApi.profile();
-        // set current user
-        changeAuth({ ...response });
-        toast.success("Login successfully");
-        navigate(path.HOME);
-      } catch (err) {
-        toast.error("AcessToken has expired");
-        navigate(path.LOGIN, { replace: true });
-      }
-    }
-    if (queryConfig.access_token && queryConfig.refresh_token) {
-      // store token to local storage
-      setToken(queryConfig.access_token, queryConfig.refresh_token);
-
-      // check valid token and get profile information
-      getProfile();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [queryConfig.access_token, queryConfig.refresh_token]);
-
   return (
     <DocumentMeta {...metadata.loginMeta}>
       <Grid

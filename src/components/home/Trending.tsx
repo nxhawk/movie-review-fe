@@ -7,26 +7,20 @@ import { Movie } from "../../types/movie.type.ts";
 import TextGradient from "../common/TextGradient.tsx";
 import { Typography } from "@mui/material";
 import MovieCardSkeleton from "../skeleton/MovieCardSkeleton.tsx";
+import { useQuery } from "@tanstack/react-query";
 
 const Trending = () => {
   const [subType, setSubType] = React.useState("today");
   const [movies, setMovies] = React.useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
 
-  React.useEffect(() => {
-    const fetchTrendingMovies = async () => {
-      setIsLoading(true);
-      try {
-        const response = subType === "today" ? await movieApi.getTodayTrending() : await movieApi.getThisWeekTrending();
-        setMovies(response.results);
-      } catch (error) {
-        console.error("Failed to fetch trending movies:", error);
-      }
-      setIsLoading(false);
-    };
-
-    fetchTrendingMovies().then();
-  }, [subType]);
+  const { isLoading } = useQuery({
+    queryKey: ["trendingMovies", subType],
+    queryFn: async () => {
+      const response = subType === "today" ? await movieApi.getTodayTrending() : await movieApi.getThisWeekTrending();
+      setMovies(response.results);
+      return response.results;
+    },
+  });
 
   return (
     <div className="min-h-40 md:min-h-56 xl:min-h-80 my-5">

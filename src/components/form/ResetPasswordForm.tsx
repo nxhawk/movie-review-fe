@@ -3,18 +3,17 @@ import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typogr
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ErrorResponse } from "../../types/response.type";
 import { resetPasswordSchema, ResetPasswordSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
 import path from "../../constants/path";
 import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 type FormData = ResetPasswordSchema;
 
 function ResetPasswordForm() {
-  const [isLoading, setIsLoading] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -27,26 +26,29 @@ function ResetPasswordForm() {
 
   const [searchParams] = useSearchParams();
 
+  const resetPasswordMutation = useMutation({
+    mutationFn: ({ token, password }: { token: string; password: string }) =>
+      userApi.resetPassword({ token, password }),
+    onError: (error: AxiosError) => {
+      toast.error(error?.message || "Something went wrong");
+    },
+    onSuccess: () => {
+      navigate(path.LOGIN);
+      toast.success("Reset password successful");
+    },
+  });
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
+    if (resetPasswordMutation.isPending) return;
     const token = searchParams.get("token");
     if (!token) {
       toast.error("No token found");
       return;
     }
-    try {
-      await userApi.resetPassword({
-        token: token ?? "",
-        password: data.password,
-      });
-
-      navigate(path.LOGIN);
-      toast.success("Reset password successful");
-    } catch (err) {
-      const error = err as ErrorResponse;
-      toast.error(error?.message || "Something went wrong");
-    }
-    setIsLoading(false);
+    resetPasswordMutation.mutate({
+      token: token ?? "",
+      password: data.password,
+    });
   };
 
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -134,13 +136,13 @@ function ResetPasswordForm() {
         color="primary"
         size="large"
         fullWidth
-        disabled={isLoading}
+        disabled={resetPasswordMutation.isPending}
         sx={{
           textTransform: "uppercase",
           my: 3,
         }}
       >
-        {isLoading ? (
+        {resetPasswordMutation.isPending ? (
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (
           <Typography fontSize={"16px"}>confirm</Typography>

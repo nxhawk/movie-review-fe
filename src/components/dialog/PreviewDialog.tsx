@@ -11,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import movieApi from "../../api/base/movie.api";
 import { getTeaserYoutubeKey } from "../../utils/helper";
+import { useQuery } from "@tanstack/react-query";
 
 type Props = {
   movieId: number;
@@ -38,7 +39,6 @@ const PreviewDialog = ({ movieId }: Props) => {
   const vidRef = React.useRef<HTMLIFrameElement>(null);
   const [open, setOpen] = React.useState(false);
   const [url, setUrl] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
   const [videoType, setVideoType] = React.useState("");
 
   const handleClickOpen = () => {
@@ -48,26 +48,22 @@ const PreviewDialog = ({ movieId }: Props) => {
     setOpen(false);
   };
 
-  React.useEffect(() => {
-    const getVideo = async () => {
-      setIsLoading(true);
-      try {
-        const res = await movieApi.getVideos(movieId);
-        if (res?.results.length <= 0) throw new Error("No video found");
-        const video = getTeaserYoutubeKey(res.results);
-        setVideoType(video.type);
-        setUrl(`https://www.youtube.com/embed/${video.key}?enablejsapi=1`);
-      } catch (error) {
-        console.log(error);
-      }
-      setIsLoading(false);
-    };
-    getVideo();
-  }, [movieId]);
+  const getVideosQuery = useQuery({
+    queryKey: ["videos", movieId],
+    queryFn: async () => {
+      const res = await movieApi.getVideos(movieId);
+      if (res?.results.length <= 0) throw new Error("No video found");
+      const video = getTeaserYoutubeKey(res.results);
+      setVideoType(video.type);
+      setUrl(`https://www.youtube.com/embed/${video.key}?enablejsapi=1`);
+      return res;
+    },
+    enabled: Boolean(movieId),
+  });
 
   return (
     <React.Fragment>
-      {isLoading ? (
+      {getVideosQuery.isLoading ? (
         <Box sx={{ display: "flex" }}>
           <CircularProgress color="secondary" />
         </Box>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import Pagination from "@mui/material/Pagination";
@@ -9,58 +9,65 @@ import path from "../constants/path";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import SearchIcon from "@mui/icons-material/Search";
+import { useQuery } from "@tanstack/react-query";
+import useDebounce from "../hooks/useDebounce";
 
 const SearchMoviePage = () => {
-  const [searchValue, setSearchValue] = useState("");
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const navigate = useNavigate();
   const location = useLocation();
+
+  const searchParams = React.useMemo(() => new URLSearchParams(location.search), [location.search]);
+  const initialQuery = React.useMemo(() => searchParams.get("query") || "", [searchParams]);
+  const initialPage = React.useMemo(() => parseInt(searchParams.get("page") || "1", 10), [searchParams]);
+
+  const [searchValue, setSearchValue] = useState(initialQuery);
+  const [searchValueRoot, setSearchValueRoot] = useState(initialQuery);
+  const [page, setPage] = useState(initialPage);
+  const [storePage, setStorePage] = useState(initialPage);
+
+  const [totalPages, setTotalPages] = useState(1);
+  const [movies, setMovies] = useState<Movie[]>([]);
+  const navigate = useNavigate();
+
+  const debounceSearchValue = useDebounce({ value: searchValue, delay: 500 });
+
+  React.useEffect(() => {
+    setSearchValueRoot(debounceSearchValue);
+  }, [debounceSearchValue]);
+
+  useQuery({
+    queryKey: ["searching-movie", page, searchValueRoot],
+    queryFn: async () => {
+      metadata.searchMeta.title = `${searchValueRoot} - Searching page ${page} - CineMatch`;
+      if (page === storePage) setPage(1);
+      setStorePage(page);
+      const response = await movieApi.getMovieByQuery(searchValueRoot, page);
+      setMovies(response.results);
+      setTotalPages(response.total_pages);
+      return response;
+    },
+  });
 
   const handleClear = () => {
     setSearchValue("");
   };
 
-  const handleSearch = useCallback(
-    async (query: string, page: number = 1) => {
-      if (query.trim()) {
-        try {
-          const response = await movieApi.getMovieByQuery(query, page);
-          setMovies(response.results);
-          setTotalPages(response.total_pages);
-          navigate(`${path.SEARCH_MOVIE}?query=${query}&page=${page}`);
-        } catch (error) {
-          console.error("Failed to fetch movies:", error);
-        }
-      }
-    },
-    [navigate],
-  );
+  const handleSearch = (query: string, page: number = 1) => {
+    if (query.trim()) {
+      navigate(`${path.SEARCH_MOVIE}?query=${query}&page=${page}`);
+    }
+  };
 
   const handleKeyUp = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
       setPage(1);
-      handleSearch(searchValue, 1).then();
+      handleSearch(searchValue, 1);
     }
   };
 
   const handlePageChange = (_event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    handleSearch(searchValue, value).then();
+    handleSearch(searchValue, value);
   };
-
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const query = params.get("query");
-    const page = parseInt(params.get("page") || "1", 10);
-    if (query) {
-      setSearchValue(query);
-      metadata.searchMeta.title = `${query} - Searching ${page} - CineMatch`;
-      setPage(page);
-      handleSearch(query, page).then();
-    }
-  }, [handleSearch, location.search]);
 
   return (
     <DocumentMeta {...metadata.searchMeta}>
@@ -88,7 +95,7 @@ const SearchMoviePage = () => {
               type="button"
               onClick={() => {
                 setPage(1);
-                handleSearch(searchValue, 1).then();
+                handleSearch(searchValue, 1);
               }}
             >
               <SearchIcon />

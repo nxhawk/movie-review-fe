@@ -1,18 +1,16 @@
 import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import { ErrorResponse } from "../../types/response.type";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
-import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
+import authApi from "../../api/base/auth.api";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 type FormData = Pick<LoginSchema, "email">;
 const forgotPasswordSchema = loginSchema.pick({ email: true });
 
 const ResendEmailVerifyForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
   const {
     control,
     handleSubmit,
@@ -21,17 +19,19 @@ const ResendEmailVerifyForm = () => {
     resolver: zodResolver(forgotPasswordSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    try {
-      await userApi.resendEmailVerify(data.email.toLowerCase());
-
-      toast.success("Resend confirm email successfully");
-    } catch (err) {
-      const error = err as ErrorResponse;
+  const resendConfirmEmailMutation = useMutation({
+    mutationFn: (email: string) => authApi.resendEmailVerify(email),
+    onError: (error: AxiosError) => {
       toast.error(error?.message || "Something went wrong");
-    }
-    setIsLoading(false);
+    },
+    onSuccess: () => {
+      toast.success("Resend confirm email successfully");
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (resendConfirmEmailMutation.isPending) return;
+    resendConfirmEmailMutation.mutate(data.email);
   };
 
   return (
@@ -72,9 +72,9 @@ const ResendEmailVerifyForm = () => {
           textTransform: "none",
         }}
         size="large"
-        disabled={isLoading}
+        disabled={resendConfirmEmailMutation.isPending}
       >
-        {isLoading ? (
+        {resendConfirmEmailMutation.isPending ? (
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (
           <Typography fontSize={"16px"} variant="body1">

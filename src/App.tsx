@@ -1,12 +1,15 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
 import { Toaster } from "react-hot-toast";
+import { useMediaQuery } from "@mui/material";
 
 function App() {
+  const matches = useMediaQuery("(max-width:480px)");
+
   return (
     <>
       <Toaster
-        position="bottom-right"
+        position={matches ? "top-center" : "bottom-right"}
         reverseOrder={true}
         toastOptions={{
           duration: 2000,

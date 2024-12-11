@@ -6,9 +6,11 @@ import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
 import Logo from "../components/common/Logo";
-import userApi from "../api/base/user.api";
 import path from "../constants/path";
 import toast from "react-hot-toast";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import authApi from "../api/base/auth.api";
 
 interface Props {
   window?: () => Window;
@@ -35,6 +37,19 @@ const PrimaryAppBar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
 
+  const logoutMutation = useMutation({
+    mutationFn: () => authApi.logout(),
+    onError: (error: AxiosError) => {
+      toast.error(error?.message || "Something went wrong");
+    },
+    onSuccess: () => {
+      toast.success("Logout successfully");
+      navigate(path.LOGIN);
+      setAnchorEl(null);
+      removeAuth();
+    },
+  });
+
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -44,11 +59,7 @@ const PrimaryAppBar = () => {
   };
 
   const handleLogout = async () => {
-    await userApi.logout();
-    toast.success("Logout successfully");
-    navigate(path.LOGIN);
-    setAnchorEl(null);
-    removeAuth();
+    logoutMutation.mutate();
   };
 
   const menuId = "primary-search-account-menu";

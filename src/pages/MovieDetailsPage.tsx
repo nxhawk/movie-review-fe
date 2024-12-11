@@ -6,31 +6,30 @@ import movieApi from "../api/base/movie.api";
 import { MovieDetail } from "../types/movie.type";
 import MovieCardInfor from "../components/movie/MovieCardInfor";
 import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 const MovieDetailsPage = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
   const { movieId } = useParams();
 
-  React.useEffect(() => {
-    async function getMovie() {
-      setIsLoading(true);
-      try {
-        const response: MovieDetail = await movieApi.getDetails(movieId!);
-        metadata.movieDetailsMeta.title = `${response.title} - Movie Details - CineMatch`;
-        setMovie(response);
-      } catch (error) {
-        console.log(error);
-        metadata.movieDetailsMeta.title = `Page Not Found - Movie Details - CineMatch`;
-      }
-      setIsLoading(false);
-    }
-    if (movieId) getMovie();
-  }, [movieId]);
+  const getMovieDetailQuery = useQuery({
+    queryKey: ["movie-detail", movieId],
+    queryFn: async () => {
+      const response: MovieDetail = await movieApi.getDetails(movieId!);
+      metadata.movieDetailsMeta.title = `${response.title} - Movie Details - CineMatch`;
+      setMovie(response);
+      return response;
+    },
+    enabled: Boolean(movieId),
+  });
+
+  if (getMovieDetailQuery.isError) {
+    metadata.movieDetailsMeta.title = `Page Not Found - Movie Details - CineMatch`;
+  }
 
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
-      {isLoading ? (
+      {getMovieDetailQuery.isLoading ? (
         <Box
           sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
         >

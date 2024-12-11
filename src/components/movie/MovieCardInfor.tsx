@@ -59,11 +59,6 @@ const MovieCardInfor = ({ movie }: Props) => {
               }}
               className="rounded-lg shadow-lg"
             />
-            {/* <img
-              src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
-              alt={movie.title}
-              className="rounded-lg shadow-lg"
-            /> */}
           </Grid>
           <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 2 }}>
             <div>

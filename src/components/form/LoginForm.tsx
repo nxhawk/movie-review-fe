@@ -5,18 +5,28 @@ import { Button, CircularProgress, IconButton, InputAdornment, Stack, TextField,
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { setToken } from "../../utils/helper";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { ErrorResponse, SuccessResponse } from "../../types/response.type";
 import { AuthContext } from "../../contexts/AuthContext";
-import { ILoginUserRes, IFullUser } from "../../types/user.type";
+import { IFullUser, AuthQueryConfig, ILoginUserRes } from "../../types/user.type";
 import { loginSchema, LoginSchema } from "../../utils/rules";
 import path from "../../constants/path";
-import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
+import useQueryString from "../../hooks/useQueryString";
+import authApi from "../../api/base/auth.api";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { SuccessResponse } from "../../types/response.type";
 
 type FormData = LoginSchema;
 
 const LoginForm = () => {
   const { auth, changeAuth } = React.useContext(AuthContext)!;
+  const queryString: AuthQueryConfig = useQueryString();
+  const queryConfig: AuthQueryConfig = {
+    access_token: queryString.access_token || "",
+    refresh_token: queryString.refresh_token || "",
+  };
+  const [showPassword, setShowPassword] = React.useState(false);
+  const navigate = useNavigate();
 
   const {
     control,
@@ -30,32 +40,54 @@ const LoginForm = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [showPassword, setShowPassword] = React.useState(false);
-
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    try {
-      const response: SuccessResponse<ILoginUserRes> = await userApi.login({
-        email: data.email.toLowerCase(),
-        password: data.password,
-      });
-
-      // store token to local storage
+  const signinMutation = useMutation({
+    mutationFn: (body: FormData) => authApi.login(body),
+    onError: (error: AxiosError) => {
+      toast.error(error?.message || "Something went wrong");
+    },
+    onSuccess: (response: SuccessResponse<ILoginUserRes>) => {
       setToken(response.data.accessToken, response.data.refreshToken);
+    },
+  });
 
-      // check valid token and get profile information
-      const responseUser: IFullUser = await userApi.profile();
+  const getMeQuery = useQuery({
+    queryKey: ["me"],
+    queryFn: authApi.profile,
+    enabled: signinMutation.isSuccess,
+    gcTime: 0,
+  });
 
-      changeAuth({ ...responseUser });
+  React.useEffect(() => {
+    if (getMeQuery.isSuccess) {
+      const profile: IFullUser = getMeQuery.data;
+      console.log(profile);
+      changeAuth({ ...profile });
       toast.success("Login successfully");
       navigate(path.HOME);
-    } catch (err) {
-      const error = err as ErrorResponse;
-      toast.error(error?.message || "Something went wrong");
     }
-    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getMeQuery.isSuccess]);
+
+  React.useEffect(() => {
+    if (getMeQuery.isError) {
+      toast.error("AcessToken has expired");
+      navigate(path.LOGIN, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getMeQuery.isError]);
+
+  React.useEffect(() => {
+    if (queryConfig.access_token && queryConfig.refresh_token) {
+      // store token to local storage
+      setToken(queryConfig.access_token, queryConfig.refresh_token);
+      // check valid token and get profile information
+      getMeQuery.refetch();
+    }
+  }, [getMeQuery, queryConfig.access_token, queryConfig.refresh_token]);
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (signinMutation.isPending || getMeQuery.isFetching) return;
+    signinMutation.mutate(data);
   };
 
   if (auth != null) {
@@ -144,9 +176,9 @@ const LoginForm = () => {
           fullWidth
           style={{ marginTop: "10px" }}
           size="large"
-          disabled={isLoading}
+          disabled={signinMutation.isPending}
         >
-          {isLoading ? (
+          {signinMutation.isPending ? (
             <CircularProgress size={30} style={{ color: "white" }} />
           ) : (
             <Typography fontSize={"16px"}>Login</Typography>

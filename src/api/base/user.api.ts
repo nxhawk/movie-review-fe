@@ -1,39 +1,17 @@
-import { ILoginUserReq, IRegisterUserReq, IResetPassword } from "../../types/user.type";
+import { IResetPassword } from "../../types/user.type";
 import AxiosClient from "./base-client";
 
+const PREFIX = "users/";
+const URL_FORGOTPASSWORD = PREFIX + "forgot-password";
+const URL_RESETPASSWORD = PREFIX + "reset-password";
+
 const userApi = {
-  login: async (data: ILoginUserReq) => {
-    const res = await AxiosClient.post("/auth/login", data);
-    return res.data;
-  },
   forgotPassword: async (email: string) => {
-    const res = await AxiosClient.post("/users/forgot-password", { email });
+    const res = await AxiosClient.post(URL_FORGOTPASSWORD, { email });
     return res.data;
   },
   resetPassword: async (data: IResetPassword) => {
-    const res = await AxiosClient.post("/users/reset-password", data);
-    return res.data;
-  },
-  register: async (data: IRegisterUserReq) => {
-    const res = await AxiosClient.post("/auth/register", data);
-    return res.data;
-  },
-  resendEmailVerify: async (email: string) => {
-    const res = await AxiosClient.post("/auth/resend-confirm-email", { email });
-    return res.data;
-  },
-  profile: async () => {
-    const res = await AxiosClient.get("/auth/me");
-    return res.data;
-  },
-  logout: async () => {
-    const res = await AxiosClient.delete("/auth/logout");
-    return res.data;
-  },
-  refreshToken: async (refreshToken: string) => {
-    const res = await AxiosClient.post("/auth/refresh-token", {
-      refreshToken,
-    });
+    const res = await AxiosClient.post(URL_RESETPASSWORD, data);
     return res.data;
   },
 };

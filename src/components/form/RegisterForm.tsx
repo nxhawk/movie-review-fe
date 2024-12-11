@@ -4,12 +4,13 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import { ErrorResponse } from "../../types/response.type";
 import { AuthContext } from "../../contexts/AuthContext";
 import { registerSchema, RegisterSchema } from "../../utils/rules";
 import path from "../../constants/path";
-import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
+import authApi from "../../api/base/auth.api";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 type FormData = RegisterSchema;
 
@@ -25,25 +26,28 @@ const RegisterForm = () => {
   });
 
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassord] = React.useState(false);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    try {
-      await userApi.register({
-        email: data.email.toLowerCase(),
-        password: data.password,
-        name: data.name,
-      });
+  const signupMutation = useMutation({
+    mutationFn: (body: FormData) => authApi.register(body),
+    onError: (error: AxiosError) => {
+      toast.error(error?.message || "Something went wrong");
+    },
+    onSuccess: () => {
       toast.success("Registered successfully");
       navigate(path.LOGIN);
-    } catch (err) {
-      const error = err as ErrorResponse;
-      toast.error(error?.message || "Something went wrong");
-    }
-    setIsLoading(false);
+    },
+  });
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (signupMutation.isPending) return;
+    signupMutation.mutate({
+      email: data.email.toLowerCase(),
+      password: data.password,
+      name: data.name,
+      confirmPassword: data.confirmPassword,
+    });
   };
 
   if (auth != null) {
@@ -167,8 +171,15 @@ const RegisterForm = () => {
         By clicking the &quot;Register&quot; button below, I certify that I have read and agree to the terms of use and
         privacy policy.
       </Typography>
-      <Button type="submit" variant="contained" color="primary" fullWidth size="large" disabled={isLoading}>
-        {isLoading ? (
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        fullWidth
+        size="large"
+        disabled={signupMutation.isPending}
+      >
+        {signupMutation.isPending ? (
           <CircularProgress size={30} style={{ color: "white" }} />
         ) : (
           <Typography fontSize={"16px"}>Register</Typography>
