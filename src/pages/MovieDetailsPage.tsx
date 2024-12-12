@@ -29,7 +29,7 @@ const MovieDetailsPage = () => {
 
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
-      {getMovieDetailQuery.isLoading ? (
+      {getMovieDetailQuery.isFetching || getMovieDetailQuery.isLoading ? (
         <Box
           sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
         >

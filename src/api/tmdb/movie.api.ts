@@ -3,8 +3,8 @@ import AxiosClient from "./tmdb-client";
 const PREFIX = "tmdb/";
 export const URL_MOVIE = PREFIX + "movie";
 export const URL_TRENDING = PREFIX + "trending/movie";
-export const URL_TRENDING_DAY = PREFIX + URL_TRENDING + "/day";
-export const URL_TRENDING_WEEK = PREFIX + URL_TRENDING + "/week";
+export const URL_TRENDING_DAY = URL_TRENDING + "/day";
+export const URL_TRENDING_WEEK = URL_TRENDING + "/week";
 export const URL_SEARCH = PREFIX + "search/movie";
 
 const movieApi = {

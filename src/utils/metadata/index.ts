@@ -44,7 +44,7 @@ const metadata = {
     },
   },
   homeMeta: {
-    title: "CineMtach - Home page",
+    title: "CineMatch - Home page",
     description: "This is page home to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {

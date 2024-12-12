@@ -49,7 +49,7 @@ const MovieCardInfor = ({ movie }: Props) => {
         }}
       ></div>
       <div style={{ position: "relative", color: textColor }}>
-        <Grid container justifyContent="center" padding={2}>
+        <Grid container justifyContent="center" padding={{ xs: 2, md: 3 }}>
           <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
             <LazyLoadImage
               alt={movie.title}

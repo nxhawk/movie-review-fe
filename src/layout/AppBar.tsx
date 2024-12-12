@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import AppBar from "@mui/material/AppBar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
@@ -11,6 +11,9 @@ import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import authApi from "../api/base/auth.api";
+import SearchIcon from "@mui/icons-material/Search";
+import CloseIcon from "@mui/icons-material/Close";
+import { SearchBar } from "./SearchBar";
 
 interface Props {
   window?: () => Window;
@@ -33,8 +36,10 @@ function HideOnScroll(props: Props) {
 const PrimaryAppBar = () => {
   const navigate = useNavigate();
   const { auth, removeAuth } = React.useContext(AuthContext)!;
+  const location = useLocation();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [showSearch, setShowSearch] = React.useState(false);
   const isMenuOpen = Boolean(anchorEl);
 
   const logoutMutation = useMutation({
@@ -94,6 +99,10 @@ const PrimaryAppBar = () => {
     </Menu>
   );
 
+  React.useEffect(() => {
+    setShowSearch(false);
+  }, [location.pathname]);
+
   return (
     <Box sx={{ flexGrow: 1, position: "relative" }}>
       <HideOnScroll>
@@ -107,7 +116,7 @@ const PrimaryAppBar = () => {
                   xs: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  gap: "20px",
+                  gap: "15px",
                 },
               }}
             >
@@ -123,7 +132,6 @@ const PrimaryAppBar = () => {
                 >
                   <Avatar
                     alt={`${auth?.email}`}
-                    //src={user?.avatar}
                     style={{
                       border: "2px solid white",
                       color: "white",
@@ -155,10 +163,23 @@ const PrimaryAppBar = () => {
                   </Link>
                 </>
               )}
+              {location.pathname !== "/search" &&
+                (showSearch ? (
+                  <IconButton aria-label="close" sx={{ color: "white" }} onClick={() => setShowSearch(false)}>
+                    <CloseIcon />
+                  </IconButton>
+                ) : (
+                  <IconButton aria-label="search" color="secondary" onClick={() => setShowSearch(true)}>
+                    <SearchIcon />
+                  </IconButton>
+                ))}
             </Box>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
+      {/* Thanh tìm kiếm */}
+      <SearchBar showSearch={location.pathname !== "/search" && showSearch} />
+
       {renderMenu}
     </Box>
   );

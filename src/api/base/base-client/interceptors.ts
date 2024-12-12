@@ -1,6 +1,7 @@
 import { AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { removeAllToken } from "../../../utils/helper";
 import authApi from "../auth.api";
+import toast from "react-hot-toast";
 
 interface IRequestAxios extends InternalAxiosRequestConfig {
   skipLoading?: boolean;
@@ -21,6 +22,11 @@ const onRequestConfig = (config: IRequestAxios) => {
 };
 
 const onResponseError = async (err: AxiosError, axiosInstance: AxiosInstance): Promise<AxiosError | undefined> => {
+  if (err.code === "ERR_NETWORK") {
+    toast.error("Có một vấn đề nhỏ với máy chủ.");
+    return Promise.reject(err.code);
+  }
+
   const originalConfig = err.config as InternalAxiosRequestConfig;
   if (err.response?.status === 401) {
     const currentRefreshToken = localStorage.getItem("refreshToken");

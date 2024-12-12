@@ -35,7 +35,7 @@ const SearchMoviePage = () => {
   }, [debounceSearchValue]);
 
   useQuery({
-    queryKey: ["searching-movie", page, searchValueRoot],
+    queryKey: ["searching-movie-page", page, searchValueRoot],
     queryFn: async () => {
       metadata.searchMeta.title = `${searchValueRoot} - Searching page ${page} - CineMatch`;
       if (page === storePage) setPage(1);
@@ -75,7 +75,7 @@ const SearchMoviePage = () => {
         <div className="w-2/3 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-6xl min-w-[200px] mb-5">
           <div className="relative w-full">
             <input
-              className="w-full border-2 border-cyan-950 bg-white text-black text-sm md:text-base lg:text-base rounded-full pl-3 md:pl-4 lg:pl-5 pr-20 md:pr-24 lg:pr-32 py-2 md:py-2.5 lg:py-3 focus:outline-none"
+              className="w-full border-2 border-cyan-950 text-sm md:text-base lg:text-base rounded-full pl-3 md:pl-4 lg:pl-5 pr-20 md:pr-24 lg:pr-32 py-2 md:py-2.5 lg:py-3 focus:outline-none"
               placeholder="Search for a movie, person,..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -91,7 +91,7 @@ const SearchMoviePage = () => {
               </button>
             )}
             <button
-              className="absolute top-1 right-1 flex items-center rounded-full bg-cyan-950 py-1.5 mb-1 md:py-2 lg:py-2.5 px-2 md:px-2.5 lg:px-3 text-center text-sm md:text-base lg:text-base text-white shadow-sm hover:bg-cyan-900"
+              className="absolute top-0.5 md:top-1 right-0.5 md:right-1 flex items-center rounded-full bg-cyan-950 py-1.5 mb-1 md:py-2 lg:py-2.5 px-2 md:px-2.5 lg:px-3 text-center text-sm md:text-base lg:text-base text-white shadow-sm hover:bg-cyan-900"
               type="button"
               onClick={() => {
                 setPage(1);
