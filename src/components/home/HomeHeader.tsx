@@ -26,7 +26,7 @@ const HomeHeader = () => {
 
   return (
     <div
-      className="min-h-40 md:min-h-56 xl:min-h-80 bg-cover bg-center relative flex items-center justify-center px-3 md:px-10 "
+      className="min-h-56 xl:min-h-80 bg-cover bg-center relative flex items-center justify-center px-3 md:px-10 "
       style={{ backgroundImage: `url(${homePageBackground})`, backgroundSize: "cover" }}
     >
       <div className="w-full text-white">

@@ -71,7 +71,7 @@ const SearchMoviePage = () => {
 
   return (
     <DocumentMeta {...metadata.searchMeta}>
-      <div className="pt-4 md:mt-6 lg:mt-8 w-full flex flex-col items-center">
+      <div className="pt-5 w-full flex flex-col items-center">
         <div className="w-2/3 max-w-xs md:max-w-md lg:max-w-lg xl:max-w-6xl min-w-[200px] mb-5">
           <div className="relative w-full">
             <input

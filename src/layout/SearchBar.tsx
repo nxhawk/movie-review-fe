@@ -109,7 +109,7 @@ export const SearchBar = ({ showSearch }: Props) => {
           <Box
             sx={{
               position: "fixed",
-              top: trigger ? 0 : matches ? "52px" : "63px",
+              top: trigger ? 0 : "62px",
               left: 0,
               width: "100%",
               backgroundColor: "white",
