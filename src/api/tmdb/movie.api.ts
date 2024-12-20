@@ -1,11 +1,10 @@
 import AxiosClient from "./tmdb-client";
 
-const PREFIX = "tmdb/";
-export const URL_MOVIE = PREFIX + "movie";
-export const URL_TRENDING = PREFIX + "trending/movie";
+export const URL_MOVIE = "movie";
+export const URL_TRENDING = "trending/movie";
 export const URL_TRENDING_DAY = URL_TRENDING + "/day";
 export const URL_TRENDING_WEEK = URL_TRENDING + "/week";
-export const URL_SEARCH = PREFIX + "search/movie";
+export const URL_SEARCH = "search/movie";
 
 const movieApi = {
   getDetails: async (movieId: number | string) => {

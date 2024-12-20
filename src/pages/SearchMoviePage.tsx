@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ClearIcon from "@mui/icons-material/Clear";
 import Pagination from "@mui/material/Pagination";
-import movieApi from "../api/base/movie.api";
+import movieApi from "../api/tmdb/movie.api";
 import MovieSearchCard from "../components/movie/MovieSearchCard";
 import { Movie } from "../types/movie.type";
 import path from "../constants/path";

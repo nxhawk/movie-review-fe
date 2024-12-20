@@ -6,11 +6,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
-import movieApi from "../api/base/movie.api";
+import movieApi from "../api/tmdb/movie.api";
 import { Movie } from "../types/movie.type";
 import path from "../constants/path";
 import { useQuery } from "@tanstack/react-query";
 import CircularProgress from "@mui/material/CircularProgress";
+import { AuthContext } from "../contexts/AuthContext";
 type Props = {
   showSearch: boolean;
 };
@@ -48,6 +49,7 @@ export const SearchBar = ({ showSearch }: Props) => {
   const location = useLocation();
   const trigger = useScrollTrigger();
   const matches = useMediaQuery("(max-width:600px)");
+  const { auth } = React.useContext(AuthContext)!;
 
   const searchParams = React.useMemo(() => new URLSearchParams(location.search), [location.search]);
   const initialQuery = React.useMemo(() => searchParams.get("query") || "", [searchParams]);
@@ -109,7 +111,7 @@ export const SearchBar = ({ showSearch }: Props) => {
           <Box
             sx={{
               position: "fixed",
-              top: trigger ? 0 : "62px",
+              top: trigger ? 0 : matches && !auth ? "52px" : "62px",
               left: 0,
               width: "100%",
               backgroundColor: "white",
@@ -124,7 +126,7 @@ export const SearchBar = ({ showSearch }: Props) => {
                 <SearchIcon sx={{ color: "black" }} />
               </SearchIconWrapper>
               <StyledInputBase
-                placeholder="Search for a movie..."
+                placeholder="Search for a movie, person..."
                 inputProps={{ "aria-label": "search" }}
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
@@ -147,7 +149,7 @@ export const SearchBar = ({ showSearch }: Props) => {
               )}
             </Search>
             {movies.length > 0 && showSearchResult && (
-              <Box sx={{ width: "100%", display: trigger ? "none" : "inline-block" }}>
+              <Box sx={{ width: "100%", display: "inline-block" }}>
                 {movies.slice(0, 12).map((movie) => (
                   <Link
                     to={`${path.SEARCH_MOVIE}?query=${movie.title}&page=1`}
@@ -157,6 +159,11 @@ export const SearchBar = ({ showSearch }: Props) => {
                     {movie.title}
                   </Link>
                 ))}
+              </Box>
+            )}
+            {!isLoading && movies.length === 0 && searchValueRoot && showSearchResult && (
+              <Box sx={{ width: "100%", display: "inline-block" }}>
+                <p className="w-full text-lg text-black px-3 py-0.5">No results</p>
               </Box>
             )}
           </Box>

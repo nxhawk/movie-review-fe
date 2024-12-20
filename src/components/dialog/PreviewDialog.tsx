@@ -9,7 +9,7 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import movieApi from "../../api/base/movie.api";
+import movieApi from "../../api/tmdb/movie.api";
 import { getTeaserYoutubeKey } from "../../utils/helper";
 import { useQuery } from "@tanstack/react-query";
 
