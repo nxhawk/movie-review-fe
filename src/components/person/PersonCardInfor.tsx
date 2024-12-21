@@ -1,4 +1,3 @@
-import React from "react";
 import { PersonDetail } from "../../types/person.type";
 import { Grid, Typography } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
