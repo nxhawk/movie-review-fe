@@ -2,7 +2,7 @@ import { Paper, Grid, Typography, CircularProgress } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { IFullUser } from "../types/user.type";
-import path from "../constants/path";
+import path from "../routes/path";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import toast from "react-hot-toast";

@@ -5,6 +5,7 @@ export const URL_TRENDING = "trending/movie";
 export const URL_TRENDING_DAY = URL_TRENDING + "/day";
 export const URL_TRENDING_WEEK = URL_TRENDING + "/week";
 export const URL_SEARCH = "search/movie";
+export const URL_CREDIT = "/credits";
 
 const movieApi = {
   getDetails: async (movieId: number | string) => {
@@ -29,6 +30,11 @@ const movieApi = {
 
   getMovieByQuery: async (query: string, page: number) => {
     const res = await AxiosClient.get(`${URL_SEARCH}?query=${query}&page=${page}`);
+    return res.data;
+  },
+
+  getMovieCredit: async (movieId: number | string) => {
+    const res = await AxiosClient.get(`${URL_MOVIE}/${movieId}${URL_CREDIT}`);
     return res.data;
   },
 };

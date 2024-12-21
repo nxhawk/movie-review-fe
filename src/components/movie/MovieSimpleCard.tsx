@@ -4,7 +4,7 @@ import { Movie } from "../../types/movie.type.ts";
 import UserScore from "./UserScore.tsx";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Link } from "react-router-dom";
-import dynamicPath from "../../constants/dynamicPath.ts";
+import dynamicPath from "../../routes/dynamicPath.ts";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
@@ -18,7 +18,7 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="min-w-60">
+    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="min-w-60" title={movie.title}>
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",

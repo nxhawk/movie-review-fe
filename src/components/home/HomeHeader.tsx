@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import homePageBackground from "../../assets/images/home_page_background.jpg";
-import path from "../../constants/path";
+import path from "../../routes/path";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
 

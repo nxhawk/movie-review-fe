@@ -6,7 +6,7 @@ import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
 import Logo from "../components/common/Logo";
-import path from "../constants/path";
+import path from "../routes/path";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";

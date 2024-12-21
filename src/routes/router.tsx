@@ -7,11 +7,13 @@ import PrivateRoute from "../layout/private/PrivateRoute";
 import UserProfilePage from "../pages/UserProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
-import path from "../constants/path";
+import path from "./path";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
 import SearchMoviePage from "../pages/SearchMoviePage";
 import ScrollToTop from "../hooks/useScrollToTop";
+import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
+import PersonProfilePage from "../pages/PersonProfilePage";
 const router = createBrowserRouter([
   {
     element: (
@@ -62,11 +64,25 @@ const router = createBrowserRouter([
           // Movies
           {
             path: path.MOVIE_DETAILS,
-            element: <MovieDetailsPage />,
+            children: [
+              {
+                index: true,
+                element: <MovieDetailsPage />,
+              },
+              {
+                path: path.CAST,
+                element: <FullCastOfMoviePage />,
+              },
+            ],
           },
           {
             path: path.SEARCH_MOVIE,
             element: <SearchMoviePage />,
+          },
+          // Person
+          {
+            path: path.PERSON_DETAILS,
+            element: <PersonProfilePage />,
           },
         ],
       },

@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { MovieDetail } from "../../types/movie.type";
-import { getYearByDate, minToHour, formatDate } from "../../utils/helper";
+import { getYearByDate, minToHour, formatDate } from "../../utils/dateFormat";
 import UserScore from "./UserScore";
 import UserAction from "./UserAction";
 import { FastAverageColor } from "fast-average-color";

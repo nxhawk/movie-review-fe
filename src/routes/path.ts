@@ -10,6 +10,10 @@ const path = {
   // Movies
   MOVIE_DETAILS: "/movie/:movieId",
   SEARCH_MOVIE: "/search",
+  // Actors
+  PERSON_DETAILS: "/person/:personId",
+  CAST: "cast",
+  FULL_CAST: "/movie/:movieId/cast",
 };
 
 export default path;

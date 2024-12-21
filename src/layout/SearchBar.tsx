@@ -8,7 +8,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useDebounce from "../hooks/useDebounce";
 import movieApi from "../api/tmdb/movie.api";
 import { Movie } from "../types/movie.type";
-import path from "../constants/path";
+import path from "../routes/path";
 import { useQuery } from "@tanstack/react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 import { AuthContext } from "../contexts/AuthContext";

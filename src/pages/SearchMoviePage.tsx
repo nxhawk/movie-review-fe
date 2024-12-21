@@ -5,7 +5,7 @@ import Pagination from "@mui/material/Pagination";
 import movieApi from "../api/tmdb/movie.api";
 import MovieSearchCard from "../components/movie/MovieSearchCard";
 import { Movie } from "../types/movie.type";
-import path from "../constants/path";
+import path from "../routes/path";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import SearchIcon from "@mui/icons-material/Search";

@@ -5,8 +5,10 @@ import { useParams } from "react-router-dom";
 import movieApi from "../api/tmdb/movie.api";
 import { MovieDetail } from "../types/movie.type";
 import MovieCardInfor from "../components/movie/MovieCardInfor";
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import ListCast from "../components/movie/ListCast";
+import ResouceNotFound from "../components/common/ResouceNotFound";
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
@@ -29,6 +31,7 @@ const MovieDetailsPage = () => {
 
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
+      {/* Group movie information */}
       {getMovieDetailQuery.isFetching || getMovieDetailQuery.isLoading ? (
         <Box
           sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
@@ -38,23 +41,11 @@ const MovieDetailsPage = () => {
       ) : movie ? (
         <MovieCardInfor movie={movie} />
       ) : (
-        <Grid
-          container
-          justifyContent="center"
-          style={{ minHeight: "50vh", marginBottom: "20px", marginTop: "2px" }}
-          spacing={4}
-        >
-          <Grid item xs={11}>
-            <Typography variant="h5" fontWeight={"bold"} marginTop={2}>
-              Oops! We can&apos;t find the page you&apos;re looking for
-            </Typography>
-            <Typography variant="body1" align="left" sx={{ mt: 2 }}>
-              You tried to request a page that doesn&apos;t exist. If you believe this to be in error, let us know on
-              the forums.
-            </Typography>
-          </Grid>
-        </Grid>
+        <ResouceNotFound />
       )}
+
+      {/* List Cast */}
+      {movieId && <ListCast movieId={movieId} />}
     </DocumentMeta>
   );
 };

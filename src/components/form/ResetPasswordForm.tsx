@@ -5,7 +5,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { resetPasswordSchema, ResetPasswordSchema } from "../../utils/rules";
 import { zodResolver } from "@hookform/resolvers/zod";
-import path from "../../constants/path";
+import path from "../../routes/path";
 import userApi from "../../api/base/user.api";
 import toast from "react-hot-toast";
 import { useMutation } from "@tanstack/react-query";

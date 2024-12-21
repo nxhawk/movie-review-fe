@@ -8,7 +8,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
 import { IFullUser, AuthQueryConfig, ILoginUserRes } from "../../types/user.type";
 import { loginSchema, LoginSchema } from "../../utils/rules";
-import path from "../../constants/path";
+import path from "../../routes/path";
 import toast from "react-hot-toast";
 import useQueryString from "../../hooks/useQueryString";
 import authApi from "../../api/base/auth.api";

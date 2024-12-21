@@ -1,5 +1,5 @@
-import { getYear, minutesToHours, format } from "date-fns";
 import { Video } from "../types/movie.type";
+import { CrewMovie, GenderType } from "../types/actor.type";
 
 export const removeAllToken = () => {
   localStorage.removeItem("accessToken");
@@ -9,20 +9,6 @@ export const removeAllToken = () => {
 export const setToken = (accessToken: string, refreshToken: string) => {
   localStorage.setItem("accessToken", accessToken);
   localStorage.setItem("refreshToken", refreshToken);
-};
-
-export const formatDate = (date: string) => {
-  return format(new Date(date), "dd/MM/yyyy");
-};
-
-export const getYearByDate = (date: string) => {
-  return getYear(date);
-};
-
-export const minToHour = (min: number) => {
-  if (min < 60) return `${min}m`;
-  const result = minutesToHours(min);
-  return `${result}h ${min - result * 60}m`;
 };
 
 export function getColorByPoint(point: number) {
@@ -58,4 +44,28 @@ export const getTeaserYoutubeKey = (videos: Video[]) => {
   if (clip) return clip;
 
   return videos[0] || "";
+};
+
+export const groupByDepartment = (items: CrewMovie[]) => {
+  return items.reduce(
+    (result, item) => {
+      if (!result[item.department]) {
+        result[item.department] = [];
+      }
+      result[item.department].push(item);
+      return result;
+    },
+    {} as Record<string, CrewMovie[]>,
+  );
+};
+
+export const showGenderText = (gender: GenderType) => {
+  switch (gender) {
+    case 1:
+      return "Female";
+    case 2:
+      return "Male";
+    default:
+      return "Non-binary";
+  }
 };

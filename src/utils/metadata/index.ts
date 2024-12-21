@@ -98,6 +98,17 @@ const metadata = {
       },
     },
   },
+  personProfileMeta: {
+    title: "Person profile page",
+    description: "This is page person profile to CineMatch",
+    canonical: "http://example.com/path/to/page",
+    meta: {
+      charset: "utf-8",
+      name: {
+        keywords: "react,meta,document,html,tags",
+      },
+    },
+  },
 };
 
 export default metadata;

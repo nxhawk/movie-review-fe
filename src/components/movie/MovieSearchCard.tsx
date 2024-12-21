@@ -1,10 +1,10 @@
 import { Card, CardActionArea, CardContent, Grid } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Movie } from "../../types/movie.type.ts";
-import { getYearByDate } from "../../utils/helper.ts";
+import { getYearByDate } from "../../utils/dateFormat";
 import React from "react";
 import { Link } from "react-router-dom";
-import dynamicPath from "../../constants/dynamicPath.ts";
+import dynamicPath from "../../routes/dynamicPath.ts";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MovieSearchCard = ({ movie }: { movie: Movie }) => {
