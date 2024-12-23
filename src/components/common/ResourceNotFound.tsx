@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 
-const ResouceNotFound = () => {
+const ResourceNotFound = () => {
   return (
     <Grid
       container
@@ -21,4 +21,4 @@ const ResouceNotFound = () => {
   );
 };
 
-export default ResouceNotFound;
+export default ResourceNotFound;

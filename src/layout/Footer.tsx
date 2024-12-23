@@ -2,22 +2,29 @@ import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import Logo from "../components/common/Logo";
 import { linkGroup } from "../constants/linkGroup";
 import { Link } from "react-router-dom";
+import path from "../routes/path";
+import { AuthContext } from "../contexts/AuthContext";
+import React from "react";
 
 const Footer = () => {
+  const { auth } = React.useContext(AuthContext)!;
+
   return (
     <Box sx={{ bgcolor: "primary.main", color: "white" }} paddingTop={"30px"} paddingBottom={"70px"} paddingX={"20px"}>
       <Grid container justifyContent="center" flexWrap={"wrap"} spacing={2}>
         <Grid item xs={12} md={4} marginBottom={2}>
           <Stack alignItems="center" justifyContent={{ xs: "space-between", md: "start" }}>
             <Logo />
-            <Button
-              variant="outlined"
-              sx={{ color: "secondary.main", bgcolor: "white", marginTop: "10px", fontWeight: "bold" }}
-              className="w-fit"
-              size="large"
-            >
-              JOIN THE COMMUNITY
-            </Button>
+            <Link to={auth?.email ? path.PROFILE : path.LOGIN}>
+              <Button
+                variant="outlined"
+                sx={{ color: "secondary.main", bgcolor: "white", marginTop: "10px", fontWeight: "bold" }}
+                className="w-fit"
+                size="large"
+              >
+                {auth?.name ? `Hi ${auth.name}` : "JOIN THE COMMUNITY"}
+              </Button>
+            </Link>
           </Stack>
         </Grid>
         {linkGroup.map((group) => (

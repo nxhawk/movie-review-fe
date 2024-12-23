@@ -54,11 +54,8 @@ const HeaderBackDrop = ({ movieId }: Props) => {
           <>
             <LazyLoadImage
               alt={movie.title}
-              src={movie?.poster_path ? `${tmdbConfig.imageW58URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg} // use normal <img> attributes as props
-              wrapperProps={{
-                style: { transitionDelay: "1s" },
-              }}
-              className="rounded shadow-lg"
+              src={movie?.poster_path ? `${tmdbConfig.imageW58URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
+              className="rounded shadow-lg w-[58px]"
             />
             <div className="flex flex-col gap-2">
               <h1 className="text-xl md:text-3xl">

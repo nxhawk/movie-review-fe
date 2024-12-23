@@ -34,9 +34,6 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
               src={
                 movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg
               }
-              wrapperProps={{
-                style: { transitionDelay: "1s" },
-              }}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>

@@ -1,19 +1,21 @@
+import path from "./path";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import Layout from "../layout/Layout";
+import ScrollToTop from "../hooks/useScrollToTop";
+import PrivateRoute from "../layout/private/PrivateRoute";
+
 import LogInPage from "../pages/LogInPage";
+import UserProfilePage from "../pages/UserProfilePage";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
-import PrivateRoute from "../layout/private/PrivateRoute";
-import UserProfilePage from "../pages/UserProfilePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
-import path from "./path";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
 import SearchMoviePage from "../pages/SearchMoviePage";
-import ScrollToTop from "../hooks/useScrollToTop";
 import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
 import PersonProfilePage from "../pages/PersonProfilePage";
+
 const router = createBrowserRouter([
   {
     element: (

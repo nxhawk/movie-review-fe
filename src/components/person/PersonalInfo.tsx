@@ -9,7 +9,7 @@ type Props = {
 
 const PersonalInfo = ({ person }: Props) => {
   return (
-    <div>
+    <div className="max-sm:hidden">
       <Typography variant="h6" fontWeight={"bold"} marginTop={2}>
         Personal Info
       </Typography>

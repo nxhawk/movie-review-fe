@@ -53,10 +53,7 @@ const MovieCardInfor = ({ movie }: Props) => {
           <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
             <LazyLoadImage
               alt={movie.title}
-              src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg} // use normal <img> attributes as props
-              wrapperProps={{
-                style: { transitionDelay: "1s" },
-              }}
+              src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
               className="rounded-lg shadow-lg"
             />
           </Grid>

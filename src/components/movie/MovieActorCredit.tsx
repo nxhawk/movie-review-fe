@@ -16,9 +16,6 @@ const MovieActorCredit = ({ actor }: Props) => {
         <LazyLoadImage
           alt={actor.name}
           src={actor.profile_path ? `${tmdbConfig.imageW500URL}/${actor.profile_path}` : tmdbConfig.defaultCastImg}
-          wrapperProps={{
-            style: { transitionDelay: "1s" },
-          }}
           className="h-60 w-full object-cover"
         />
       </Link>

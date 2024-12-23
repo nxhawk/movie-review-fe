@@ -1,5 +1,3 @@
-import { Movie } from "./movie.type";
-
 // 1. Female;           2. Male;            3. Non-binary
 export type GenderType = 1 | 2 | 3;
 
@@ -46,11 +44,6 @@ export type Actor = {
   homepage: null;
   known_for_department: string;
   popularity: number;
-};
-
-export type MoviesOfActor = {
-  cast: Movie[];
-  id: number;
 };
 
 export type ActorsOfMovie = {

@@ -25,7 +25,7 @@ const BiographyText = ({ text }: Props) => {
           dangerouslySetInnerHTML={{ __html: text }}
         />
       ) : (
-        <div className="mt-2 font-sans overflow-hidden" dangerouslySetInnerHTML={{ __html: text }} />
+        <div className="mt-2 font-sans" dangerouslySetInnerHTML={{ __html: text }} />
       )}
       {isTextClamped && (
         <div

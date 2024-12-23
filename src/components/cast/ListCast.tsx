@@ -26,9 +26,6 @@ const ListCast = ({ casts }: Props) => {
             <LazyLoadImage
               alt={cast.name}
               src={cast.profile_path ? `${tmdbConfig.imageW500URL}/${cast.profile_path}` : tmdbConfig.defaultCastImg}
-              wrapperProps={{
-                style: { transitionDelay: "1s" },
-              }}
               className="w-16 h-16 object-cover rounded-lg"
             />
           </Link>

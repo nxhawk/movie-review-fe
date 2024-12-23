@@ -30,9 +30,6 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
           <LazyLoadImage
             alt={movie.title}
             src={movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg}
-            wrapperProps={{
-              style: { transitionDelay: "1s" },
-            }}
             style={{ width: 100, height: "auto", objectFit: "cover" }}
           />
           <CardContent sx={{ flex: 1, padding: 0, marginLeft: 2 }}>

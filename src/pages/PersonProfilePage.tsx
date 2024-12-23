@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import personApi from "../api/tmdb/person.api";
 import { PersonDetail } from "../types/person.type";
-import ResouceNotFound from "../components/common/ResouceNotFound";
+import ResourceNotFound from "../components/common/ResourceNotFound";
 import { Box, CircularProgress } from "@mui/material";
 import PersonCardInfor from "../components/person/PersonCardInfor";
 
@@ -40,7 +40,7 @@ const PersonProfilePage = () => {
       ) : person ? (
         <PersonCardInfor person={person} />
       ) : (
-        <ResouceNotFound />
+        <ResourceNotFound />
       )}
     </DocumentMeta>
   );

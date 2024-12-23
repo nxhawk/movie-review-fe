@@ -8,6 +8,7 @@ import { Container } from "@mui/material";
 import ListCast from "../components/cast/ListCast";
 import ListCrew from "../components/cast/ListCrew";
 import AllCastSkeleton from "../components/skeleton/AllCastSkeleton";
+import ResourceNotFound from "../components/common/ResourceNotFound";
 
 const FullCastOfMoviePage = () => {
   const { movieId } = useParams();
@@ -26,18 +27,24 @@ const FullCastOfMoviePage = () => {
   return (
     <div>
       {/* Header */}
-      {movieId && <HeaderBackDrop movieId={movieId} />}
+      {movieId && !getCastOfMovieQuery.isError && <HeaderBackDrop movieId={movieId} />}
 
       {/* List Cast and Crew */}
       {getCastOfMovieQuery.isFetching || getCastOfMovieQuery.isLoading ? (
         <AllCastSkeleton />
       ) : (
-        <Container maxWidth="xl" className="flex flex-col sm:flex-row my-6">
-          {/* Cast */}
-          {actors?.cast && <ListCast casts={actors.cast} />}
-          {/* Crew */}
-          {actors?.crew && <ListCrew crews={actors.crew} />}
-        </Container>
+        <>
+          {getCastOfMovieQuery.isError ? (
+            <ResourceNotFound />
+          ) : (
+            <Container maxWidth="xl" className="flex flex-col sm:flex-row my-6">
+              {/* Cast */}
+              {actors?.cast && <ListCast casts={actors.cast} />}
+              {/* Crew */}
+              {actors?.crew && <ListCrew crews={actors.crew} />}
+            </Container>
+          )}
+        </>
       )}
     </div>
   );

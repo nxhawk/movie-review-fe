@@ -37,9 +37,6 @@ const ListCrew = ({ crews }: Props) => {
                   src={
                     crew.profile_path ? `${tmdbConfig.imageW500URL}/${crew.profile_path}` : tmdbConfig.defaultCastImg
                   }
-                  wrapperProps={{
-                    style: { transitionDelay: "1s" },
-                  }}
                   className="w-16 h-16 object-cover rounded-lg"
                 />
               </Link>
@@ -57,27 +54,6 @@ const ListCrew = ({ crews }: Props) => {
           ))}
         </div>
       ))}
-
-      {/* {crews.map((crew) => (
-        <div key={crew.id} className="flex items-center gap-5 my-3">
-          <LazyLoadImage
-            alt={crew.name}
-            src={crew.profile_path ? `${tmdbConfig.imageW500URL}/${crew.profile_path}` : tmdbConfig.defaultCastImg}
-            wrapperProps={{
-              style: { transitionDelay: "1s" },
-            }}
-            className="w-16 h-16 object-cover rounded-lg"
-          />
-          <div>
-            <Typography variant="body1" className="font-bold">
-              {crew.name}
-            </Typography>
-            <Typography variant="body2" className="text-gray-500">
-              {crew.job} - {crew.department}
-            </Typography>
-          </div>
-        </div>
-      ))} */}
     </div>
   );
 };
