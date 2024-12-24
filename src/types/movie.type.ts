@@ -23,7 +23,8 @@ export type Movie = {
 export type MovieDetail = Movie & {
   genres: Genre[];
   popularity: number;
-  revenue: number;
+  revenue?: number;
+  budget?: number;
   status: string;
   runtime: number;
 };
@@ -99,4 +100,11 @@ export type CutCredit = {
 export type ListCutCredit = {
   name: string; // Group name
   credits: CutCredit[];
+};
+
+export type Pagination<T> = {
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
 };

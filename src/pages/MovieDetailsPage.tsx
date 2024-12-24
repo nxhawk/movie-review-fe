@@ -9,6 +9,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import ListCast from "../components/movie/ListCast";
 import ResourceNotFound from "../components/common/ResourceNotFound";
+import ListRecommendations from "../components/movie/ListRecommendations";
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
@@ -41,8 +42,10 @@ const MovieDetailsPage = () => {
       ) : movie ? (
         <>
           <MovieCardInfor movie={movie} />
-          {/* List Cast */}
+          {/* Top Billed Cast */}
           {movieId && <ListCast movieId={movieId} />}
+          {/* Movie Recommendations */}
+          {movieId && <ListRecommendations movieId={movieId} title={movie.title} />}
         </>
       ) : (
         <ResourceNotFound />

@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { MovieDetail } from "../../types/movie.type";
 import { getYearByDate, minToHour, formatDate } from "../../utils/dateFormat";
@@ -14,6 +14,12 @@ type Props = {
 
 const MovieCardInfor = ({ movie }: Props) => {
   const { dominantColor } = useExtractColors(`${tmdbConfig.imageOriginalURL}${movie.poster_path}`);
+  const formatter = (money: number) => {
+    return money.toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    });
+  };
 
   return (
     <div
@@ -37,14 +43,14 @@ const MovieCardInfor = ({ movie }: Props) => {
         }}
       >
         <Grid container justifyContent="center" padding={{ xs: 2, md: 3 }}>
-          <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
+          <Grid item xs={12} md={5} lg={3} paddingTop={2} className="flex items-start justify-center">
             <LazyLoadImage
               alt={movie.title}
               src={movie?.poster_path ? `${tmdbConfig.imageW500URL}${movie.poster_path}` : tmdbConfig.defaultMovieImg}
               className="rounded-lg shadow-lg"
             />
           </Grid>
-          <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 2 }}>
+          <Grid item xs={12} md={7} lg={9} paddingTop={2} paddingLeft={{ xs: 0, md: 5 }}>
             <div>
               <h1 className="text-4xl">
                 <span className="font-bold">{movie.title}</span>
@@ -76,6 +82,34 @@ const MovieCardInfor = ({ movie }: Props) => {
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">Overview</h1>
                 <p>{movie.overview}</p>
+              </div>
+            </div>
+            {/*  */}
+            <div className="mt-5 grid grid-cols-2 gap-y-3">
+              <div>
+                <Typography variant="body1" fontWeight={"bold"}>
+                  Original Title
+                </Typography>
+                <Typography variant="body1">{movie.original_title}</Typography>
+              </div>
+              <div>
+                <Typography variant="body1" fontWeight={"bold"}>
+                  Status
+                </Typography>
+                <Typography variant="body1">{movie.status}</Typography>
+              </div>
+
+              <div>
+                <Typography variant="body1" fontWeight={"bold"}>
+                  Budget
+                </Typography>
+                <Typography variant="body1">{movie.budget ? formatter(movie.budget) : "-"}</Typography>
+              </div>
+              <div>
+                <Typography variant="body1" fontWeight={"bold"}>
+                  Revenue
+                </Typography>
+                <Typography variant="body1">{movie.revenue ? formatter(movie.revenue) : "-"}</Typography>
               </div>
             </div>
           </Grid>

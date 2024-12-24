@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const CastCardSkeleton = () => {
+const MovieRecommendationSkeleton = () => {
   return (
     <Grid container wrap="nowrap" overflow={"hidden"}>
       <Swiper
@@ -17,19 +17,19 @@ const CastCardSkeleton = () => {
           },
           480: {
             slidesPerView: 2,
-            spaceBetween: 12,
+            spaceBetween: 20,
           },
           640: {
-            slidesPerView: 4,
-            spaceBetween: 12,
+            slidesPerView: 3,
+            spaceBetween: 20,
           },
           1024: {
-            slidesPerView: 6,
-            spaceBetween: 12,
+            slidesPerView: 4,
+            spaceBetween: 20,
           },
           1280: {
-            slidesPerView: 8,
-            spaceBetween: 12,
+            slidesPerView: 5,
+            spaceBetween: 20,
           },
         }}
         autoplay={{
@@ -37,12 +37,14 @@ const CastCardSkeleton = () => {
           disableOnInteraction: false,
         }}
       >
-        {Array.from(new Array(15)).map((_, index) => (
+        {Array.from(new Array(8)).map((_, index) => (
           <SwiperSlide key={index}>
             <Box sx={{ position: "relative" }}>
-              <Skeleton variant="rounded" style={{ height: "15rem", width: "100%" }} />
-              <Skeleton variant="rounded" style={{ height: "1rem", width: "100%", marginTop: "8px" }} />
-              <Skeleton variant="rounded" style={{ height: "1rem", width: "100%", marginTop: "8px" }} />
+              <Skeleton variant="rounded" style={{ height: "10rem", width: "100%" }} />
+              <div className="flex items-center justify-between gap-3 mt-2">
+                <Skeleton variant="rounded" style={{ height: "1rem", flexGrow: 2 }} />
+                <Skeleton variant="rounded" style={{ height: "1rem", flexGrow: 1 }} />
+              </div>
             </Box>
           </SwiperSlide>
         ))}
@@ -51,4 +53,4 @@ const CastCardSkeleton = () => {
   );
 };
 
-export default CastCardSkeleton;
+export default MovieRecommendationSkeleton;
