@@ -15,6 +15,7 @@ import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
 import SearchMoviePage from "../pages/SearchMoviePage";
 import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
 import PersonProfilePage from "../pages/PersonProfilePage";
+import NotFoundPage from "../pages/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ const router = createBrowserRouter([
           {
             path: path.PERSON_DETAILS,
             element: <PersonProfilePage />,
+          },
+          {
+            path: path.OTHER,
+            element: <NotFoundPage />,
           },
         ],
       },

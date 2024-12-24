@@ -14,6 +14,8 @@ const path = {
   PERSON_DETAILS: "/person/:personId",
   CAST: "cast",
   FULL_CAST: "/movie/:movieId/cast",
+  // Not found
+  OTHER: "*",
 };
 
 export default path;

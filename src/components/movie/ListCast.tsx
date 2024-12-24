@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import CastCardSkeleton from "../skeleton/CastCardSkeleton";
 import dynamicPath from "../../routes/dynamicPath";
-import { motion } from "motion/react";
 
 type Props = {
   movieId: string | number;
@@ -57,47 +56,45 @@ const ListCast = ({ movieId }: Props) => {
       ) : (
         <>
           {haveData ? (
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
-              <Swiper
-                modules={[Navigation, Autoplay]}
-                navigation
-                className="my-3"
-                slidesPerView={1}
-                spaceBetween={20}
-                breakpoints={{
-                  0: {
-                    slidesPerView: 1,
-                    spaceBetween: 20,
-                  },
-                  480: {
-                    slidesPerView: 2,
-                    spaceBetween: 12,
-                  },
-                  640: {
-                    slidesPerView: 4,
-                    spaceBetween: 12,
-                  },
-                  1024: {
-                    slidesPerView: 6,
-                    spaceBetween: 12,
-                  },
-                  1280: {
-                    slidesPerView: 8,
-                    spaceBetween: 12,
-                  },
-                }}
-                autoplay={{
-                  delay: 2500,
-                  disableOnInteraction: false,
-                }}
-              >
-                {actors?.cast?.slice(0, 15)?.map((act) => (
-                  <SwiperSlide key={act.id}>
-                    <MovieActorCredit actor={act} />
-                  </SwiperSlide>
-                ))}
-              </Swiper>
-            </motion.div>
+            <Swiper
+              modules={[Navigation, Autoplay]}
+              navigation
+              className="my-3"
+              slidesPerView={1}
+              spaceBetween={20}
+              breakpoints={{
+                0: {
+                  slidesPerView: 1,
+                  spaceBetween: 20,
+                },
+                480: {
+                  slidesPerView: 2,
+                  spaceBetween: 12,
+                },
+                640: {
+                  slidesPerView: 4,
+                  spaceBetween: 12,
+                },
+                1024: {
+                  slidesPerView: 6,
+                  spaceBetween: 12,
+                },
+                1280: {
+                  slidesPerView: 8,
+                  spaceBetween: 12,
+                },
+              }}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+            >
+              {actors?.cast?.slice(0, 15)?.map((act) => (
+                <SwiperSlide key={act.id}>
+                  <MovieActorCredit actor={act} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           ) : (
             <div className="my-3">We don&apos;t have any cast added to this movie. You can help by adding some!</div>
           )}

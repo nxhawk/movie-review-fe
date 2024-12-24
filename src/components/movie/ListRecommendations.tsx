@@ -50,7 +50,7 @@ const MovieRecomendations = ({ movie }: { movie: Movie }) => {
         >
           <div className="flex items-center gap-1 text-sm">
             <EventNoteIcon sx={{ fontSize: 16 }} />
-            <div>{formatDate(movie.release_date)}</div>
+            <div>{movie.release_date ? formatDate(movie.release_date) : "-"}</div>
           </div>
           <div className="flex items-center gap-1 text-sm">
             <StarIcon sx={{ fontSize: 16 }} />
@@ -100,7 +100,7 @@ const ListRecommendations = ({ movieId, title }: Props) => {
       ) : (
         <>
           {haveData ? (
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
               <Swiper
                 modules={[Navigation, Autoplay]}
                 navigation

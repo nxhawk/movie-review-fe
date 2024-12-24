@@ -67,7 +67,7 @@ const MovieCardInfor = ({ movie }: Props) => {
                     </div>
                   ))}
                 </div>
-                <p>&#x1F784; {minToHour(movie.runtime)}</p>
+                {movie.runtime > 0 && <p>&#x1F784; {minToHour(movie.runtime)}</p>}
               </div>
             </div>
             {/* User score */}
@@ -81,7 +81,11 @@ const MovieCardInfor = ({ movie }: Props) => {
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-2">
                 <h1 className="text-xl font-bold">Overview</h1>
-                <p>{movie.overview}</p>
+                <p>
+                  {movie.overview
+                    ? movie.overview
+                    : "We don't have an overview translated in English. Help us expand our database by adding one."}
+                </p>
               </div>
             </div>
             {/*  */}
