@@ -46,6 +46,7 @@ const PrimaryAppBar = () => {
     mutationFn: () => authApi.logout(),
     onError: (error: AxiosError) => {
       toast.error(error?.message || "Something went wrong");
+      removeAuth();
     },
     onSuccess: () => {
       toast.success("Logout successfully");

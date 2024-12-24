@@ -20,14 +20,10 @@ const KnowForSwiper = ({ movies }: Props) => {
           modules={[Navigation, Autoplay]}
           navigation
           className="my-3"
-          slidesPerView={1}
-          spaceBetween={20}
+          slidesPerView={2}
+          spaceBetween={12}
           breakpoints={{
             0: {
-              slidesPerView: 1,
-              spaceBetween: 20,
-            },
-            480: {
               slidesPerView: 2,
               spaceBetween: 12,
             },

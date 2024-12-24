@@ -29,8 +29,8 @@ const ListCrew = ({ crews }: Props) => {
       {Object.keys(groupedData).map((department) => (
         <div key={department} className="mt-8">
           <div className="font-bold text-xl">{department}</div>
-          {groupedData[department].map((crew) => (
-            <div key={crew.id} className="flex items-center gap-5 my-3">
+          {groupedData[department].map((crew, idx) => (
+            <div key={`${crew.id}-${idx}`} className="flex items-center gap-5 my-3">
               <Link to={dynamicPath.PERSON_DETAILS(crew.id)}>
                 <LazyLoadImage
                   alt={crew.name}

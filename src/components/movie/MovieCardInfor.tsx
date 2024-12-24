@@ -4,34 +4,16 @@ import { MovieDetail } from "../../types/movie.type";
 import { getYearByDate, minToHour, formatDate } from "../../utils/dateFormat";
 import UserScore from "./UserScore";
 import UserAction from "./UserAction";
-import { FastAverageColor } from "fast-average-color";
-import React from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { useExtractColors } from "react-extract-colors";
+import { isLightColor } from "../../utils/helper";
 
 type Props = {
   movie: MovieDetail;
 };
 
-const fac = new FastAverageColor();
-
 const MovieCardInfor = ({ movie }: Props) => {
-  const [bgColor, setBgColor] = React.useState<string>("#343434");
-  const [textColor, setTextColor] = React.useState<string>("#ffffff");
-
-  React.useEffect(() => {
-    const getAverageColor = async (image: string) => {
-      await fac
-        .getColorAsync(image)
-        .then((color) => {
-          setBgColor(color.rgba);
-          setTextColor(color.isDark ? "#fff" : "#000");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-    getAverageColor(`${tmdbConfig.imageOriginalURL}${movie.poster_path}`);
-  }, [movie.poster_path]);
+  const { dominantColor } = useExtractColors(`${tmdbConfig.imageOriginalURL}${movie.poster_path}`);
 
   return (
     <div
@@ -43,12 +25,17 @@ const MovieCardInfor = ({ movie }: Props) => {
         style={{
           position: "absolute",
           inset: 0,
-          backgroundColor: bgColor, // Your calculated background color
+          backgroundColor: dominantColor || "#343434",
           backdropFilter: "blur(10px)", // Apply the blur effect
           opacity: 0.8, // Adjust the transparency
         }}
       ></div>
-      <div style={{ position: "relative", color: textColor }}>
+      <div
+        style={{
+          position: "relative",
+          color: dominantColor ? (isLightColor(dominantColor) ? "#000000" : "#ffffff") : "#ffffff",
+        }}
+      >
         <Grid container justifyContent="center" padding={{ xs: 2, md: 3 }}>
           <Grid item xs={12} md={4} lg={3} padding={3} className="flex justify-center">
             <LazyLoadImage

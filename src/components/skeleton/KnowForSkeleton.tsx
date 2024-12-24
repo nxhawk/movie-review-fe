@@ -8,14 +8,10 @@ const KnowForSkeleton = () => {
     <Grid container wrap="nowrap" overflow={"hidden"}>
       <Swiper
         className="my-3 w-full"
-        slidesPerView={1}
-        spaceBetween={20}
+        slidesPerView={2}
+        spaceBetween={12}
         breakpoints={{
           0: {
-            slidesPerView: 1,
-            spaceBetween: 20,
-          },
-          480: {
             slidesPerView: 2,
             spaceBetween: 12,
           },

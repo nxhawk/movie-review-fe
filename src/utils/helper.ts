@@ -69,3 +69,33 @@ export const showGenderText = (gender: GenderType) => {
       return "Non-binary";
   }
 };
+
+export function isLightColor(color: string): boolean {
+  let r, g, b;
+
+  // Check the format of the color, HEX or RGB?
+  if (color.match(/^rgb/)) {
+    // If HEX --> store the red, green, blue values in separate variables
+    const rgb = color.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/);
+    if (!rgb) return false;
+
+    r = parseInt(rgb[1], 10);
+    g = parseInt(rgb[2], 10);
+    b = parseInt(rgb[3], 10);
+  } else {
+    // If RGB --> Convert it to HEX: http://gist.github.com/983661
+    const hexColor = +("0x" + color.slice(1).replace(/./g, color.length < 5 ? "$&$&" : "$&"));
+
+    r = (hexColor >> 16) & 255;
+    g = (hexColor >> 8) & 255;
+    b = hexColor & 255;
+  }
+
+  // HSP equation from http://alienryderflex.com/hsp.html
+  const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+
+  // Using the HSP value, determine whether the color is light or dark
+  // > 127.5 is 'light', <= 127.5 is 'dark'
+
+  return hsp > 127.5;
+}

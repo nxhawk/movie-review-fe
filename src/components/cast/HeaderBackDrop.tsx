@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { MovieDetail } from "../../types/movie.type";
 import movieApi from "../../api/tmdb/movie.api";
-import { FastAverageColor } from "fast-average-color";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Box, Container } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -10,32 +9,16 @@ import { getYearByDate } from "../../utils/dateFormat";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useExtractColors } from "react-extract-colors";
+import { isLightColor } from "../../utils/helper";
 
 type Props = {
   movieId: string | number;
 };
 
-const fac = new FastAverageColor();
-
 const HeaderBackDrop = ({ movieId }: Props) => {
-  const [bgColor, setBgColor] = React.useState<string>("#343434");
-  const [textColor, setTextColor] = React.useState<string>("#ffffff");
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
-
-  React.useEffect(() => {
-    const getAverageColor = async (image: string) => {
-      await fac
-        .getColorAsync(image)
-        .then((color) => {
-          setBgColor(color.rgba);
-          setTextColor(color.isDark ? "#fff" : "#000");
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    };
-    if (movie?.poster_path) getAverageColor(`${tmdbConfig.imageOriginalURL}${movie.poster_path}`);
-  }, [movie?.poster_path]);
+  const { dominantColor } = useExtractColors(`${tmdbConfig.imageOriginalURL}${movie?.poster_path}`);
 
   useQuery({
     queryKey: ["movie-detail", movieId],
@@ -48,7 +31,11 @@ const HeaderBackDrop = ({ movieId }: Props) => {
   });
 
   return (
-    <Box bgcolor={bgColor} paddingY={2} style={{ color: textColor }}>
+    <Box
+      bgcolor={dominantColor || "#343434"}
+      paddingY={2}
+      style={{ color: dominantColor ? (isLightColor(dominantColor) ? "#000000" : "#ffffff") : "#ffffff" }}
+    >
       <Container maxWidth="xl" sx={{ display: "flex", gap: 3, alignItems: "center" }}>
         {movie ? (
           <>
