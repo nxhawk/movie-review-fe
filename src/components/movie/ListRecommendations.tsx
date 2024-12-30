@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import movieApi from "../../api/tmdb/movie.api";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath";
-import { Movie, Pagination } from "../../types/movie.type";
+import { Movie } from "../../types/movie.type";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { formatDate } from "../../utils/dateFormat";
@@ -19,6 +19,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import StarIcon from "@mui/icons-material/Star";
 import MovieRecommendationSkeleton from "../skeleton/MovieRecommendationSkeleton";
+import { Pagination } from "../../types/response.type";
 
 type Props = {
   movieId: string;

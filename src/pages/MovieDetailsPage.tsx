@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import ListCast from "../components/movie/ListCast";
 import ResourceNotFound from "../components/common/ResourceNotFound";
 import ListRecommendations from "../components/movie/ListRecommendations";
+import Reviews from "../components/movie/Reviews";
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
@@ -44,6 +45,8 @@ const MovieDetailsPage = () => {
           <MovieCardInfor movie={movie} />
           {/* Top Billed Cast */}
           {movieId && <ListCast movieId={movieId} />}
+          {/* Reviews */}
+          {movieId && <Reviews movieId={movieId} title={movie.title} />}
           {/* Movie Recommendations */}
           {movieId && <ListRecommendations movieId={movieId} title={movie.title} />}
         </>
