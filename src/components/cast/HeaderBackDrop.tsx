@@ -3,7 +3,7 @@ import React from "react";
 import { MovieDetail } from "../../types/movie.type";
 import movieApi from "../../api/tmdb/movie.api";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
-import { Box, Container } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { getYearByDate } from "../../utils/dateFormat";
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ const HeaderBackDrop = ({ movieId }: Props) => {
       paddingY={2}
       style={{ color: dominantColor ? (isLightColor(dominantColor) ? "#000000" : "#ffffff") : "#ffffff" }}
     >
-      <Container maxWidth="xl" sx={{ display: "flex", gap: 3, alignItems: "center" }}>
+      <Grid container sx={{ display: "flex", gap: 3, alignItems: "center" }} paddingX={{ xs: 2, md: 3 }}>
         {movie ? (
           <>
             <LazyLoadImage
@@ -68,7 +68,7 @@ const HeaderBackDrop = ({ movieId }: Props) => {
             Quay lại trang chính
           </Link>
         )}
-      </Container>
+      </Grid>
     </Box>
   );
 };

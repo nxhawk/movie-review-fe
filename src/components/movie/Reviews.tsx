@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Typography } from "@mui/material";
+import { Box, Chip, Grid, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import movieApi from "../../api/tmdb/movie.api";
@@ -30,7 +30,7 @@ const Reviews = ({ movieId, title }: Props) => {
   });
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3 }}>
+    <Grid container padding={{ xs: 2, md: 3 }} style={{ flexDirection: "column" }}>
       {/* title */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Box
@@ -74,7 +74,7 @@ const Reviews = ({ movieId, title }: Props) => {
           )}
         </>
       )}
-    </Container>
+    </Grid>
   );
 };
 

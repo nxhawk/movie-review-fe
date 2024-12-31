@@ -1,9 +1,10 @@
-import { Container, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import Skeleton from "@mui/material/Skeleton";
 
 const AllCastSkeleton = () => {
   return (
-    <Container maxWidth="xl" className="flex flex-col sm:flex-row my-6">
+    // <Container maxWidth="xl" className="flex flex-col sm:flex-row my-6">
+    <Grid container padding={{ xs: 2, md: 3 }} direction={{ xs: "column", sm: "row" }}>
       {/* left */}
       <div className="flex-1">
         <div className="flex items-end gap-2">
@@ -34,7 +35,8 @@ const AllCastSkeleton = () => {
           </div>
         ))}
       </div>
-    </Container>
+    </Grid>
+    // </Container>
   );
 };
 

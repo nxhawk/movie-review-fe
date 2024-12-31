@@ -1,6 +1,5 @@
 import React from "react";
-import Container from "@mui/material/Container";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -33,9 +32,9 @@ const ListCast = ({ movieId }: Props) => {
   });
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3 }}>
+    <Grid container padding={{ xs: 2, md: 3 }}>
       {/* title */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
           Top Billed Cast
         </Typography>
@@ -100,7 +99,7 @@ const ListCast = ({ movieId }: Props) => {
           )}
         </>
       )}
-    </Container>
+    </Grid>
   );
 };
 

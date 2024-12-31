@@ -1,6 +1,5 @@
 import React from "react";
-import Container from "@mui/material/Container";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -87,7 +86,7 @@ const ListRecommendations = ({ movieId, title }: Props) => {
   });
 
   return (
-    <Container maxWidth="xl" sx={{ paddingTop: 3 }}>
+    <Grid container padding={{ xs: 2, md: 3 }}>
       {/* title */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -101,7 +100,12 @@ const ListRecommendations = ({ movieId, title }: Props) => {
       ) : (
         <>
           {haveData ? (
-            <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              className="w-full"
+            >
               <Swiper
                 modules={[Navigation, Autoplay]}
                 navigation
@@ -150,7 +154,7 @@ const ListRecommendations = ({ movieId, title }: Props) => {
           )}
         </>
       )}
-    </Container>
+    </Grid>
   );
 };
 

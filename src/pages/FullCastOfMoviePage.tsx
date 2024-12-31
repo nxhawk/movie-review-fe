@@ -4,7 +4,7 @@ import { ActorsOfMovie } from "../types/actor.type";
 import { useQuery } from "@tanstack/react-query";
 import movieApi from "../api/tmdb/movie.api";
 import HeaderBackDrop from "../components/cast/HeaderBackDrop";
-import { Container } from "@mui/material";
+import { Grid } from "@mui/material";
 import ListCast from "../components/cast/ListCast";
 import ListCrew from "../components/cast/ListCrew";
 import AllCastSkeleton from "../components/skeleton/AllCastSkeleton";
@@ -37,12 +37,12 @@ const FullCastOfMoviePage = () => {
           {getCastOfMovieQuery.isError ? (
             <ResourceNotFound />
           ) : (
-            <Container maxWidth="xl" className="flex flex-col sm:flex-row my-6">
+            <Grid container padding={{ xs: 2, md: 3 }} direction={{ xs: "column", sm: "row" }}>
               {/* Cast */}
               {actors?.cast && <ListCast casts={actors.cast} />}
               {/* Crew */}
               {actors?.crew && <ListCrew crews={actors.crew} />}
-            </Container>
+            </Grid>
           )}
         </>
       )}

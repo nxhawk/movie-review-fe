@@ -1,3 +1,15 @@
+Dockerize development
+```bash
+docker build -t cine-match-dev -f Dockerfile.dev .
+docker run -p 5173:5173 cine-match-dev
+```
+
+Dockerize production
+```bash
+docker build -t cine-match .
+docker run -p 80:80 cine-match
+```
+
 ![reactjs-vite-tailwindcss-boilerplate](https://user-images.githubusercontent.com/16243531/217138979-b854309c-4742-4275-a705-f9fec5158217.jpg)
 
 # React Tailwindcss Boilerplate build with Vite

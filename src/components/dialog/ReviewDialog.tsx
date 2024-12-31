@@ -44,7 +44,7 @@ const ReviewDialog = ({ review }: Props) => {
         open={open}
         TransitionComponent={Transition}
         keepMounted
-        maxWidth="lg"
+        maxWidth="xl"
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
