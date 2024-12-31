@@ -9,6 +9,7 @@ export const URL_CREDIT = "/credits";
 export const URL_RECOMMENDATIONS = "/recommendations";
 export const URL_DISCOVER = "/discover/movie";
 export const URL_GENRE = "/genre/movie/list";
+export const URL_REVIEWS = "/reviews";
 
 const movieApi = {
   getDetails: async (movieId: number | string) => {
@@ -58,6 +59,11 @@ const movieApi = {
     };
     const mergedParams = { ...defaultParams, ...params };
     const res = await AxiosClient.get(`${URL_DISCOVER}`, { params: mergedParams });
+    return res.data;
+  },
+
+  getReviews: async (movieId: number | string) => {
+    const res = await AxiosClient.get(`${URL_MOVIE}/${movieId}${URL_REVIEWS}`);
     return res.data;
   },
 };

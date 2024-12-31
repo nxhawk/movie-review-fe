@@ -16,6 +16,7 @@ import SearchPage from "../pages/SearchPage.tsx";
 import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
 import PersonProfilePage from "../pages/PersonProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
+import FullReviewOfMoviePage from "../pages/FullReviewOfMoviePage";
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
               {
                 path: path.CAST,
                 element: <FullCastOfMoviePage />,
+              },
+              {
+                path: path.FULL_REVIEWS,
+                element: <FullReviewOfMoviePage />,
               },
             ],
           },
