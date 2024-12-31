@@ -18,7 +18,7 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="max-h-fit w-full md:w-2/3 mb-4 px-5 md:px-0">
+    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="max-h-fit w-full mb-4 px-3">
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",
@@ -26,16 +26,16 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
           borderRadius: "10px",
         }}
       >
-        <CardActionArea disableRipple sx={{ display: "flex", backgroundColor: "white" }}>
+        <CardActionArea disableRipple sx={{ display: "flex", backgroundColor: "white", alignItems: "start" }}>
           <LazyLoadImage
             alt={movie.title}
             src={movie.poster_path ? `${tmdbConfig.imageOriginalURL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg}
             style={{ width: 100, height: "auto", objectFit: "cover" }}
           />
-          <CardContent sx={{ flex: 1, padding: 0, marginLeft: 2 }}>
+          <CardContent sx={{ flex: 1, padding: 0, marginLeft: 1 }}>
             <Grid item xs={12} md={8} lg={9} padding={{ xs: 0, md: 0 }}>
               <div>
-                <h1 className="text-sm md:text-2xl">
+                <h1 className="text-sm md:text-md mt-1 lg:text-2xl">
                   <span className="font-bold">{movie.title}</span>
                   &nbsp;
                   {movie.release_date && <span>({getYearByDate(movie.release_date)})</span>}
@@ -45,9 +45,9 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
                 )}
               </div>
               {/* Overview */}
-              <div className="flex-col gap-5 mt-2 hidden md:flex max-h-20">
-                <div className="flex flex-col gap-2 text-xs md:text-sm text-ellipsis overflow-hidden ...">
-                  <p>{movie.overview}</p>
+              <div className="flex-col gap-5 mt-2 hidden sm:flex max-h-20">
+                <div className="flex flex-col gap-2 text-sm md:text-sm text-ellipsis overflow-hidden ...">
+                  <p className="pr-2">{movie.overview}</p>
                 </div>
               </div>
             </Grid>

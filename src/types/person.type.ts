@@ -1,4 +1,5 @@
 import { GenderType } from "./actor.type";
+import { Movie } from "./movie.type.ts";
 
 export type PersonDetail = {
   id: number;
@@ -14,4 +15,5 @@ export type PersonDetail = {
   place_of_birth: string | null;
   popularity: number;
   profile_path: string;
+  known_for: Movie[] | [];
 };

@@ -7,6 +7,8 @@ export const URL_TRENDING_WEEK = URL_TRENDING + "/week";
 export const URL_SEARCH = "search/movie";
 export const URL_CREDIT = "/credits";
 export const URL_RECOMMENDATIONS = "/recommendations";
+export const URL_DISCOVER = "/discover/movie";
+export const URL_GENRE = "/genre/movie/list";
 
 const movieApi = {
   getDetails: async (movieId: number | string) => {
@@ -41,6 +43,21 @@ const movieApi = {
 
   getRecommendations: async (movieId: number | string) => {
     const res = await AxiosClient.get(`${URL_MOVIE}/${movieId}${URL_RECOMMENDATIONS}`);
+    return res.data;
+  },
+
+  getMovieGenres: async () => {
+    const res = await AxiosClient.get(URL_GENRE);
+    return res.data;
+  },
+
+  getMovieByDiscover: async (params: any) => {
+    const defaultParams = {
+      language: "en-US",
+      page: params.page || 1,
+    };
+    const mergedParams = { ...defaultParams, ...params };
+    const res = await AxiosClient.get(`${URL_DISCOVER}`, { params: mergedParams });
     return res.data;
   },
 };

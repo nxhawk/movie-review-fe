@@ -12,7 +12,7 @@ import ForgotPasswordPage from "../pages/ForgotPasswordPage";
 import ResetPasswordPage from "../pages/ResetPasswordPage";
 import MovieDetailsPage from "../pages/MovieDetailsPage";
 import ResendEmailVerifyPage from "../pages/ResendEmailVerifyPage";
-import SearchMoviePage from "../pages/SearchMoviePage";
+import SearchPage from "../pages/SearchPage.tsx";
 import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
 import PersonProfilePage from "../pages/PersonProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
           },
           {
             path: path.SEARCH_MOVIE,
-            element: <SearchMoviePage />,
+            element: <SearchPage />,
           },
           // Person
           {
