@@ -42,7 +42,7 @@ const UserProfileLayout = () => {
       {/* User information */}
       <div className="bg-center bg-cover w-full relative">
         <div className="block w-full gradient relative">
-          <div className="bg-[url('src/assets/images/user-background.svg')] bg-transparent bg-no-repeat bg-cover inner_content top-0 left-0">
+          <div className="bg-user-background bg-transparent bg-no-repeat bg-cover inner_content top-0 left-0">
             <div className="p-10">{user && <AboutUser user={user} />}</div>
           </div>
         </div>
