@@ -9,7 +9,7 @@ import authApi from "../api/base/auth.api";
 import { useQuery } from "@tanstack/react-query";
 import AboutUser from "../components/profile/AboutUser";
 import { cn } from "../utils/cn";
-import userBackground from "../assets/images/user-background.svg";
+import userBackground from "../assets/images/user-background.png";
 
 const UserProfileLayout = () => {
   const navigate = useNavigate();

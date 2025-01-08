@@ -120,6 +120,17 @@ const metadata = {
       },
     },
   },
+  editWatchListMeta: {
+    title: "Edit watchlist page - CineMatch",
+    description: "This is page edit watchlist to CineMatch",
+    canonical: "http://example.com/path/to/page",
+    meta: {
+      charset: "utf-8",
+      name: {
+        keywords: "react,meta,document,html,tags",
+      },
+    },
+  },
   watchListDetailMeta: {
     title: "Watchlist details page - CineMatch",
     description: "This is page watchlist details to CineMatch",

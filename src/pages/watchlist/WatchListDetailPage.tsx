@@ -10,9 +10,12 @@ import ResourceNotFound from "../../components/common/ResourceNotFound";
 import HeaderAuthor from "../../components/watchlist/HeaderAuthor";
 import ButtonChangeStyleView from "../../components/common/ButtonChangeStyleView";
 import MovieProfileCard from "../../components/movie/MovieProfileCard";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const WatchListDetailPage = () => {
   const { watchlistId } = useParams();
+  const { auth } = React.useContext(AuthContext)!;
+
   const [watchlist, setWatchlist] = React.useState<IWatchListDetails | null>(null);
   const [isGridView, setGridView] = React.useState(false);
 
@@ -47,6 +50,8 @@ const WatchListDetailPage = () => {
             email={watchlist.user.email}
             description={watchlist.description}
             watchListId={watchlist.id}
+            isPublic={watchlist.isPublic}
+            isAuthor={auth?.email ? auth.email === watchlist.user.email : false}
           />
           {/* List Movie in WatchList */}
           <div>
@@ -75,7 +80,7 @@ const WatchListDetailPage = () => {
                 )}
               </div>
             ) : (
-              <div className="mt-2 text-xl">Chưa có phim nào trong danh sách này.</div>
+              <div className="px-2 sm:px-10 mt-2 h-[100px] text-xl">Chưa có phim nào trong danh sách này.</div>
             )}
           </div>
         </>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -9,17 +9,21 @@ import DialogTitle from "@mui/material/DialogTitle";
 import React from "react";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import toast from "react-hot-toast";
+import DeleteAction from "./DeleteAction";
 
 type Props = {
   watchListId: string;
   name: string;
   description?: string;
   email: string;
+  isPublic: boolean;
+  isAuthor?: boolean;
 };
 
-const HeaderAuthor = ({ watchListId, name, description, email }: Props) => {
+const HeaderAuthor = ({ watchListId, name, description, email, isPublic = false, isAuthor = false }: Props) => {
   const [open, setOpen] = React.useState(false);
   const textRef = React.useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const handleCopy = async () => {
     if (textRef.current) {
@@ -52,10 +56,24 @@ const HeaderAuthor = ({ watchListId, name, description, email }: Props) => {
           </div>
         </div>
       </div>
-      <div className="w-full flex bg-[#032541] py-2 px-8">
-        <div className="text-gray-500 font-bold cursor-pointer" onClick={() => setOpen(true)}>
-          Share
-        </div>
+      <div className="w-full flex bg-[#032541] py-2 px-8 gap-3">
+        {/* Edit if this author */}
+        {isAuthor && (
+          <div
+            className="text-gray-400 font-bold cursor-pointer"
+            onClick={() => navigate(dynamicPath.WATCHLIST_EDIT(watchListId))}
+          >
+            Edit
+          </div>
+        )}
+        {/* Can delete watchlist if author */}
+        {isAuthor && <DeleteAction watchListId={watchListId} />}
+        {/* Can share if public */}
+        {isPublic && (
+          <div className="text-gray-400 font-bold cursor-pointer" onClick={() => setOpen(true)}>
+            Share
+          </div>
+        )}
         <Dialog
           open={open}
           onClose={() => setOpen(false)}
@@ -82,7 +100,7 @@ const HeaderAuthor = ({ watchListId, name, description, email }: Props) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button color="error" onClick={() => setOpen(false)} autoFocus>
+            <Button color="error" onClick={() => setOpen(false)}>
               Close
             </Button>
           </DialogActions>

@@ -24,6 +24,7 @@ import RatingPage from "../pages/RatingPage.tsx";
 import WatchListPage from "../pages/watchlist/WatchListPage.tsx";
 import NewWatchListPage from "../pages/watchlist/NewWatchListPage.tsx";
 import WatchListDetailPage from "../pages/watchlist/WatchListDetailPage.tsx";
+import EditWatchListPage from "../pages/watchlist/EditWatchListPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -133,7 +134,13 @@ const router = createBrowserRouter([
           // watchlist details
           {
             path: path.WATCHLIST_DETAIL,
-            element: <WatchListDetailPage />,
+            children: [
+              {
+                index: true,
+                element: <WatchListDetailPage />,
+              },
+              { path: path.EDIT, element: <EditWatchListPage /> },
+            ],
           },
         ],
       },

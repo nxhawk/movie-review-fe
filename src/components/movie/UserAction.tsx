@@ -1,6 +1,5 @@
 import { Stack, Tooltip, tooltipClasses, TooltipProps } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import ListIcon from "@mui/icons-material/List";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import React from "react";
 import { styled } from "@mui/material/styles";
@@ -10,6 +9,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import favoriteApi from "../../api/base/favorite.api";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
+import AddMovieToWatchListDialog from "../dialog/AddMovieToWatchListDialog";
 
 type ButtonActionProps = {
   children: React.ReactNode;
@@ -30,7 +30,7 @@ const BootstrapTooltip = styled(({ className, ...props }: TooltipProps) => (
   },
 }));
 
-const ButtonAction = ({ children, title, onClick }: ButtonActionProps) => {
+export const ButtonAction = ({ children, title, onClick }: ButtonActionProps) => {
   return (
     <BootstrapTooltip title={title}>
       <IconButton
@@ -101,16 +101,11 @@ const UserAction = ({ movieId }: Props) => {
     }
   };
 
-  const handleAddToWatchlist = () => {};
-
   return (
     <Stack marginBottom={3} direction="row" spacing={3} sx={{ alignItems: "center" }}>
-      <ButtonAction
-        title={auth ? "Add to your watchlist" : "Login to add this movie to your watchlist"}
-        onClick={handleAddToWatchlist}
-      >
-        <ListIcon />
-      </ButtonAction>
+      {/* hanlde add movie to watchlist */}
+      <AddMovieToWatchListDialog movieId={movieId} />
+      {/* handle add movie to favorite */}
       <ButtonAction
         title={
           auth

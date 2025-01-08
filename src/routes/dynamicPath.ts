@@ -7,6 +7,7 @@ const dynamicPath = {
   FULL_REVIEWS: (movieId: string | number) => path.FULL_REVIEWS.replace(":movieId", movieId.toString()),
   WATCHLIST_DETAIL: (watchlistId: string | number) =>
     path.WATCHLIST_DETAIL.replace(":watchlistId", watchlistId.toString()),
+  WATCHLIST_EDIT: (watchlistId: string | number) => path.WATCHLIST_EDIT.replace(":watchlistId", watchlistId.toString()),
 };
 
 export default dynamicPath;

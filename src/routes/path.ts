@@ -20,6 +20,7 @@ const path = {
   RATING: "/rating",
   WATCHLIST: "/watchlist",
   WATCHLIST_DETAIL: "/list/:watchlistId",
+  WATCHLIST_EDIT: "/list/:watchlistId/edit",
   // CRUD
   NEW: "new",
   EDIT: "edit",
