@@ -5,7 +5,7 @@ import ScrollToTop from "../hooks/useScrollToTop";
 import PrivateRoute from "../layout/private/PrivateRoute";
 
 import LogInPage from "../pages/LogInPage";
-import UserProfilePage from "../pages/UserProfilePage";
+import UserProfileLayout from "../layout/UserProfileLayout.tsx";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ForgotPasswordPage from "../pages/ForgotPasswordPage";
@@ -17,27 +17,61 @@ import FullCastOfMoviePage from "../pages/FullCastOfMoviePage";
 import PersonProfilePage from "../pages/PersonProfilePage";
 import NotFoundPage from "../pages/NotFoundPage";
 import FullReviewOfMoviePage from "../pages/FullReviewOfMoviePage";
+import FavoriteMoviePage from "../pages/FavoriteMoviePage.tsx";
+import RatingPage from "../pages/RatingPage.tsx";
+
+// watchlist
+import WatchListPage from "../pages/watchlist/WatchListPage.tsx";
+import NewWatchListPage from "../pages/watchlist/NewWatchListPage.tsx";
+import WatchListDetailPage from "../pages/watchlist/WatchListDetailPage.tsx";
 
 const router = createBrowserRouter([
   {
-    element: (
-      <ScrollToTop>
-        <Outlet />
-      </ScrollToTop>
-    ),
+    element: <Layout />,
     children: [
       {
-        element: <Layout />,
+        element: <PrivateRoute />,
         children: [
           {
-            element: <PrivateRoute />,
+            element: <UserProfileLayout />,
             children: [
               {
-                path: path.PROFILE,
-                element: <UserProfilePage />,
+                path: path.FAVORITE,
+                element: <FavoriteMoviePage />,
+              },
+              {
+                path: path.RATING,
+                element: <RatingPage />,
               },
             ],
           },
+          {
+            path: path.WATCHLIST,
+            children: [
+              {
+                element: <UserProfileLayout />,
+                children: [
+                  {
+                    index: true,
+                    element: <WatchListPage />,
+                  },
+                ],
+              },
+              {
+                path: path.NEW,
+                element: <NewWatchListPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        element: (
+          <ScrollToTop>
+            <Outlet />
+          </ScrollToTop>
+        ),
+        children: [
           // Home page
           {
             path: path.HOME,
@@ -95,6 +129,11 @@ const router = createBrowserRouter([
           {
             path: path.OTHER,
             element: <NotFoundPage />,
+          },
+          // watchlist details
+          {
+            path: path.WATCHLIST_DETAIL,
+            element: <WatchListDetailPage />,
           },
         ],
       },

@@ -36,7 +36,11 @@ const HeaderBackDrop = ({ movieId }: Props) => {
       paddingY={2}
       style={{ color: dominantColor ? (isLightColor(dominantColor) ? "#000000" : "#ffffff") : "#ffffff" }}
     >
-      <Grid container sx={{ display: "flex", gap: 3, alignItems: "center" }} paddingX={{ xs: 2, md: 3 }}>
+      <Grid
+        container
+        sx={{ display: "flex", gap: 3, alignItems: "center", flexWrap: "nowrap" }}
+        paddingX={{ xs: 2, md: 3 }}
+      >
         {movie ? (
           <>
             <LazyLoadImage

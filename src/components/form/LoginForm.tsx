@@ -60,7 +60,6 @@ const LoginForm = () => {
   React.useEffect(() => {
     if (getMeQuery.isSuccess) {
       const profile: IFullUser = getMeQuery.data;
-      console.log(profile);
       changeAuth({ ...profile });
       toast.success("Login successfully");
       navigate(path.HOME);

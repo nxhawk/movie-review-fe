@@ -1,6 +1,6 @@
 const metadata = {
   loginMeta: {
-    title: "Login page",
+    title: "Login page - CineMatch",
     description: "This is page login to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -11,7 +11,7 @@ const metadata = {
     },
   },
   registerMeta: {
-    title: "Register page",
+    title: "Register page - CineMatch",
     description: "This is page register to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -22,7 +22,7 @@ const metadata = {
     },
   },
   forgotPasswordMeta: {
-    title: "Forgot password page",
+    title: "Forgot password page - CineMatch",
     description: "This is page forgot password to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -33,7 +33,7 @@ const metadata = {
     },
   },
   resendEmailVerifyMeta: {
-    title: "Resend email verify page",
+    title: "Resend email verify page - CineMatch",
     description: "This is page resend email verify to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -55,7 +55,7 @@ const metadata = {
     },
   },
   resetPasswordMeta: {
-    title: "Reset password page",
+    title: "Reset password page - CineMatch",
     description: "This is page reset password to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -66,7 +66,7 @@ const metadata = {
     },
   },
   profileMeta: {
-    title: "Profile page",
+    title: "Profile page - CineMatch",
     description: "This is page profile to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -77,7 +77,7 @@ const metadata = {
     },
   },
   movieDetailsMeta: {
-    title: "Movie details page",
+    title: "Movie details page - CineMatch",
     description: "This is page movie details to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -88,7 +88,7 @@ const metadata = {
     },
   },
   searchMeta: {
-    title: "Search movie page",
+    title: "Search movie page - CineMatch",
     description: "This is page search movie to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
@@ -101,6 +101,28 @@ const metadata = {
   personProfileMeta: {
     title: "Person profile page",
     description: "This is page person profile to CineMatch",
+    canonical: "http://example.com/path/to/page",
+    meta: {
+      charset: "utf-8",
+      name: {
+        keywords: "react,meta,document,html,tags",
+      },
+    },
+  },
+  addNewWatchListMeta: {
+    title: "New watchlist page - CineMatch",
+    description: "This is page new watchlist to CineMatch",
+    canonical: "http://example.com/path/to/page",
+    meta: {
+      charset: "utf-8",
+      name: {
+        keywords: "react,meta,document,html,tags",
+      },
+    },
+  },
+  watchListDetailMeta: {
+    title: "Watchlist details page - CineMatch",
+    description: "This is page watchlist details to CineMatch",
     canonical: "http://example.com/path/to/page",
     meta: {
       charset: "utf-8",

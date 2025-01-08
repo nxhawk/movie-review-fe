@@ -3,7 +3,6 @@ const path = {
   // Authentication
   LOGIN: "/login",
   REGISTER: "/register",
-  PROFILE: "/profile",
   FORGOT_PASSWORD: "/forgot-password",
   RESET_PASSWORD: "/reset-password",
   RESEND_EMAIL_VERIFYCATION: "/resend-email-verification",
@@ -15,6 +14,16 @@ const path = {
   PERSON_DETAILS: "/person/:personId",
   CAST: "cast",
   FULL_CAST: "/movie/:movieId/cast",
+  // User Profile
+  PROFILE: "/profile",
+  FAVORITE: "/favorite",
+  RATING: "/rating",
+  WATCHLIST: "/watchlist",
+  WATCHLIST_DETAIL: "/list/:watchlistId",
+  // CRUD
+  NEW: "new",
+  EDIT: "edit",
+  DETAIL: ":watchlistId",
   // Not found
   OTHER: "*",
 };

@@ -14,7 +14,7 @@ import { getTeaserYoutubeKey } from "../../utils/helper";
 import { useQuery } from "@tanstack/react-query";
 
 type Props = {
-  movieId: number;
+  movieId: number | string;
 };
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

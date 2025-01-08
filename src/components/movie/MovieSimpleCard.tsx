@@ -6,6 +6,7 @@ import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath.ts";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { getCorrectId } from "../../utils/helper.ts";
 
 const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
   const formattedDate = React.useMemo(() => {
@@ -18,7 +19,11 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="min-w-60" title={movie.title}>
+    <Link
+      to={dynamicPath.MOVIE_DETAILS(getCorrectId(movie.tmdb_id, movie.id))}
+      className="min-w-60"
+      title={movie.title}
+    >
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",
@@ -39,7 +44,7 @@ const MovieSimpleCard = ({ movie }: { movie: Movie }) => {
           </div>
           <CardContent>
             <Box sx={{ position: "absolute", top: "270px", left: "5px" }}>
-              <UserScore point={Math.round(movie.vote_average * 10)} />
+              <UserScore point={Math.round((movie.vote_average ? movie.vote_average : 0) * 10)} />
             </Box>
             <Typography
               noWrap

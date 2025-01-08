@@ -99,3 +99,14 @@ export function isLightColor(color: string): boolean {
 
   return hsp > 127.5;
 }
+
+export function getRatingTextColor(point: number): string {
+  if (point === 0) return "#032541";
+  if (point < 50) return "#db2360";
+  else if (point < 70) return "#d2d531";
+  return "#21d07a";
+}
+
+export function getCorrectId(tmdbId: number | string | undefined, id: number | string) {
+  return tmdbId ? tmdbId : id;
+}

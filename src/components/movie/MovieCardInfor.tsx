@@ -7,6 +7,7 @@ import UserAction from "./UserAction";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useExtractColors } from "react-extract-colors";
 import { isLightColor } from "../../utils/helper";
+import YourVibe from "./rating/YourVibe";
 
 type Props = {
   movie: MovieDetail;
@@ -71,8 +72,9 @@ const MovieCardInfor = ({ movie }: Props) => {
               </div>
             </div>
             {/* User score */}
-            <div className="mt-6 mb-3">
-              <UserScore showText={true} point={Math.round(movie.vote_average * 10)} size="large" />
+            <div className="mt-6 mb-3 flex flex-wrap items-center gap-5 md:gap-10">
+              <UserScore showText={true} point={Math.round(movie.vote_average * 10)} size="large" canHover />
+              <YourVibe title={movie.title} movieId={movie.id} point={Math.round(movie.vote_average * 10)} />
             </div>
             <UserAction movieId={movie.id} />
             {/* Tag line */}

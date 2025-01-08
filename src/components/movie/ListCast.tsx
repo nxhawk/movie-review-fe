@@ -32,7 +32,7 @@ const ListCast = ({ movieId }: Props) => {
   });
 
   return (
-    <Grid container padding={{ xs: 2, md: 3 }}>
+    <Grid container padding={{ xs: 2, md: 3 }} flexDirection="column">
       {/* title */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>
@@ -53,7 +53,7 @@ const ListCast = ({ movieId }: Props) => {
       {getCastOfMovieQuery.isFetching || getCastOfMovieQuery.isLoading ? (
         <CastCardSkeleton />
       ) : (
-        <>
+        <div className="w-full">
           {haveData ? (
             <Swiper
               modules={[Navigation, Autoplay]}
@@ -97,7 +97,7 @@ const ListCast = ({ movieId }: Props) => {
           ) : (
             <div className="my-3">We don&apos;t have any cast added to this movie. You can help by adding some!</div>
           )}
-        </>
+        </div>
       )}
     </Grid>
   );

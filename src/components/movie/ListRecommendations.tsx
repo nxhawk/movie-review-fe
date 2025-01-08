@@ -86,7 +86,7 @@ const ListRecommendations = ({ movieId, title }: Props) => {
   });
 
   return (
-    <Grid container padding={{ xs: 2, md: 3 }}>
+    <Grid container padding={{ xs: 2, md: 3 }} flexDirection="column">
       {/* title */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <Typography variant="h5" sx={{ fontWeight: "bold" }}>

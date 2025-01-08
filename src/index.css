@@ -39,3 +39,11 @@ body,
     /* Handle on hover */;
   }
 }
+
+.gradient {
+  background-image: radial-gradient(at 30% top, #2f331d 0%, rgba(3, 37, 65, 1) 70%);
+}
+
+.inner_content {
+  background-position: center -250px;
+}

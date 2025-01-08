@@ -46,6 +46,13 @@ export const resetPasswordSchema = zod
     path: ["confirmPassword"],
   });
 
+export const watchListSchema = zod.object({
+  name: zod.string().min(1, "Name is required").max(50, "Maximum length is 50 characters").trim(),
+  description: zod.string().max(250, "Maximum length is 250 characters").optional(),
+  isPublic: zod.boolean().default(true),
+});
+
 export type LoginSchema = zod.infer<typeof loginSchema>;
 export type RegisterSchema = zod.infer<typeof registerSchema>;
 export type ResetPasswordSchema = zod.infer<typeof resetPasswordSchema>;
+export type WatchListSchema = zod.infer<typeof watchListSchema>;

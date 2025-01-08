@@ -6,7 +6,18 @@ import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import { TransitionProps } from "@mui/material/transitions";
 import { MovieReview } from "../../types/movie.type";
-import { Avatar, Box, Card, CardHeader, Chip, DialogContent, DialogTitle, IconButton, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Card,
+  CardHeader,
+  Chip,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  styled,
+  Typography,
+} from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { stringAvatar } from "../../utils/avatarConvert";
 import { format } from "date-fns";
@@ -24,6 +35,12 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialog-paper": {
+    margin: theme.spacing(1),
+  },
+}));
+
 const ReviewDialog = ({ review }: Props) => {
   const [open, setOpen] = React.useState(false);
 
@@ -40,7 +57,7 @@ const ReviewDialog = ({ review }: Props) => {
       <Button variant="outlined" onClick={handleClickOpen}>
         Read full the test
       </Button>
-      <Dialog
+      <BootstrapDialog
         open={open}
         TransitionComponent={Transition}
         keepMounted
@@ -97,7 +114,7 @@ const ReviewDialog = ({ review }: Props) => {
             className="font-sans overflow-y-auto"
           ></div>
         </DialogContent>
-      </Dialog>
+      </BootstrapDialog>
     </React.Fragment>
   );
 };

@@ -90,7 +90,7 @@ const PrimaryAppBar = () => {
         <MenuItem
           onClick={() => {
             setAnchorEl(null);
-            navigate(path.PROFILE);
+            navigate(path.WATCHLIST);
           }}
         >
           {auth?.email}

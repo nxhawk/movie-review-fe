@@ -8,15 +8,17 @@ type Props = {
   point: number;
   showText?: boolean;
   size?: "small" | "large";
+  canHover?: boolean;
 };
 
-const UserScore = ({ point, showText = false, size = "small" }: Props) => {
+const UserScore = ({ point, showText = false, size = "small", canHover = false }: Props) => {
   return (
     <div className="flex items-center gap-3">
       <div
         className={cn(
           "cursor-pointer w-[58px] h-[58px] bg-[#081c22] rounded-full flex items-center justify-center",
-          size === "large" && "h-[68px] w-[68px] hover:scale-110 transition-all ease-linear",
+          size === "large" && "h-[68px] w-[68px]",
+          canHover && "hover:scale-110 transition-all ease-linear",
         )}
       >
         <Box sx={{ position: "relative", display: "inline-flex" }}>

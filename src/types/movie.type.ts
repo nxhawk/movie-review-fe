@@ -6,7 +6,8 @@ export type Genre = {
 };
 
 export type Movie = {
-  id: number;
+  id: number | string;
+  tmdb_id?: number;
   adult: boolean;
   backdrop_path?: string;
   poster_path?: string;

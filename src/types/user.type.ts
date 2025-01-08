@@ -1,6 +1,7 @@
 export interface IFullUser {
   email: string;
   name: string;
+  createdAt: string;
 }
 
 export interface IRegisterUserReq {
