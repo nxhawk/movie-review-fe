@@ -9,6 +9,7 @@ import authApi from "../api/base/auth.api";
 import { useQuery } from "@tanstack/react-query";
 import AboutUser from "../components/profile/AboutUser";
 import { cn } from "../utils/cn";
+import userBackground from "../assets/images/user-background.svg";
 
 const UserProfileLayout = () => {
   const navigate = useNavigate();
@@ -42,7 +43,10 @@ const UserProfileLayout = () => {
       {/* User information */}
       <div className="bg-center bg-cover w-full relative">
         <div className="block w-full gradient relative">
-          <div className="bg-user-background bg-transparent bg-no-repeat bg-cover inner_content top-0 left-0">
+          <div
+            className="bg-transparent bg-no-repeat bg-cover inner_content top-0 left-0"
+            style={{ backgroundImage: `url(${userBackground})` }}
+          >
             <div className="p-10">{user && <AboutUser user={user} />}</div>
           </div>
         </div>

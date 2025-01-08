@@ -8,6 +8,7 @@ import watchlistApi from "../../api/base/watchlist.api";
 import { IWatchList } from "../../types/watchlist.type";
 import { getTimeFromNow } from "../../utils/dateFormat";
 import dynamicPath from "../../routes/dynamicPath";
+import defaultMovieBackground from "../../assets/images/default_movie.jpg";
 
 const WatchListPage = () => {
   const navigate = useNavigate();
@@ -43,7 +44,11 @@ const WatchListPage = () => {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
                 {watchLists.map((watchList) => (
-                  <div key={watchList.id} className="bg-default-movie bg-no-repeat bg-cover bg-center relative">
+                  <div
+                    key={watchList.id}
+                    className="bg-no-repeat bg-cover bg-center relative"
+                    style={{ backgroundImage: `url(${defaultMovieBackground})` }}
+                  >
                     <div className="rounded-lg bg-[#032541] text-white p-10 flex flex-col items-center justify-center gap-4 opacity-80 h-[280px] sm:h-[350px]">
                       <Link to={dynamicPath.WATCHLIST_DETAIL(watchList.id)}>
                         <Typography variant="h5" className="italic">
