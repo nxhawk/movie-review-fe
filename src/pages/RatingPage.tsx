@@ -30,7 +30,7 @@ const RatingPage = () => {
         <ListMovieProfileSeleton isGridView={isGridView} />
       ) : (
         <>
-          {listRated?.length === 0 && <div className="mt-2 text-xl">Bạn chưa đánh giá phim nào.</div>}
+          {listRated?.length === 0 && <div className="mt-2 text-xl">Bạn chưa thực hiện đánh giá nào.</div>}
           {isGridView ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 my-5">
               {listRated?.map((rated, idx) => (

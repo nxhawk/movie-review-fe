@@ -3,6 +3,7 @@ import AxiosClient from "./tmdb-client";
 export const URL_PERSON = "person";
 export const URL_CREDITS = "combined_credits";
 export const URL_SEARCH = "search/person";
+
 const personApi = {
   getDetails: async (personId: number | string) => {
     const res = await AxiosClient.get(`${URL_PERSON}/${personId}`);
