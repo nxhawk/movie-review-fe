@@ -4,7 +4,7 @@ import AppBar from "@mui/material/AppBar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Avatar, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
+import { Avatar, Divider, IconButton, Menu, MenuItem, Slide, useScrollTrigger } from "@mui/material";
 import Logo from "../components/common/Logo";
 import path from "../routes/path";
 import toast from "react-hot-toast";
@@ -93,9 +93,35 @@ const PrimaryAppBar = () => {
             navigate(path.WATCHLIST);
           }}
         >
-          {auth?.email}
+          {auth?.name}
         </MenuItem>
       )}
+      <Divider />
+      <MenuItem
+        onClick={() => {
+          setAnchorEl(null);
+          navigate(path.WATCHLIST);
+        }}
+      >
+        Watchlist
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          setAnchorEl(null);
+          navigate(path.FAVORITE);
+        }}
+      >
+        Favorite list
+      </MenuItem>
+      <MenuItem
+        onClick={() => {
+          setAnchorEl(null);
+          navigate(path.RATING);
+        }}
+      >
+        Rating
+      </MenuItem>
+      <Divider />
       <MenuItem onClick={handleLogout}>Logout</MenuItem>
     </Menu>
   );

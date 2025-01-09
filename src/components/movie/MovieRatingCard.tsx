@@ -108,7 +108,7 @@ const MovieRatingCard = ({ movie, index, mood, rating, isGridView = true }: Prop
                 <div className="flex py-1 px-3 justify-center items-center rounded-full text-xs md:text-sm text-white bg-gradient-to-r from-[#fdc170] to-[#d93b63]">
                   Movie
                 </div>
-                <div className="flex py-1 px-3 justify-center items-center rounded-full text-xs w-[142px] md:text-sm text-white bg-[#032541]">
+                <div className="flex py-1 px-3 justify-center items-center rounded-full text-xs w-[150px] md:text-sm text-white bg-[#032541]">
                   {formattedDate}
                 </div>
               </div>
