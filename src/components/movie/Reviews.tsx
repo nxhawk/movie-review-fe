@@ -1,7 +1,7 @@
 import { Box, Chip, Grid, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import movieApi from "../../api/tmdb/movie.api";
+import movieApi from "../../api/base/movie.api";
 import { Pagination } from "../../types/response.type";
 import { MovieReview } from "../../types/movie.type";
 import ReviewMovieCard from "./ReviewMovieCard";

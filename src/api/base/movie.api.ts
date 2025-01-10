@@ -1,20 +1,21 @@
 import AxiosClient from "./base-client";
 
-const PREFIX = "tmdb/";
-export const URL_MOVIE = PREFIX + "movie";
-export const URL_TRENDING = PREFIX + "trending/movie";
-export const URL_TRENDING_DAY = URL_TRENDING + "/day";
-export const URL_TRENDING_WEEK = URL_TRENDING + "/week";
-export const URL_SEARCH = PREFIX + "search/movie";
+const PREFIX = "movie/";
+const URL_TRENDING = PREFIX + "trending";
+const URL_TRENDING_DAY = URL_TRENDING + "-day";
+const URL_TRENDING_WEEK = URL_TRENDING + "-week";
+const URL_SEARCH = PREFIX + "search";
+const URL_CREDIT = "/credits";
+const URL_REVIEWS = "/reviews";
 
 const movieApi = {
   getDetails: async (movieId: number | string) => {
-    const res = await AxiosClient.get(`${URL_MOVIE}/${movieId}`);
+    const res = await AxiosClient.get(`${PREFIX}${movieId}`);
     return res.data;
   },
 
   getVideos: async (movieId: number | string) => {
-    const res = await AxiosClient.get(`${URL_MOVIE}/${movieId}/videos`);
+    const res = await AxiosClient.get(`${PREFIX}${movieId}/videos`);
     return res.data;
   },
 
@@ -28,8 +29,18 @@ const movieApi = {
     return res.data;
   },
 
+  getMovieCredit: async (movieId: number | string) => {
+    const res = await AxiosClient.get(`${PREFIX}${movieId}${URL_CREDIT}`);
+    return res.data;
+  },
+
   getMovieByQuery: async (query: string, page: number) => {
     const res = await AxiosClient.get(`${URL_SEARCH}?query=${query}&page=${page}`);
+    return res.data;
+  },
+
+  getReviews: async (movieId: number | string) => {
+    const res = await AxiosClient.get(`${PREFIX}${movieId}${URL_REVIEWS}`);
     return res.data;
   },
 };

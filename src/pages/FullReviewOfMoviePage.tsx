@@ -3,7 +3,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Pagination } from "../types/response.type";
 import { MovieReview } from "../types/movie.type";
-import movieApi from "../api/tmdb/movie.api";
+import movieApi from "../api/base/movie.api";
 import HeaderBackDrop from "../components/cast/HeaderBackDrop";
 import ResourceNotFound from "../components/common/ResourceNotFound";
 import { Grid } from "@mui/material";

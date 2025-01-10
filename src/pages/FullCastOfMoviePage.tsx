@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { ActorsOfMovie } from "../types/actor.type";
 import { useQuery } from "@tanstack/react-query";
-import movieApi from "../api/tmdb/movie.api";
+import movieApi from "../api/base/movie.api";
 import HeaderBackDrop from "../components/cast/HeaderBackDrop";
 import { Grid } from "@mui/material";
 import ListCast from "../components/cast/ListCast";

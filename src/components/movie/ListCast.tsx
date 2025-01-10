@@ -4,7 +4,7 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
-import movieApi from "../../api/tmdb/movie.api";
+import movieApi from "../../api/base/movie.api";
 import { ActorsOfMovie } from "../../types/actor.type";
 import MovieActorCredit from "./MovieActorCredit";
 import { Link } from "react-router-dom";

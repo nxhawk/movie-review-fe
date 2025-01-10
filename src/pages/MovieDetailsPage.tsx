@@ -2,7 +2,7 @@ import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import React from "react";
 import { useParams } from "react-router-dom";
-import movieApi from "../api/tmdb/movie.api";
+import movieApi from "../api/base/movie.api";
 import { MovieDetail } from "../types/movie.type";
 import MovieCardInfor from "../components/movie/MovieCardInfor";
 import { Box, CircularProgress } from "@mui/material";

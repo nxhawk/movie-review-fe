@@ -15,7 +15,7 @@ const Footer = () => {
         <Grid item xs={12} md={4} marginBottom={2}>
           <Stack alignItems="center" justifyContent={{ xs: "space-between", md: "start" }}>
             <Logo />
-            <Link to={auth?.email ? path.PROFILE : path.LOGIN}>
+            <Link to={auth?.email ? path.WATCHLIST : path.LOGIN}>
               <Button
                 variant="outlined"
                 sx={{ color: "secondary.main", bgcolor: "white", marginTop: "10px", fontWeight: "bold" }}
