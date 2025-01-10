@@ -11,13 +11,14 @@ import HeaderAuthor from "../../components/watchlist/HeaderAuthor";
 import ButtonChangeStyleView from "../../components/common/ButtonChangeStyleView";
 import MovieProfileCard from "../../components/movie/MovieProfileCard";
 import { AuthContext } from "../../contexts/AuthContext";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
 const WatchListDetailPage = () => {
   const { watchlistId } = useParams();
   const { auth } = React.useContext(AuthContext)!;
 
   const [watchlist, setWatchlist] = React.useState<IWatchListDetails | null>(null);
-  const [isGridView, setGridView] = React.useState(false);
+  const { isGridView } = React.useContext(GlobalContext)!;
 
   const getWatchListDetailQuery = useQuery({
     queryKey: ["watchlist-detail", watchlistId],
@@ -56,7 +57,7 @@ const WatchListDetailPage = () => {
           {/* List Movie in WatchList */}
           <div>
             <div className="flex items-center justify-center my-3">
-              <ButtonChangeStyleView isGridView={isGridView} setIsGridView={(isGridView) => setGridView(isGridView)} />
+              <ButtonChangeStyleView />
             </div>
             {/* List Movie */}
             {watchlist.movies && watchlist.movies.length > 0 ? (
