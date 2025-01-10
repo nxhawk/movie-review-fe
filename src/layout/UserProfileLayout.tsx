@@ -10,6 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import AboutUser from "../components/profile/AboutUser";
 import { cn } from "../utils/cn";
 import userBackground from "../assets/images/user-background.png";
+import AboutUserSkeleton from "../components/skeleton/AboutUserSkeleton";
 
 const UserProfileLayout = () => {
   const navigate = useNavigate();
@@ -47,7 +48,10 @@ const UserProfileLayout = () => {
             className="bg-transparent bg-no-repeat bg-cover inner_content top-0 left-0"
             style={{ backgroundImage: `url(${userBackground})` }}
           >
-            <div className="p-10">{user && <AboutUser user={user} />}</div>
+            <div className="p-10">
+              {/* User information */}
+              {user ? <AboutUser user={user} /> : <AboutUserSkeleton />}
+            </div>
           </div>
         </div>
       </div>

@@ -14,6 +14,10 @@ import authApi from "../api/base/auth.api";
 import SearchIcon from "@mui/icons-material/Search";
 import CloseIcon from "@mui/icons-material/Close";
 import { SearchBar } from "./SearchBar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import StarIcon from "@mui/icons-material/Star";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import LogoutIcon from "@mui/icons-material/Logout";
 
 interface Props {
   window?: () => Window;
@@ -92,6 +96,7 @@ const PrimaryAppBar = () => {
             setAnchorEl(null);
             navigate(path.WATCHLIST);
           }}
+          sx={{ color: "#032541" }}
         >
           {auth?.name}
         </MenuItem>
@@ -102,7 +107,9 @@ const PrimaryAppBar = () => {
           setAnchorEl(null);
           navigate(path.WATCHLIST);
         }}
+        sx={{ display: "flex", alignItems: "center", gap: "10px", color: "#2b2ff7", fontWeight: 500 }}
       >
+        <FormatListBulletedIcon />
         Watchlist
       </MenuItem>
       <MenuItem
@@ -110,7 +117,9 @@ const PrimaryAppBar = () => {
           setAnchorEl(null);
           navigate(path.FAVORITE);
         }}
+        sx={{ display: "flex", alignItems: "center", gap: "10px", color: "#e91e63", fontWeight: 500 }}
       >
+        <FavoriteIcon />
         Favorite list
       </MenuItem>
       <MenuItem
@@ -118,11 +127,19 @@ const PrimaryAppBar = () => {
           setAnchorEl(null);
           navigate(path.RATING);
         }}
+        sx={{ display: "flex", alignItems: "center", gap: "10px", color: "#faaf00", fontWeight: 500 }}
       >
+        <StarIcon />
         Rating
       </MenuItem>
       <Divider />
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+      <MenuItem
+        onClick={handleLogout}
+        sx={{ display: "flex", alignItems: "center", gap: "10px", color: "#FF2929", fontWeight: 500 }}
+      >
+        <LogoutIcon />
+        Logout
+      </MenuItem>
     </Menu>
   );
 

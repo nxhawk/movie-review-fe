@@ -6,10 +6,11 @@ import { IListFavorite } from "../types/favorite.type";
 import MovieProfileCard from "../components/movie/MovieProfileCard";
 import ButtonChangeStyleView from "../components/common/ButtonChangeStyleView";
 import ListMovieProfileSeleton from "../components/skeleton/ListMovieProfileSkeleton";
+import { GlobalContext } from "../contexts/GlobalContext";
 
 const FavoriteMoviePage = () => {
   const [listFavorite, setListFavorite] = React.useState<IListFavorite | null>(null);
-  const [isGridView, setGridView] = React.useState(false);
+  const { isGridView } = React.useContext(GlobalContext)!;
 
   const getFavoriteListQuery = useQuery({
     queryKey: ["favorite-list"],
@@ -24,7 +25,7 @@ const FavoriteMoviePage = () => {
     <div>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <Typography variant="h5">Danh sách yêu thích</Typography>
-        <ButtonChangeStyleView isGridView={isGridView} setIsGridView={(isGridView) => setGridView(isGridView)} />
+        <ButtonChangeStyleView />
       </div>
       {getFavoriteListQuery.isLoading || getFavoriteListQuery.isFetching ? (
         <ListMovieProfileSeleton isGridView={isGridView} />

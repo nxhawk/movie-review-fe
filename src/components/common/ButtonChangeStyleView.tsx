@@ -1,13 +1,11 @@
 import ViewStreamIcon from "@mui/icons-material/ViewStream";
 import ViewWeekIcon from "@mui/icons-material/ViewWeek";
+import React from "react";
+import { GlobalContext } from "../../contexts/GlobalContext";
 
-type Props = {
-  isGridView: boolean;
-  // eslint-disable-next-line no-unused-vars
-  setIsGridView: (isGridView: boolean) => void;
-};
+const ButtonChangeStyleView = () => {
+  const { isGridView, setIsGridView } = React.useContext(GlobalContext)!;
 
-const ButtonChangeStyleView = ({ isGridView, setIsGridView }: Props) => {
   return (
     <button
       className="px-2 py-1 rounded-full border border-solid border-slate-500 md:px-4 font-semibold"

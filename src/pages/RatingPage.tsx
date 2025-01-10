@@ -6,10 +6,11 @@ import ratingApi from "../api/base/rating.api";
 import { IRated } from "../types/rating.type";
 import ListMovieProfileSeleton from "../components/skeleton/ListMovieProfileSkeleton";
 import MovieRatingCard from "../components/movie/MovieRatingCard";
+import { GlobalContext } from "../contexts/GlobalContext";
 
 const RatingPage = () => {
   const [listRated, setListRated] = React.useState<IRated[] | null>(null);
-  const [isGridView, setGridView] = React.useState(false);
+  const { isGridView } = React.useContext(GlobalContext)!;
 
   const getRatedListQuery = useQuery({
     queryKey: ["rated-list"],
@@ -24,7 +25,7 @@ const RatingPage = () => {
     <div>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <Typography variant="h5">Movie đã đánh giá</Typography>
-        <ButtonChangeStyleView isGridView={isGridView} setIsGridView={(isGridView) => setGridView(isGridView)} />
+        <ButtonChangeStyleView />
       </div>
       {getRatedListQuery.isLoading || getRatedListQuery.isFetching ? (
         <ListMovieProfileSeleton isGridView={isGridView} />

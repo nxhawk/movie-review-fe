@@ -16,6 +16,7 @@ const PersonProfilePage = () => {
   const getPersonDetailQuery = useQuery({
     queryKey: ["person-detail", personId],
     queryFn: async () => {
+      setPerson(null);
       const response: PersonDetail = await personApi.getDetails(personId!);
       metadata.personProfileMeta.title = `${response.name} - Personal Info - CineMatch`;
       setPerson(response);

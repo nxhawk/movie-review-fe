@@ -19,6 +19,7 @@ const MovieDetailsPage = () => {
   const getMovieDetailQuery = useQuery({
     queryKey: ["movie-detail", movieId],
     queryFn: async () => {
+      setMovie(null);
       const response: MovieDetail = await movieApi.getDetails(movieId!);
       metadata.movieDetailsMeta.title = `${response.title} - Movie Details - CineMatch`;
       setMovie(response);

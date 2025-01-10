@@ -6,6 +6,7 @@ import { AuthProvider } from "./contexts/AuthContext.tsx";
 import { ThemeProvider } from "@emotion/react";
 import theme from "./themes/theme.ts";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { GlobalProvider } from "./contexts/GlobalContext.tsx";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -20,11 +21,13 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </AuthProvider>
+      <GlobalProvider>
+        <AuthProvider>
+          <ThemeProvider theme={theme}>
+            <App />
+          </ThemeProvider>
+        </AuthProvider>
+      </GlobalProvider>
     </QueryClientProvider>
   </React.StrictMode>,
 );
