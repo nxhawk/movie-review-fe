@@ -7,7 +7,7 @@ const URL_TRENDING_WEEK = URL_TRENDING + "-week";
 const URL_SEARCH = PREFIX + "search";
 const URL_CREDIT = "/credits";
 const URL_REVIEWS = "/reviews";
-
+const URL_TRAILER_POPULAR = PREFIX + "release-date-range";
 const movieApi = {
   getDetails: async (movieId: number | string) => {
     const res = await AxiosClient.get(`${PREFIX}${movieId}`);
@@ -41,6 +41,12 @@ const movieApi = {
 
   getReviews: async (movieId: number | string) => {
     const res = await AxiosClient.get(`${PREFIX}${movieId}${URL_REVIEWS}`);
+    return res.data;
+  },
+
+  getReleaseDateRange: async () => {
+    const res = await AxiosClient.get(URL_TRAILER_POPULAR);
+    console.log(res);
     return res.data;
   },
 };

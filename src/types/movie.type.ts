@@ -117,3 +117,14 @@ export type MovieReview = {
   updated_at: string;
   url: string;
 };
+
+export type MovieTrailer = {
+  id: number | string;
+  tmdb_id: number;
+  backdrop_path?: string;
+  poster_path?: string;
+  original_title: string;
+  title: string;
+  release_date: string;
+  trailers: Video[];
+};

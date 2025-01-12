@@ -1,24 +1,25 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import React from "react";
-import MovieSimpleCard from "../movie/MovieSimpleCard.tsx";
 import movieApi from "../../api/base/movie.api";
-import { Movie } from "../../types/movie.type.ts";
+import { MovieTrailer } from "../../types/movie.type.ts";
 import TextGradient from "../common/TextGradient.tsx";
 import { Typography } from "@mui/material";
 import MovieCardSkeleton from "../skeleton/MovieCardSkeleton.tsx";
 import { useQuery } from "@tanstack/react-query";
+import MovieTrailerCard from "../movie/MovieTrailerCard.tsx";
 
 const LatestTrailer = () => {
   const [subType, setSubType] = React.useState("popular");
-  const [movies, setMovies] = React.useState<Movie[]>([]);
+  const [movies, setMovies] = React.useState<MovieTrailer[]>([]);
 
   const { isLoading } = useQuery({
-    queryKey: ["trendingMovies", subType],
+    queryKey: ["latestTrailers", subType],
     queryFn: async () => {
-      const response = subType === "popular" ? await movieApi.getTodayTrending() : await movieApi.getThisWeekTrending();
-      setMovies(response.results);
-      return response.results;
+      const response =
+        subType === "popular" ? await movieApi.getReleaseDateRange() : await movieApi.getReleaseDateRange();
+      setMovies(response);
+      return response;
     },
   });
 
@@ -75,7 +76,7 @@ const LatestTrailer = () => {
         ) : (
           <div className="relative custom-scrollbar-h flex overflow-auto gap-3 pb-5 px-5 md:px-10">
             {movies.map((movie) => (
-              <MovieSimpleCard key={movie.id} movie={movie} />
+              <MovieTrailerCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
