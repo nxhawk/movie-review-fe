@@ -3,10 +3,10 @@ import AppBar from "./AppBar";
 import Footer from "./Footer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
+import Chatbox from "../components/chatbox/Chatbox";
 
 const Layout = () => {
   const matches = useMediaQuery("(max-width:600px)");
-
   return (
     <>
       <AppBar />
@@ -15,6 +15,9 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+
+      {/* Chatbox */}
+      <Chatbox />
     </>
   );
 };

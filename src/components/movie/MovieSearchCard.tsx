@@ -6,6 +6,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath.ts";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { getCorrectId } from "../../utils/helper.ts";
 
 const MovieSearchCard = ({ movie }: { movie: Movie }) => {
   const formattedDate = React.useMemo(() => {
@@ -18,7 +19,7 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
   }, [movie.release_date]);
 
   return (
-    <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="max-h-fit w-full mb-4 px-3">
+    <Link to={dynamicPath.MOVIE_DETAILS(getCorrectId(movie.tmdb_id, movie.id))} className="w-full block mb-4 px-1">
       <Card
         sx={{
           boxShadow: "0 2px 8px rgba(0, 0, 0, .5)",
