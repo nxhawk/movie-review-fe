@@ -9,14 +9,14 @@ import { Typography } from "@mui/material";
 import MovieCardSkeleton from "../skeleton/MovieCardSkeleton.tsx";
 import { useQuery } from "@tanstack/react-query";
 
-const Trending = () => {
-  const [subType, setSubType] = React.useState("today");
+const LatestTrailer = () => {
+  const [subType, setSubType] = React.useState("popular");
   const [movies, setMovies] = React.useState<Movie[]>([]);
 
   const { isLoading } = useQuery({
     queryKey: ["trendingMovies", subType],
     queryFn: async () => {
-      const response = subType === "today" ? await movieApi.getTodayTrending() : await movieApi.getThisWeekTrending();
+      const response = subType === "popular" ? await movieApi.getTodayTrending() : await movieApi.getThisWeekTrending();
       setMovies(response.results);
       return response.results;
     },
@@ -26,14 +26,14 @@ const Trending = () => {
     <div className="min-h-40 md:min-h-56 xl:min-h-80 my-5">
       <div className="flex items-center gap-4 pl-5 md:pl-10">
         <Typography color="primary.main" fontWeight={"bold"} fontSize={{ xs: "1.2em", md: "1.8em", xl: "2em" }}>
-          Trending
+          Latest Trailer
         </Typography>
         <Box className="relative border-2 border-cyan-950 rounded-full flex w-fit">
           <Box
             className="absolute w-[100px] h-[32px] rounded-full transition-all duration-500 ease"
             bgcolor={"primary.main"}
             style={{
-              transform: `translateX(${subType === "today" ? 0 : "100px"})`,
+              transform: `translateX(${subType === "popular" ? 0 : "100px"})`,
             }}
           />
           <Button
@@ -46,9 +46,9 @@ const Trending = () => {
               borderRadius: "20px",
               transition: "all 0.1s ease 0.1s",
             }}
-            onClick={() => setSubType("today")}
+            onClick={() => setSubType("popular")}
           >
-            {subType === "today" ? <TextGradient text="Today" /> : "Today"}
+            {subType === "popular" ? <TextGradient text="Popular" /> : "Popular"}
           </Button>
           <Button
             disableRipple
@@ -60,9 +60,9 @@ const Trending = () => {
               borderRadius: "20px",
               transition: "all 0.1s ease 0.1s",
             }}
-            onClick={() => setSubType("weekly")}
+            onClick={() => setSubType("theaters")}
           >
-            {subType === "weekly" ? <TextGradient text="This Week" /> : "This Week"}
+            {subType === "theaters" ? <TextGradient text="In Theaters" /> : "In Theaters"}
           </Button>
         </Box>
       </div>
@@ -84,4 +84,4 @@ const Trending = () => {
   );
 };
 
-export default Trending;
+export default LatestTrailer;
