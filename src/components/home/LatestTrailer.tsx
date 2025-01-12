@@ -17,7 +17,7 @@ const LatestTrailer = () => {
     queryKey: ["latestTrailers", subType],
     queryFn: async () => {
       const response =
-        subType === "popular" ? await movieApi.getReleaseDateRange() : await movieApi.getReleaseDateRange();
+        subType === "popular" ? await movieApi.getReleaseDateRange() : await movieApi.getNowPlayingTrailers();
       setMovies(response);
       return response;
     },

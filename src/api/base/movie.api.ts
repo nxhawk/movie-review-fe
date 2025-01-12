@@ -8,6 +8,7 @@ const URL_SEARCH = PREFIX + "search";
 const URL_CREDIT = "/credits";
 const URL_REVIEWS = "/reviews";
 const URL_TRAILER_POPULAR = PREFIX + "release-date-range";
+const URL_TRAILER_NOW_PLAYING = PREFIX + "now-playing-trailers";
 const movieApi = {
   getDetails: async (movieId: number | string) => {
     const res = await AxiosClient.get(`${PREFIX}${movieId}`);
@@ -47,6 +48,10 @@ const movieApi = {
   getReleaseDateRange: async () => {
     const res = await AxiosClient.get(URL_TRAILER_POPULAR);
     console.log(res);
+    return res.data;
+  },
+  getNowPlayingTrailers: async () => {
+    const res = await AxiosClient.get(URL_TRAILER_NOW_PLAYING);
     return res.data;
   },
 };
