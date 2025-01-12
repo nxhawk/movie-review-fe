@@ -19,6 +19,7 @@ import RouteCardResult from "./RouteCardResult";
 import ZoomOutMapIcon from "@mui/icons-material/ZoomOutMap";
 import ZoomInMapIcon from "@mui/icons-material/ZoomInMap";
 import MovieSearchResult from "./MovieSearchResult";
+import ButtonRecord from "./ButtonRecord";
 
 const Chatbox = () => {
   const [open, setOpen] = React.useState(false);
@@ -29,6 +30,7 @@ const Chatbox = () => {
   const [movies, setMovies] = React.useState<MovieDetail[] | null>(null);
   const [showResult, setShowResult] = React.useState(false);
   const [fullScreen, setFullScreen] = React.useState(false);
+  const [isRecording, setIsRecording] = React.useState(false);
 
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue == 0 ? ETabToggle.AI_NAVIGATION : ETabToggle.LLM_SEARCH);
@@ -36,7 +38,7 @@ const Chatbox = () => {
 
   const handleClose = () => {
     setOpen(false);
-    setShowResult(false);
+    setError("");
   };
   const closeResult = () => setShowResult(false);
 
@@ -73,7 +75,7 @@ const Chatbox = () => {
     }
   };
 
-  const isLoading = aiNavigationMutation.isPending || llmSearchMutation.isPending;
+  const isLoading = aiNavigationMutation.isPending || llmSearchMutation.isPending || isRecording;
 
   return (
     <>
@@ -132,6 +134,9 @@ const Chatbox = () => {
                 <IconButton aria-label="clear" size="small" onClick={() => setQuery("")} disabled={isLoading}>
                   <ClearIcon color="error" />
                 </IconButton>
+              </div>
+              <div className="absolute bottom-3 right-3" style={{ display: query ? "none" : "block" }}>
+                <ButtonRecord setQuery={setQuery} open={open} setIsRecording={setIsRecording} />
               </div>
             </div>
             <div className="my-3">
