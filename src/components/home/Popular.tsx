@@ -26,7 +26,7 @@ const Popular = () => {
           What's Popular
         </Typography>
       </div>
-      <div className="mt-5">
+      <div className="mt-1">
         {isLoading ? (
           <div className="pl-5 md:pl-10">
             <MovieCardSkeleton />

@@ -79,7 +79,7 @@ const LatestTrailer = () => {
               </Box>
             </div>
 
-            <div className="mt-5">
+            <div className="mt-1">
               {isLoading ? (
                 <TrailerCardSkeleton />
               ) : (
