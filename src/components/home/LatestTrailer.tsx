@@ -83,7 +83,7 @@ const LatestTrailer = () => {
               {isLoading ? (
                 <TrailerCardSkeleton />
               ) : (
-                <div className="relative custom-scrollbar-h flex overflow-auto gap-3 pb-8 px-5 md:px-10">
+                <div className="relative custom-scrollbar-h flex overflow-auto gap-1 pb-8 px-5 md:px-10">
                   {movies.map((movie) => (
                     <MovieTrailerCard key={movie.id} movie={movie} />
                   ))}

@@ -29,14 +29,14 @@ const MovieRectangleCard = ({ movie }: { movie: MovieTrailer }) => {
   };
 
   return (
-    <div>
+    <div className="p-1.5">
       <Card
         sx={{
           width: "300px",
           boxShadow: "0 2px 8px rgba(0, 0, 0, 0.5)",
           background: "#000",
-          overflow: "hidden",
           borderRadius: "15px",
+          overflow: "hidden",
           position: "relative",
           transition: "transform 0.3s ease",
           "&:hover": {

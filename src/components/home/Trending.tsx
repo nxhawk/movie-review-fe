@@ -73,7 +73,7 @@ const Trending = () => {
             <MovieCardSkeleton />
           </div>
         ) : (
-          <div className="relative custom-scrollbar-h flex overflow-auto gap-3 pb-5 px-5 md:px-10">
+          <div className="relative custom-scrollbar-h flex overflow-auto gap-1 pb-5 px-5 md:px-10">
             {movies.map((movie) => (
               <MovieSimpleCard key={movie.id} movie={movie} />
             ))}
