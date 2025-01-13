@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
@@ -7,7 +8,6 @@ import { Box, Button, Chip, FormControl, MenuItem, Select, SelectChangeEvent, St
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import React, { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
 import movieApi from "../../api/base/movie.api.ts";
 import { Dayjs } from "dayjs";
@@ -16,16 +16,16 @@ import { Genre } from "../../types/movie.type.ts";
 interface FilterOptionsProps {
   // eslint-disable-next-line no-unused-vars
   onApplyFilters: (params: any) => void;
+  onClearFilters: () => void;
 }
 
-const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
+const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFilters }) => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [value, setValue] = useState<number[]>([0, 10]);
   const [sortValue, setSortValue] = useState<string | undefined>("popularity.desc");
   const [releaseDateFrom, setReleaseDateFrom] = useState<Dayjs | null>(null);
   const [releaseDateTo, setReleaseDateTo] = useState<Dayjs | null>(null);
-  const [filtersChanged, setFiltersChanged] = useState<boolean>(false);
 
   const marks = [
     { value: 0, label: "0" },
@@ -46,7 +46,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
-    setFiltersChanged(true);
+    applyFilters();
   };
 
   const handleChipClick = (genreId: number) => {
@@ -55,7 +55,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
     } else {
       setSelectedGenres([...selectedGenres, genreId]);
     }
-    setFiltersChanged(true);
+    applyFilters();
   };
 
   const handleSortChange = (event: SelectChangeEvent) => {
@@ -72,16 +72,16 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
     ];
     if (validSortValues.includes(value)) {
       setSortValue(value);
-      setFiltersChanged(true);
+      applyFilters();
     }
   };
 
   const handleDateChange = (setter: React.Dispatch<React.SetStateAction<Dayjs | null>>) => (newValue: Dayjs | null) => {
     setter(newValue);
-    setFiltersChanged(true);
+    applyFilters();
   };
 
-  const handleApplyFilters = () => {
+  const applyFilters = () => {
     const params: any = {
       sort_by: sortValue,
       "vote_average.gte": value[0],
@@ -100,7 +100,15 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
     }
 
     onApplyFilters(params);
-    setFiltersChanged(false);
+  };
+
+  const clearFilters = () => {
+    setSelectedGenres([]);
+    setValue([0, 10]);
+    setSortValue("popularity.desc");
+    setReleaseDateFrom(null);
+    setReleaseDateTo(null);
+    onClearFilters();
   };
 
   return (
@@ -238,11 +246,10 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
           variant="contained"
           color="primary"
           className="w-full"
-          onClick={handleApplyFilters}
-          disabled={!filtersChanged}
+          onClick={clearFilters}
           sx={{ borderRadius: "0.75rem" }}
         >
-          Apply Filters
+          Clear Filters
         </Button>
       </Box>
     </>

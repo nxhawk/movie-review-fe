@@ -15,6 +15,7 @@ interface SearchResultsContainerProps {
   onPageChange: (event: React.ChangeEvent<unknown>, value: number) => void;
   // eslint-disable-next-line no-unused-vars
   onApplyFilters: (params: any) => void;
+  onClearFilters: () => void;
 }
 
 const SearchResultsContainer: React.FC<SearchResultsContainerProps> = ({
@@ -26,17 +27,18 @@ const SearchResultsContainer: React.FC<SearchResultsContainerProps> = ({
   page,
   onPageChange,
   onApplyFilters,
+  onClearFilters,
 }) => {
   return (
     <>
       <div id="filter-option-container">
         {selectedType === "adv_search" ? (
           <div className="w-full block md:hidden px-2">
-            <FilterOptions onApplyFilters={onApplyFilters} />
+            <FilterOptions onApplyFilters={onApplyFilters} onClearFilters={onClearFilters} />
           </div>
         ) : null}
       </div>
-      <Stack direction={"column"} gap={2} className="w-1/2 justify-center items-center">
+      <Stack direction={"column"} gap={2} className="w-full md:w-1/2 items-center">
         {selectedType === "movies" || selectedType === "adv_search" ? (
           <SearchMoviesList movies={movies} />
         ) : (
@@ -79,7 +81,9 @@ const SearchResultsContainer: React.FC<SearchResultsContainerProps> = ({
       </Stack>
       <div id="filter-option-container" className="w-full md:w-1/4">
         <div className="ml-5 w-4/5 hidden md:block">
-          {selectedType === "adv_search" ? <FilterOptions onApplyFilters={onApplyFilters} /> : null}
+          {selectedType === "adv_search" ? (
+            <FilterOptions onApplyFilters={onApplyFilters} onClearFilters={onClearFilters} />
+          ) : null}
         </div>
       </div>
     </>

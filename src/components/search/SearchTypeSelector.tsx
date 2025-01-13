@@ -1,6 +1,5 @@
 import React from "react";
 import { Box, Chip, ListItemButton, ListItemText, Stack, Typography } from "@mui/material";
-import List from "@mui/material/List";
 
 interface SearchTypeSelectorProps {
   movieCount: number;
@@ -17,8 +16,11 @@ const SearchTypeSelector: React.FC<SearchTypeSelectorProps> = ({
   onSelectType,
 }) => {
   return (
-    <div className="w-full md:w-1/4 flex justify-end px-2" id="search-type-selector">
-      <Stack direction={"column"} className="w-4/5 mr-5 text-center border-cyan-200 border rounded-xl h-fit">
+    <div className="w-full md:w-1/4 flex justify-end px-2 pb-5" id="search-type-selector">
+      <Stack
+        direction={"column"}
+        className="w-full md:w-4/5 md:mr-5 text-center border-cyan-200 border rounded-xl h-fit"
+      >
         <Box bgcolor={"primary.main"} className="px-3 py-2 rounded-t-xl">
           <Typography
             component="div"
@@ -30,7 +32,7 @@ const SearchTypeSelector: React.FC<SearchTypeSelectorProps> = ({
           </Typography>
         </Box>
         <Box sx={{ width: "100%", bgcolor: "background.paper" }} className="rounded-b-xl">
-          <List sx={{ flex: 1, flexDirection: { xs: "row", md: "column" } }}>
+          <Stack sx={{ flex: 1, flexDirection: { xs: "row", md: "column" } }}>
             <ListItemButton
               component="div"
               sx={{
@@ -72,7 +74,7 @@ const SearchTypeSelector: React.FC<SearchTypeSelectorProps> = ({
             >
               <ListItemText primary="Advanced Search" />
             </ListItemButton>
-          </List>
+          </Stack>
         </Box>
       </Stack>
     </div>

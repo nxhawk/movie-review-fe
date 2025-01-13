@@ -61,7 +61,6 @@ const movieApi = {
 
   getReleaseDateRange: async () => {
     const res = await AxiosClient.get(URL_TRAILER_POPULAR);
-    console.log(res);
     return res.data;
   },
 

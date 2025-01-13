@@ -36,11 +36,22 @@ const SearchPage = () => {
 
   const handleClear = () => {
     setSearchValue("");
+    setMovies([]);
+    setAdvancedMovies([]);
+    setPeople([]);
+    setTotalMovieResults(0);
+    setTotalPeopleResults(0);
   };
 
   const handleSearch = (query: string, page: number = 1) => {
     if (query.trim()) {
-      navigate(`${path.SEARCH_MOVIE}?query=${query}&page=${page}`);
+      if (selectedType === "adv_search") {
+        handleApplyFilters({ ...advancedSearchParams, query, page });
+      } else {
+        navigate(`${path.SEARCH_MOVIE}?query=${query}&page=${page}`);
+      }
+    } else {
+      handleClear();
     }
   };
 
@@ -65,13 +76,19 @@ const SearchPage = () => {
     setSelectedType("adv_search");
   };
 
+  const handleClearFilters = () => {
+    setAdvancedSearchParams(null);
+    setPage(1);
+    handleApplyFilters(advancedSearchParams);
+  };
+
   const handleSelectType = (type: string) => {
     setSelectedType(type);
     setPage(1);
     if (type === "adv_search") {
       handleApplyFilters({});
     } else {
-      handleSearch(searchValue, 1);
+      navigate(`${path.SEARCH_MOVIE}?query=${searchValue}&page=1`);
     }
   };
 
@@ -80,6 +97,7 @@ const SearchPage = () => {
     queryFn: async () => {
       metadata.searchMeta.title = `${searchValue} - Searching page ${page} - CineMatch`;
       if (selectedType === "adv_search") {
+        setAdvancedSearchParams({ ...advancedSearchParams, query: searchValue, page: page });
         const movieAdvancedResponse = await movieApi.getMoviesByAdvancedSearch(advancedSearchParams);
         setAdvancedMovies(movieAdvancedResponse.results);
         setTotalAdvancedMoviePages(movieAdvancedResponse.total_pages);
@@ -96,16 +114,6 @@ const SearchPage = () => {
       return [];
     },
   });
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     const movieResponse = await movieApi.getMovieByQuery(searchValue, page);
-  //     const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
-  //     setTotalMovieResults(movieResponse.total_results);
-  //     setTotalPeopleResults(peopleResponse.total_results);
-  //   };
-  //   fetchData().then();
-  // }, [searchValue, page]);
 
   return (
     <DocumentMeta {...metadata.searchMeta}>
@@ -135,6 +143,7 @@ const SearchPage = () => {
             page={page}
             onPageChange={handlePageChange}
             onApplyFilters={handleApplyFilters}
+            onClearFilters={handleClearFilters}
           />
         </Stack>
       </div>
