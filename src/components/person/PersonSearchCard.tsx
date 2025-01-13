@@ -1,11 +1,17 @@
 import { PersonDetail } from "../../types/person.type";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath";
 import { Card, CardActionArea, CardContent, Grid } from "@mui/material";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 
 const PersonSearchCard = ({ person }: { person: PersonDetail }) => {
+  const navigate = useNavigate();
+
+  const handleMovieClick = (movieId: string | number) => {
+    navigate(dynamicPath.MOVIE_DETAILS(movieId));
+  };
+
   return (
     <Link to={dynamicPath.PERSON_DETAILS(person.id)} className="max-h-fit w-full mb-4 px-3">
       <Card
@@ -39,10 +45,12 @@ const PersonSearchCard = ({ person }: { person: PersonDetail }) => {
                     Know for:{" "}
                     {person.known_for &&
                       person.known_for.map((movie, index) => (
-                        <span key={movie.id}>
-                          <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} className="text-blue-500">
-                            {movie.title ? movie.title : movie.original_title}
-                          </Link>
+                        <span
+                          key={movie.id}
+                          onClick={() => handleMovieClick(movie.id)}
+                          className="text-blue-500 cursor-pointer"
+                        >
+                          {movie.title ? movie.title : movie.original_title}
                           {index < person.known_for.length - 1 && ", "}
                         </span>
                       ))}

@@ -3,6 +3,7 @@ export type MovieType = "now_playing" | "popular" | "top_rated" | "upcoming";
 export type Genre = {
   id: number;
   name: string;
+  tmdb_id: number;
 };
 
 export type Movie = {

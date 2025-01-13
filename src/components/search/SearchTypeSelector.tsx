@@ -17,8 +17,8 @@ const SearchTypeSelector: React.FC<SearchTypeSelectorProps> = ({
   onSelectType,
 }) => {
   return (
-    <div className="w-full md:w-1/5 flex justify-end px-2" id="search-type-selector">
-      <Stack direction={"column"} className="w-4/5 text-center border-cyan-200 border rounded-xl h-fit">
+    <div className="w-full md:w-1/4 flex justify-end px-2" id="search-type-selector">
+      <Stack direction={"column"} className="w-4/5 mr-5 text-center border-cyan-200 border rounded-xl h-fit">
         <Box bgcolor={"primary.main"} className="px-3 py-2 rounded-t-xl">
           <Typography
             component="div"

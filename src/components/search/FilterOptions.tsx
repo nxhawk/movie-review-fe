@@ -11,6 +11,7 @@ import React, { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
 import movieApi from "../../api/base/movie.api.ts";
 import { Dayjs } from "dayjs";
+import { Genre } from "../../types/movie.type.ts";
 
 interface FilterOptionsProps {
   // eslint-disable-next-line no-unused-vars
@@ -19,7 +20,7 @@ interface FilterOptionsProps {
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
-  const [genres, setGenres] = useState<{ id: number; name: string }[]>([]);
+  const [genres, setGenres] = useState<Genre[]>([]);
   const [value, setValue] = useState<number[]>([0, 10]);
   const [sortValue, setSortValue] = useState<string | undefined>("popularity.desc");
   const [releaseDateFrom, setReleaseDateFrom] = useState<Dayjs | null>(null);
@@ -205,11 +206,11 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
             <Stack direction="row" spacing={1} flexWrap="wrap">
               {genres.map((genre) => (
                 <Chip
-                  key={genre.id}
+                  key={genre.tmdb_id}
                   label={genre.name}
                   clickable
-                  onClick={() => handleChipClick(genre.id)}
-                  color={selectedGenres.includes(genre.id) ? "primary" : "default"}
+                  onClick={() => handleChipClick(genre.tmdb_id)}
+                  color={selectedGenres.includes(genre.tmdb_id) ? "primary" : "default"}
                   style={{ margin: "4px" }}
                 />
               ))}
@@ -232,7 +233,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters }) => {
           </Stack>
         </AccordionDetails>
       </Accordion>
-      <Box className="pt-2 rounded-xl">
+      <Box className="pt-2 rounded-xl pb-10">
         <Button
           variant="contained"
           color="primary"

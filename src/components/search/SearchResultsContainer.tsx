@@ -36,14 +36,14 @@ const SearchResultsContainer: React.FC<SearchResultsContainerProps> = ({
           </div>
         ) : null}
       </div>
-      <Stack direction={"column"} gap={2} className="w-3/5 justify-center items-center">
+      <Stack direction={"column"} gap={2} className="w-1/2 justify-center items-center">
         {selectedType === "movies" || selectedType === "adv_search" ? (
           <SearchMoviesList movies={movies} />
         ) : (
           <SearchPeopleList people={people} />
         )}
         <div id="pagination-container">
-          {(selectedType === "movies" || selectedType === "adv_search") && movies.length > 0 && (
+          {(selectedType === "movies" || selectedType === "adv_search") && movies && movies.length > 0 && (
             <>
               <Box sx={{ display: { xs: "block", md: "none" } }} className="mt-2 mb-5">
                 <Pagination
@@ -77,8 +77,8 @@ const SearchResultsContainer: React.FC<SearchResultsContainerProps> = ({
           )}
         </div>
       </Stack>
-      <div id="filter-option-container" className="w-full md:w-1/5">
-        <div className="w-4/5 hidden md:block">
+      <div id="filter-option-container" className="w-full md:w-1/4">
+        <div className="ml-5 w-4/5 hidden md:block">
           {selectedType === "adv_search" ? <FilterOptions onApplyFilters={onApplyFilters} /> : null}
         </div>
       </div>

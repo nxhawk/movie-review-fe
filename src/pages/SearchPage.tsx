@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -61,7 +61,7 @@ const SearchPage = () => {
   };
 
   const handleApplyFilters = (params: any) => {
-    setAdvancedSearchParams(params);
+    setAdvancedSearchParams({ ...params, query: searchValue });
     setSelectedType("adv_search");
   };
 
@@ -97,15 +97,15 @@ const SearchPage = () => {
     },
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const movieResponse = await movieApi.getMovieByQuery(searchValue, page);
-      const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
-      setTotalMovieResults(movieResponse.total_results);
-      setTotalPeopleResults(peopleResponse.total_results);
-    };
-    fetchData().then();
-  }, [searchValue, page]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const movieResponse = await movieApi.getMovieByQuery(searchValue, page);
+  //     const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
+  //     setTotalMovieResults(movieResponse.total_results);
+  //     setTotalPeopleResults(peopleResponse.total_results);
+  //   };
+  //   fetchData().then();
+  // }, [searchValue, page]);
 
   return (
     <DocumentMeta {...metadata.searchMeta}>
@@ -119,7 +119,7 @@ const SearchPage = () => {
             onKeyUp={handleKeyUp}
           />
         </div>
-        <Stack direction={{ xs: "column", md: "row" }} gap={2} className="w-full justify-center" id="body-container">
+        <Stack direction={{ xs: "column", md: "row" }} className="w-full justify-center" id="body-container">
           <SearchTypeSelector
             movieCount={totalMovieResults}
             peopleCount={totalPeopleResults}
