@@ -4,7 +4,7 @@ import Trending from "../components/home/Trending.tsx";
 import metadata from "../utils/metadata/index.ts";
 import LatestTrailer from "../components/home/LatestTrailer.tsx";
 import Popular from "../components/home/Popular.tsx";
-// import TopRated from "../components/home/TopRated.tsx";
+import TopRated from "../components/home/TopRated.tsx";
 
 const HomePage = () => {
   return (
@@ -13,7 +13,7 @@ const HomePage = () => {
       <Trending />
       <LatestTrailer />
       <Popular />
-      {/*<TopRated />*/}
+      <TopRated />
     </DocumentMeta>
   );
 };
