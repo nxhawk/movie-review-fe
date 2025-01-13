@@ -13,6 +13,7 @@ const URL_TRAILER_NOW_PLAYING = PREFIX + "now-playing-trailers";
 const URL_POPULAR = PREFIX + "popular";
 const URL_TOP_RATED = PREFIX + "top_rated";
 const URL_RECOMMENDED_MOVIES = PREFIX + "recommend";
+const URL_ADVANCED_SEARCH = PREFIX + "advanced-search";
 const movieApi = {
   getMovieGenres: async () => {
     const res = await AxiosClient.get(URL_GENRE);
@@ -74,6 +75,10 @@ const movieApi = {
   },
   getTopRatedMovies: async () => {
     const res = await AxiosClient.get(URL_TOP_RATED);
+    return res.data;
+  },
+  getMoviesByAdvancedSearch: async (params: any) => {
+    const res = await AxiosClient.get(URL_ADVANCED_SEARCH, { params });
     return res.data;
   },
 };

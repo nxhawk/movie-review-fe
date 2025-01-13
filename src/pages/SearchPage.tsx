@@ -1,20 +1,17 @@
+import React, { useState, useEffect } from "react";
 import DocumentMeta from "react-document-meta";
 import metadata from "../utils/metadata";
-import SearchMoviesList from "../components/search/SearchMoviesList.tsx";
-import ClearIcon from "@mui/icons-material/Clear";
-import SearchIcon from "@mui/icons-material/Search";
-import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import path from "../routes/path.ts";
+import path from "../routes/path";
 import { useQuery } from "@tanstack/react-query";
-import movieApi from "../api/base/movie.api.ts";
-import personApi from "../api/tmdb/person.api.ts";
-import { Movie } from "../types/movie.type.ts";
-import Pagination from "@mui/material/Pagination";
-import { Box, Stack } from "@mui/material";
-import SearchResults from "../components/search/SearchResults.tsx";
-import FilterOptions from "../components/search/FilterOptions.tsx";
-import SearchPeopleList from "../components/search/SearchPeopleList.tsx";
+import movieApi from "../api/base/movie.api";
+import personApi from "../api/tmdb/person.api";
+import { Movie } from "../types/movie.type";
+import SearchInput from "../components/search/SearchInput";
+import SearchResultsContainer from "../components/search/SearchResultsContainer";
+import SearchTypeSelector from "../components/search/SearchTypeSelector";
+import { Stack } from "@mui/material";
+import { PersonDetail } from "../types/person.type.ts";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -27,8 +24,10 @@ const SearchPage = () => {
   const [searchValue, setSearchValue] = useState(initialQuery);
   const [page, setPage] = useState(initialPage);
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [people, setPeople] = useState<any[]>([]);
+  const [advancedMovies, setAdvancedMovies] = useState<Movie[]>([]);
+  const [people, setPeople] = useState<PersonDetail[]>([]);
   const [totalMoviePages, setTotalMoviePages] = useState(1);
+  const [totalAdvancedMoviePages, setTotalAdvancedMoviePages] = useState(1);
   const [totalPeoplePages, setTotalPeoplePages] = useState(1);
   const [totalMovieResults, setTotalMovieResults] = useState(0);
   const [totalPeopleResults, setTotalPeopleResults] = useState(0);
@@ -68,6 +67,7 @@ const SearchPage = () => {
 
   const handleSelectType = (type: string) => {
     setSelectedType(type);
+    setPage(1);
     if (type === "adv_search") {
       handleApplyFilters({});
     } else {
@@ -79,111 +79,64 @@ const SearchPage = () => {
     queryKey: ["searching-page", page, searchValue, advancedSearchParams],
     queryFn: async () => {
       metadata.searchMeta.title = `${searchValue} - Searching page ${page} - CineMatch`;
-      const movieResponse = advancedSearchParams
-        ? await movieApi.getPopularMovies()
-        : await movieApi.getMovieByQuery(searchValue, page);
-      const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
-      setMovies(movieResponse.results);
-      setPeople(peopleResponse.results);
-      setTotalMoviePages(movieResponse.total_pages);
-      setTotalPeoplePages(peopleResponse.total_pages);
-      if (selectedType != "adv_search") {
+      if (selectedType === "adv_search") {
+        const movieAdvancedResponse = await movieApi.getMoviesByAdvancedSearch(advancedSearchParams);
+        setAdvancedMovies(movieAdvancedResponse.results);
+        setTotalAdvancedMoviePages(movieAdvancedResponse.total_pages);
+      } else {
+        const movieResponse = await movieApi.getMovieByQuery(searchValue, page);
+        const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
+        setMovies(movieResponse.results);
+        setPeople(peopleResponse.results);
+        setTotalMoviePages(movieResponse.total_pages);
+        setTotalPeoplePages(peopleResponse.total_pages);
         setTotalMovieResults(movieResponse.total_results);
+        setTotalPeopleResults(peopleResponse.total_results);
       }
-      setTotalPeopleResults(peopleResponse.total_results);
-      return { movieResponse, peopleResponse };
+      return [];
     },
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const movieResponse = await movieApi.getMovieByQuery(searchValue, page);
+      const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
+      setTotalMovieResults(movieResponse.total_results);
+      setTotalPeopleResults(peopleResponse.total_results);
+    };
+    fetchData().then();
+  }, [searchValue, page]);
 
   return (
     <DocumentMeta {...metadata.searchMeta}>
       <div className="pt-5 w-full flex flex-col items-center">
-        <div className="w-full lg:w-1/2 mb-5 px-2">
-          <div className="relative w-full">
-            <input
-              className="w-full border-2 border-cyan-950 text-sm md:text-base lg:text-base rounded-full pl-3 md:pl-4 lg:pl-5 pr-20 md:pr-24 lg:pr-32 py-2 md:py-2.5 lg:py-3 focus:outline-none"
-              placeholder="Search for a movie, person,..."
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onKeyUp={handleKeyUp}
-            />
-            {searchValue && (
-              <button
-                className="absolute top-1.5 right-20 md:top-2.5 md:right-28 flex items-center py-1.5 mb-1 md:py-2 lg:py-2.5 px-2 md:px-2.5 lg:px-3 text-center"
-                type="button"
-                onClick={handleClear}
-              >
-                <ClearIcon className="absolute top-1 right-1" fontSize="small" style={{ color: "red" }} />
-              </button>
-            )}
-            <button
-              className="absolute top-0 right-0 flex items-center rounded-full bg-cyan-950 py-1.5 h-full md:py-2 lg:py-2.5 px-2 md:px-2.5 lg:px-3 text-center text-sm md:text-base lg:text-base text-white shadow-sm hover:bg-cyan-900"
-              type="button"
-              onClick={() => {
-                setPage(1);
-                handleSearch(searchValue, 1);
-              }}
-            >
-              <SearchIcon />
-              Search
-            </button>
-          </div>
+        <div className="w-full lg:w-1/2 mb-5 px-2" id="search-input-container">
+          <SearchInput
+            searchValue={searchValue}
+            onSearchValueChange={setSearchValue}
+            onSearch={() => handleSearch(searchValue, 1)}
+            onClear={handleClear}
+            onKeyUp={handleKeyUp}
+          />
         </div>
-        <Stack direction={{ xs: "column", md: "row" }} gap={2} className="w-full justify-center">
-          <div className="w-full md:w-1/5 flex justify-end px-2">
-            <SearchResults
-              movieCount={totalMovieResults}
-              peopleCount={totalPeopleResults}
-              selectedType={selectedType}
-              onSelectType={handleSelectType}
-            />
-          </div>
-          {selectedType === "adv_search" ? (
-            <div className="w-full block md:hidden px-2">
-              <FilterOptions onApplyFilters={handleApplyFilters} />
-            </div>
-          ) : null}
-          {selectedType === "movies" || selectedType === "adv_search" ? (
-            <SearchMoviesList movies={movies} />
-          ) : (
-            <SearchPeopleList people={people} />
-          )}
-          <div className="w-1/5 hidden md:block">
-            {selectedType === "adv_search" ? <FilterOptions onApplyFilters={handleApplyFilters} /> : null}
-          </div>
+        <Stack direction={{ xs: "column", md: "row" }} gap={2} className="w-full justify-center" id="body-container">
+          <SearchTypeSelector
+            movieCount={totalMovieResults}
+            peopleCount={totalPeopleResults}
+            selectedType={selectedType}
+            onSelectType={handleSelectType}
+          />
+          <SearchResultsContainer
+            selectedType={selectedType}
+            movies={selectedType === "adv_search" ? advancedMovies : movies}
+            people={people}
+            totalMoviePages={selectedType === "adv_search" ? totalAdvancedMoviePages : totalMoviePages}
+            totalPeoplePages={totalPeoplePages}
+            page={page}
+            onPageChange={handlePageChange}
+            onApplyFilters={handleApplyFilters}
+          />
         </Stack>
-        {(selectedType === "movies" || selectedType === "adv_search") && movies.length > 0 && (
-          <>
-            <Box sx={{ display: { xs: "block", md: "none" } }} className="mt-2 mb-5">
-              <Pagination
-                count={totalMoviePages}
-                page={page}
-                size={"small"}
-                onChange={handlePageChange}
-                color="primary"
-              />
-            </Box>
-            <Box sx={{ display: { xs: "none", md: "block" } }} className="mt-2 mb-5">
-              <Pagination count={totalMoviePages} page={page} onChange={handlePageChange} color="primary" />
-            </Box>
-          </>
-        )}
-        {selectedType === "people" && people.length > 0 && (
-          <>
-            <Box sx={{ display: { xs: "block", md: "none" } }} className="mt-2 mb-5">
-              <Pagination
-                count={totalPeoplePages}
-                page={page}
-                size={"small"}
-                onChange={handlePageChange}
-                color="primary"
-              />
-            </Box>
-            <Box sx={{ display: { xs: "none", md: "block" } }} className="mt-2 mb-5">
-              <Pagination count={totalPeoplePages} page={page} onChange={handlePageChange} color="primary" />
-            </Box>
-          </>
-        )}
       </div>
     </DocumentMeta>
   );

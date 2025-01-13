@@ -3,7 +3,7 @@ import { Movie } from "../../types/movie.type.ts";
 
 const SearchMoviesList = ({ movies }: { movies: Movie[] }) => {
   return (
-    <div className="w-full md:w-1/2 flex flex-wrap justify-center">
+    <div className="w-full flex flex-wrap justify-center">
       {movies.length > 0 ? (
         movies.map((movie) => <MovieSearchCard key={movie.id} movie={movie} />)
       ) : (
