@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import path from "../routes/path.ts";
 import { useQuery } from "@tanstack/react-query";
-import movieApi from "../api/tmdb/movie.api.ts";
+import movieApi from "../api/base/movie.api.ts";
 import personApi from "../api/tmdb/person.api.ts";
 import { Movie } from "../types/movie.type.ts";
 import Pagination from "@mui/material/Pagination";
@@ -80,7 +80,7 @@ const SearchPage = () => {
     queryFn: async () => {
       metadata.searchMeta.title = `${searchValue} - Searching page ${page} - CineMatch`;
       const movieResponse = advancedSearchParams
-        ? await movieApi.getMovieByDiscover(advancedSearchParams)
+        ? await movieApi.getPopularMovies()
         : await movieApi.getMovieByQuery(searchValue, page);
       const peopleResponse = await personApi.getPeopleByQuery(searchValue, page);
       setMovies(movieResponse.results);

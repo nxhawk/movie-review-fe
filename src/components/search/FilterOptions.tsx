@@ -9,7 +9,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import React, { useState, useEffect } from "react";
 import Slider from "@mui/material/Slider";
-import movieApi from "../../api/tmdb/movie.api.ts";
+import movieApi from "../../api/base/movie.api.ts";
 import { Dayjs } from "dayjs";
 
 interface FilterOptionsProps {
