@@ -5,7 +5,7 @@ const MovieDetailSkeleton = () => {
   const matches = useMediaQuery("(min-width:780px)");
 
   return (
-    <div className="flex flex-col md:flex-row py-5 md:px-7 items-center">
+    <div className="flex flex-col md:flex-row py-10 md:px-7 items-center bg-gray-300">
       <Skeleton variant="rectangular" width={matches ? 320 : "80%"} height={matches ? 420 : 600} />
       <div className="flex-1 max-md:w-full px-3 md:ml-6 space-y-4">
         <div className="w-full">

@@ -40,8 +40,8 @@ const MovieRecommendationSkeleton = () => {
         {Array.from(new Array(8)).map((_, index) => (
           <SwiperSlide key={index}>
             <Box sx={{ position: "relative" }}>
-              <Skeleton variant="rounded" style={{ height: "10rem", width: "100%" }} />
-              <div className="flex items-center justify-between gap-3 mt-2">
+              <Skeleton variant="rounded" style={{ height: "10.6rem", width: "100%" }} />
+              <div className="flex items-center justify-between gap-3 mt-3">
                 <Skeleton variant="rounded" style={{ height: "1rem", flexGrow: 2 }} />
                 <Skeleton variant="rounded" style={{ height: "1rem", flexGrow: 1 }} />
               </div>

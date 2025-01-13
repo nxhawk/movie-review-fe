@@ -1,4 +1,4 @@
-import { Video } from "../types/movie.type";
+import { Genre, Movie, Video } from "../types/movie.type";
 import { CrewMovie, GenderType } from "../types/actor.type";
 
 export const removeAllToken = () => {
@@ -110,3 +110,25 @@ export function getRatingTextColor(point: number): string {
 export function getCorrectId(tmdbId: number | string | undefined, id: number | string) {
   return tmdbId ? tmdbId : id;
 }
+
+export const buildQueryString = (movie: Movie) => {
+  const { genres, release_date, keywords } = movie;
+
+  let query = "";
+
+  if (genres && genres.length > 0) {
+    query += `${genres.map((genre: Genre) => genre.name).join(" and ")} movies, `;
+  }
+
+  if (keywords && keywords.length > 0) {
+    query += `with keywords like ${keywords.map((keyword) => keyword.name).join(" and ")}, `;
+  }
+
+  if (release_date && release_date.length > 0) {
+    query += `released in ${new Date(release_date).getFullYear()}, `;
+  }
+
+  query += `not have tmdb id: ${movie.tmdb_id} or id: ${movie.id}`;
+
+  return query.trim();
+};
