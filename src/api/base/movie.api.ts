@@ -1,6 +1,7 @@
 import AxiosClient from "./base-client";
 
 const PREFIX = "movie/";
+const URL_GENRE = PREFIX + "genre";
 const URL_TRENDING = PREFIX + "trending";
 const URL_TRENDING_DAY = URL_TRENDING + "-day";
 const URL_TRENDING_WEEK = URL_TRENDING + "-week";
@@ -13,6 +14,10 @@ const URL_POPULAR = PREFIX + "popular";
 const URL_TOP_RATED = PREFIX + "top_rated";
 const URL_RECOMMENDED_MOVIES = PREFIX + "recommend";
 const movieApi = {
+  getMovieGenres: async () => {
+    const res = await AxiosClient.get(URL_GENRE);
+    return res.data;
+  },
   getDetails: async (movieId: number | string) => {
     const res = await AxiosClient.get(`${PREFIX}${movieId}`);
     return res.data;
