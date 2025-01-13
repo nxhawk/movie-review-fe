@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, Grid } from "@mui/material";
+import { Card, CardActionArea, CardContent, Grid, Chip } from "@mui/material";
 import { tmdbConfig } from "../../api/tmdb/tmdb-client";
 import { Movie } from "../../types/movie.type.ts";
 import { getYearByDate } from "../../utils/dateFormat";
@@ -41,13 +41,20 @@ const MovieSearchCard = ({ movie }: { movie: Movie }) => {
                   &nbsp;
                   {movie.release_date && <span>({getYearByDate(movie.release_date)})</span>}
                 </h1>
+                {movie.genres && movie.genres.length > 0 && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {movie.genres.map((genre) => (
+                      <Chip key={genre.id} label={genre.name} size="small" />
+                    ))}
+                  </div>
+                )}
                 {movie.release_date && (
-                  <p className="text-xs md:text-md italic text-neutral-500">Release date: {formattedDate}</p>
+                  <p className="text-xs mt-1 md:text-md italic text-neutral-500">Release date: {formattedDate}</p>
                 )}
               </div>
               {/* Overview */}
               <div className="flex-col gap-5 mt-2 hidden sm:flex max-h-20">
-                <div className="flex flex-col gap-2 text-sm md:text-sm text-ellipsis overflow-hidden ...">
+                <div className="flex flex-col max-h-10 gap-2 text-sm md:text-sm text-ellipsis overflow-hidden ...">
                   <p className="pr-2">{movie.overview}</p>
                 </div>
               </div>
