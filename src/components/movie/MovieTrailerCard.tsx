@@ -74,14 +74,14 @@ const MovieRectangleCard = ({ movie }: { movie: MovieTrailer }) => {
           noWrap
           variant="h5"
           title={movie.title}
-          sx={{ color: "primary.main", textAlign: "center", fontWeight: "bold", marginTop: "10px", fontSize: "medium" }}
+          sx={{ color: "white", textAlign: "center", fontWeight: "bold", marginTop: "10px", fontSize: "medium" }}
         >
           {movie.title}
         </Typography>
         <Typography
           variant="body2"
           component="p"
-          sx={{ color: "gray", textAlign: "center", fontSize: "small", marginTop: "5px" }}
+          sx={{ color: "white", textAlign: "center", fontSize: "small", marginTop: "5px" }}
         >
           {formattedDate}
         </Typography>

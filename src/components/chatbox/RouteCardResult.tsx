@@ -22,7 +22,7 @@ const RouteCardResult = ({ query, route, handleClose, closeResult }: Props) => {
         <Typography variant="h5" component="div">
           Result query: `<i>{query}</i>`
         </Typography>
-        <div className="flex items-center gap-2 my-2">
+        <div className="flex items-center gap-2 my-2 flex-wrap">
           <Typography sx={{ fontSize: 20 }}>You will be redirected to the link:</Typography>
           <div className="px-5 border rounded-lg flex items-center justify-center">{route}</div>
         </div>

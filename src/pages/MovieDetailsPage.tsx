@@ -5,12 +5,12 @@ import { useParams } from "react-router-dom";
 import movieApi from "../api/base/movie.api";
 import { MovieDetail } from "../types/movie.type";
 import MovieCardInfor from "../components/movie/MovieCardInfor";
-import { Box, CircularProgress } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import ListCast from "../components/movie/ListCast";
 import ResourceNotFound from "../components/common/ResourceNotFound";
 import ListRecommendations from "../components/movie/ListRecommendations";
 import Reviews from "../components/movie/Reviews";
+import MovieDetailSkeleton from "../components/skeleton/MovieDetailSkeleton";
 
 const MovieDetailsPage = () => {
   const [movie, setMovie] = React.useState<MovieDetail | null>(null);
@@ -35,12 +35,9 @@ const MovieDetailsPage = () => {
   return (
     <DocumentMeta {...metadata.movieDetailsMeta}>
       {/* Group movie information */}
+
       {getMovieDetailQuery.isFetching || getMovieDetailQuery.isLoading ? (
-        <Box
-          sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
-        >
-          <CircularProgress />
-        </Box>
+        <MovieDetailSkeleton />
       ) : movie ? (
         <>
           <MovieCardInfor movie={movie} />

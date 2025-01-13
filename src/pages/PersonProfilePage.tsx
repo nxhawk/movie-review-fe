@@ -6,8 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import personApi from "../api/tmdb/person.api";
 import { PersonDetail } from "../types/person.type";
 import ResourceNotFound from "../components/common/ResourceNotFound";
-import { Box, CircularProgress } from "@mui/material";
 import PersonCardInfor from "../components/person/PersonCardInfor";
+import CastDetailSkeleton from "../components/skeleton/CastDetailSkeleton";
 
 const PersonProfilePage = () => {
   const [person, setPerson] = React.useState<PersonDetail | null>(null);
@@ -33,11 +33,7 @@ const PersonProfilePage = () => {
     <DocumentMeta {...metadata.personProfileMeta}>
       {/* Group person information */}
       {getPersonDetailQuery.isFetching || getPersonDetailQuery.isLoading ? (
-        <Box
-          sx={{ display: "flex", justifyContent: "center", paddingY: "10px", minHeight: "500px", alignItems: "center" }}
-        >
-          <CircularProgress />
-        </Box>
+        <CastDetailSkeleton />
       ) : person ? (
         <PersonCardInfor person={person} />
       ) : (

@@ -80,7 +80,7 @@ const Chatbox = () => {
   return (
     <>
       <button
-        className="fixed z-100 bottom-4 right-5 bg-slate-300/30 hover:bg-slate-300/40 p-2 rounded-full"
+        className="fixed z-[100] bottom-4 right-5 bg-slate-300/30 hover:bg-slate-300/40 p-2 rounded-full"
         onClick={() => setOpen(true)}
         style={{ display: open ? "none" : "block" }}
       >
