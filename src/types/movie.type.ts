@@ -19,6 +19,8 @@ export type Movie = {
   video: boolean;
   vote_average: number;
   vote_count: number;
+  keywords?: Keyword[];
+  genres?: Genre[];
 };
 
 export type MovieDetail = Movie & {
@@ -127,4 +129,9 @@ export type MovieTrailer = {
   title: string;
   release_date: string;
   trailers: Video[];
+};
+
+export type Keyword = {
+  id: number;
+  name: string;
 };

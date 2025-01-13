@@ -1,10 +1,10 @@
 import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import { useQuery } from "@tanstack/react-query";
-import movieApi from "../../api/tmdb/movie.api";
+import movieApi from "../../api/base/movie.api";
 import { Link } from "react-router-dom";
 import dynamicPath from "../../routes/dynamicPath";
 import { Movie } from "../../types/movie.type";
@@ -14,15 +14,16 @@ import { formatDate } from "../../utils/dateFormat";
 import { cn } from "../../utils/cn";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { motion } from "motion/react";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import StarIcon from "@mui/icons-material/Star";
 import MovieRecommendationSkeleton from "../skeleton/MovieRecommendationSkeleton";
-import { Pagination } from "../../types/response.type";
+import { buildQueryString, getCorrectId } from "../../utils/helper";
+import TextGradient from "../common/TextGradient";
+import { ILlmSearch } from "../../types/llm.type";
+import llmApi from "../../api/base/llm.api";
 
 type Props = {
   movieId: string;
   title: string;
+  movie: Movie;
 };
 
 const MovieRecomendations = ({ movie }: { movie: Movie }) => {
@@ -32,7 +33,7 @@ const MovieRecomendations = ({ movie }: { movie: Movie }) => {
     <div>
       <div className="relative" onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
         {/* Image */}
-        <Link to={dynamicPath.MOVIE_DETAILS(movie.id)} title={movie.title}>
+        <Link to={dynamicPath.MOVIE_DETAILS(getCorrectId(movie.tmdb_id, movie.id))} title={movie.title}>
           <LazyLoadImage
             alt={movie.title}
             src={movie.poster_path ? `${tmdbConfig.imageW500URL}/${movie.poster_path}` : tmdbConfig.defaultMovieImg}
@@ -52,16 +53,11 @@ const MovieRecomendations = ({ movie }: { movie: Movie }) => {
             <EventNoteIcon sx={{ fontSize: 16 }} />
             <div>{movie.release_date ? formatDate(movie.release_date) : "-"}</div>
           </div>
-          <div className="flex items-center gap-1 text-sm">
-            <StarIcon sx={{ fontSize: 16 }} />
-            <FavoriteIcon sx={{ fontSize: 16 }} />
-            <BookmarkIcon sx={{ fontSize: 16 }} />
-          </div>
         </div>
       </div>
       {/* movie title and rating */}
       <div className="mt-2 flex items-center justify-between">
-        <Link to={dynamicPath.MOVIE_DETAILS(movie.id)}>
+        <Link to={dynamicPath.MOVIE_DETAILS(getCorrectId(movie.tmdb_id, movie.id))}>
           <p className="line-clamp-1">{movie.title}</p>
         </Link>
         <p className="">{Math.round(movie.vote_average * 10)}%</p>
@@ -70,16 +66,20 @@ const MovieRecomendations = ({ movie }: { movie: Movie }) => {
   );
 };
 
-const ListRecommendations = ({ movieId, title }: Props) => {
-  const [movies, setMovies] = React.useState<Pagination<Movie> | null>(null);
+const ListRecommendations = ({ movieId, title, movie }: Props) => {
+  const [movies, setMovies] = React.useState<Movie[] | null>(null);
   const [haveData, setHaveData] = React.useState(false);
+  const [subType, setSubType] = React.useState("genres");
 
   const getRecommendationsMovieQuery = useQuery({
-    queryKey: ["recommendations-movie", movieId],
+    queryKey: ["recommendations-movie", movieId, subType],
     queryFn: async () => {
-      const response: Pagination<Movie> = await movieApi.getRecommendations(movieId!);
-      setMovies(response);
-      setHaveData(response.results.length > 0);
+      const response: ILlmSearch =
+        subType === "genres"
+          ? await movieApi.getRecommendations(movieId!)
+          : await llmApi.searchMovie(buildQueryString(movie), 20, 0.5);
+      setMovies(response.data);
+      setHaveData(response.data.length > 0);
       return response;
     },
     enabled: Boolean(movieId),
@@ -88,11 +88,49 @@ const ListRecommendations = ({ movieId, title }: Props) => {
   return (
     <Grid container padding={{ xs: 2, md: 3 }} flexDirection="column">
       {/* title */}
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+
+      <div className="flex items-center gap-4 mb-2">
+        <Typography color="primary.main" fontWeight={"bold"} fontSize={{ xs: "1.2em", md: "1.8em" }}>
           Recommendations
         </Typography>
-      </Box>
+        <Box className="relative border-2 border-cyan-950 rounded-full flex w-fit">
+          <Box
+            className="absolute w-[100px] h-[32px] rounded-full transition-all duration-500 ease"
+            bgcolor={"primary.main"}
+            style={{
+              transform: `translateX(${subType === "genres" ? 0 : "100px"})`,
+            }}
+          />
+          <Button
+            disableRipple
+            variant="text"
+            sx={{
+              width: "100px",
+              height: "32px",
+              fontWeight: "bold",
+              borderRadius: "20px",
+              transition: "all 0.1s ease 0.1s",
+            }}
+            onClick={() => setSubType("genres")}
+          >
+            {subType === "genres" ? <TextGradient text="Genres" /> : "Genres"}
+          </Button>
+          <Button
+            disableRipple
+            variant="text"
+            sx={{
+              width: "100px",
+              height: "32px",
+              fontWeight: "bold",
+              borderRadius: "20px",
+              transition: "all 0.1s ease 0.1s",
+            }}
+            onClick={() => setSubType("vectors")}
+          >
+            {subType === "vectors" ? <TextGradient text="Vectors" /> : "Vectors"}
+          </Button>
+        </Box>
+      </div>
 
       {/* Carousel */}
       {getRecommendationsMovieQuery.isFetching || getRecommendationsMovieQuery.isLoading ? (
@@ -139,11 +177,14 @@ const ListRecommendations = ({ movieId, title }: Props) => {
                   disableOnInteraction: false,
                 }}
               >
-                {movies?.results.slice(0, 20)?.map((movie) => (
-                  <SwiperSlide key={movie.id}>
-                    <MovieRecomendations movie={movie} />
-                  </SwiperSlide>
-                ))}
+                {movies?.slice(0, 20)?.map((movie) => {
+                  if (movie.tmdb_id.toString() === movieId) return <></>;
+                  return (
+                    <SwiperSlide key={movie.id}>
+                      <MovieRecomendations movie={movie} />
+                    </SwiperSlide>
+                  );
+                })}
               </Swiper>
             </motion.div>
           ) : (

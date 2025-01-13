@@ -46,7 +46,7 @@ const MovieDetailsPage = () => {
           {/* Reviews */}
           {movieId && <Reviews movieId={movieId} title={movie.title} />}
           {/* Movie Recommendations */}
-          {movieId && <ListRecommendations movieId={movieId} title={movie.title} />}
+          {movieId && movie && <ListRecommendations movie={movie} movieId={movieId} title={movie.title} />}
         </>
       ) : (
         <ResourceNotFound />
