@@ -173,7 +173,7 @@ const ListRecommendations = ({ movieId, title, movie }: Props) => {
                   },
                 }}
                 autoplay={{
-                  delay: 3000,
+                  delay: 3000, //swiper time
                   disableOnInteraction: false,
                 }}
               >
