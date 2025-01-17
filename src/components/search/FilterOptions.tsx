@@ -43,10 +43,13 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     };
     fetchGenres().then();
   }, []);
+  useEffect(() => {
+    applyFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGenres, value, sortValue, releaseDateFrom, releaseDateTo]);
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
-    applyFilters();
   };
 
   const handleChipClick = (genreId: number) => {
@@ -55,7 +58,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     } else {
       setSelectedGenres([...selectedGenres, genreId]);
     }
-    applyFilters();
   };
 
   const handleSortChange = (event: SelectChangeEvent) => {
@@ -63,8 +65,8 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     const validSortValues = [
       "popularity.asc",
       "popularity.desc",
-      "primary_release_date.asc",
-      "primary_release_date.desc",
+      "release_date.asc",
+      "release_date.desc",
       "title.asc",
       "title.desc",
       "vote_average.asc",
@@ -72,13 +74,11 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     ];
     if (validSortValues.includes(value)) {
       setSortValue(value);
-      applyFilters();
     }
   };
 
   const handleDateChange = (setter: React.Dispatch<React.SetStateAction<Dayjs | null>>) => (newValue: Dayjs | null) => {
     setter(newValue);
-    applyFilters();
   };
 
   useEffect(() => {
@@ -103,7 +103,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     if (releaseDateTo) {
       params["release_date.lte"] = releaseDateTo.format("YYYY-MM-DD");
     }
-
     onApplyFilters(params);
   };
 
@@ -151,8 +150,8 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
                 <MenuItem value="popularity.asc">Popularity Ascending</MenuItem>
                 <MenuItem value="vote_average.desc">Rating Descending</MenuItem>
                 <MenuItem value="vote_average.asc">Rating Ascending</MenuItem>
-                <MenuItem value="primary_release_date.desc">Release Date Descending</MenuItem>
-                <MenuItem value="primary_release_date.asc">Release Date Ascending</MenuItem>
+                <MenuItem value="release_date.desc">Release Date Descending</MenuItem>
+                <MenuItem value="release_date.asc">Release Date Ascending</MenuItem>
                 <MenuItem value="title.asc">Title (A-Z)</MenuItem>
                 <MenuItem value="title.desc">Title (Z-A)</MenuItem>
               </Select>
