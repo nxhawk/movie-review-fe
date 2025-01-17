@@ -1,99 +1,120 @@
-Dockerize development
-```bash
-docker build -t cine-match-dev -f Dockerfile.dev .
-docker run -p 5173:5173 cine-match-dev
+# CineMatch - TMDB
+
+CineMatch is an advanced movie search and recommendation platform built using React.js (frontend) and NestJS (backend), integrating AI-powered search to enhance user experience.  Users can explore trending movies, search by keywords or AI queries, and manage their watchlist, favorites, and ratings.
+
+## Table of Contents
+
+- [About](#about)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Contributing](#contributing)
+
+## About
+
+Final project
+
+Advanced Web Programming
+
+### Tech Stack
+- Front-end: Reactjs, Material UI, react-router, react-hook-form
+- Back-end: Nestjs, Prisma, MongoDB, Passportjs
+
+## Deployment
+
+Front-end: https://movie-review-fe-rose.vercel.app/
+
+Back-end: https://movie-review-be-hhs7.onrender.com/docs
+
+## Installation
+
+```
+git clone https://github.com/nxhawk/movie-review-fe.git
+cd movie-review-fe
 ```
 
-Dockerize production
-```bash
-docker build -t cine-match .
-docker run -p 80:80 cine-match
+## Usage
+
+```
+npm install
+npm run dev
 ```
 
-![reactjs-vite-tailwindcss-boilerplate](https://user-images.githubusercontent.com/16243531/217138979-b854309c-4742-4275-a705-f9fec5158217.jpg)
+Then create a `.env` file
 
-# React Tailwindcss Boilerplate build with Vite
-
-This is a boilerplate build with Vite, React 18, TypeScript, Vitest, Testing Library, Commitlint, TailwindCSS 3, Eslint and Prettier.
-
-## What is inside?
-
-This project uses many tools like:
-
-- [Vite](https://vitejs.dev)
-- [ReactJS](https://reactjs.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [Vitest](https://vitest.dev)
-- [Testing Library](https://testing-library.com)
-- [Commitlint gitmoji](https://www.npmjs.com/package/commitlint-config-gitmoji)
-- [Tailwindcss](https://tailwindcss.com)
-- [Eslint](https://eslint.org)
-- [Prettier](https://prettier.io)
-
-## Getting Started
-
-### Install
-
-Use this template or clone this repository.
-
-Install dependencies.
-
-```bash
-yarn install
+```sh
+cp .env.example .env
 ```
 
-Serve with hot reload at <http://localhost:5173>.
+Then goto http://localhost:5173/
 
-```bash
-yarn run dev
-```
+## Features
 
-### Lint
+### User Navigation
+- Users can navigate between all pages.
 
-```bash
-# check lint
-yarn run lint
+### React UI Framework
+- Utilizes a React UI Framework for the project's user interface, ensuring a responsive and modern design.
 
-# fix lint
-yarn run lint:fix
-```
+### Authentication Flow
+- Sign Up
+- Sign In with email and password
+- Sign In with Google
+- Sign In with Facebook
+- Account activation by email
+- Verify access token
+- Refresh token
+- Sign out
+- Managing sign-in and sign-out UI states for users
+- Restrict feature access based on the user’s role
+- Use a popular authentication library
+- Forgot password and renew password by email
 
-### Typecheck
+### Home page
+- Search panel
+- Trending movies by today, this week
+- Latest trailers
+- Popular movies
+- Overall information: header, footer, ...
 
-```bash
-yarn run typecheck
-```
+###  Simple Search
+- Search results
+- Filtering
+- LLM search
 
-### Build
+### AI search
+-  LLM movie search: For example, when asked "Sea adventure animation movies," the website would list movies that match the request.
+- AI navigation:  For example, when asked "Casts of Moana," the website would redirect to the cast listing for the Moana movie.
 
-```bash
-yarn run build
-```
+### Movie details
+- Quick information about the movie
+- Rating
+- Mark as favorite
+- Add to watch list
+- Casts
+- Reviews
+- Recommendations
+  - Similar movie recommendations based on user history or genres of current selection
+  -  Similar movies based on vectors search with reasoned match:  Movies are recommended based on vector search, which analyzes similarities in themes, genres, and other features to provide a reasoned match.
 
-### Test
+### Cast details
+- Quick info
+- Acting list
 
-### Commitlint 
-#### Structure
-The Gitmoji Structure of commit styles is below
+### User profile
+- Watchlist
+- Favorite list
+- Rating list
 
-```bash
-:gitmoji: type(scope?): subject
-body?
-footer?
-```
+### Bonus
+- Dockerize (development, production)
+- CI/CD
+- Speech to text
+- Reponsive
 
-Example
+## Contributing
 
-```bash
-:sparkles: feat(changelog): support chinese title
+This project was created and is actively maintained by:
 
-:bug: fix(config): fix a subject bug
-
-:memo: docs: update README.md
-
-:bulb: docs(plugin): update comments
-```
-
-## License
-
-This project is licensed under the MIT License.
+- [21120447 Nguyễn Nhật Hào](https://github.com/nxhawk)
+- [21120453 Tô Phương Hiếu](https://github.com/phuonghieuto)

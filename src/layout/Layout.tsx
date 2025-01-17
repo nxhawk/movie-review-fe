@@ -4,6 +4,7 @@ import Footer from "./Footer";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box } from "@mui/material";
 import Chatbox from "../components/chatbox/Chatbox";
+import ConsecutiveSnackbars from "./ConsecutiveSnackbars";
 
 const Layout = () => {
   const matches = useMediaQuery("(max-width:600px)");
@@ -15,6 +16,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <Footer />
+      <ConsecutiveSnackbars />
 
       {/* Chatbox */}
       <Chatbox />

@@ -81,6 +81,11 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({ onApplyFilters, onClearFi
     applyFilters();
   };
 
+  useEffect(() => {
+    applyFilters();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedGenres, value, sortValue, releaseDateFrom, releaseDateTo]);
+
   const applyFilters = () => {
     const params: any = {
       sort_by: sortValue,
